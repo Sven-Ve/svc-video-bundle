@@ -3,13 +3,13 @@
 namespace Svc\VideoBundle\Controller;
 
 use Svc\VideoBundle\Entity\Video;
-use Svc\VideoBundle\Form\VideoType;
 use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Svc\VideoBundle\Form\VideoType;
 
 /**
  * @Route("/admin/video/{_locale}", requirements={"_locale": "%app.supported_locales%"})

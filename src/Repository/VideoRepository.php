@@ -2,9 +2,9 @@
 
 namespace Svc\VideoBundle\Repository;
 
-use Svc\VideoBundle\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Svc\VideoBundle\Entity\Video;
 
 /**
  * @method Video|null find($id, $lockMode = null, $lockVersion = null)
