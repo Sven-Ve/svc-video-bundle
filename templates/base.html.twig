@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+
+		{% block css %}{% endblock %}
+
+		{% block js_header %}{% endblock %}
+	</head>
+	<body>
+
+
+		<div class="container">
+			<br/>
+			{% block body %}{% endblock %}
+		</div>
+
+
+		{% block javascript %}{% endblock %}
+	</body>
+</html>

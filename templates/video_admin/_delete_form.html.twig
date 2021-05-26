@@ -1,0 +1,14 @@
+<form method="post" action="{{ path('video_admin_delete', {'id': video.id}) }}"
+  {{ stimulus_controller('submit-confirm', {
+    title: 'Remove this video?' | trans,
+    icon: 'warning',
+    confirmButtonText: 'Yes, remove it' | trans,
+    cancelButtonText: 'Cancel' | trans
+  }) }}
+  data-action="submit-confirm#onSubmit"
+>
+    <input type="hidden" name="_method" value="post">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
+    <span class="float-end">&nbsp;&nbsp;</span>
+    <button class="btn btn-danger float-end">{% trans %}Delete{% endtrans %}</button>
+</form>

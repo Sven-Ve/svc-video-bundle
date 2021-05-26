@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+      <service id="svc_video.controller.admin" class="Svc\VideoBundle\Controller\VideoAdminController" public="true" autowire="true" >
+        <call method="setContainer">
+            <argument type="service" id="Psr\Container\ContainerInterface"/>
+        </call>
+        <tag name="container.service_subscriber"/>
+        <tag name="controller.service_arguments"/>
+      </service>
+
+      <service id="svc_video.service.video-helper" class="Svc\VideoBundle\Service\VideoHelper" public="false" autowire="true">
+        <tag name="controller.service_arguments"/>
+      </service>
+      <service id="Svc\VideoBundle\Service\VideoHelper" alias="svc_video.service.video-helper" />
+
+
+      <service id="svc_video.rep.video" class="Svc\VideoBundle\Repository\VideoRepository" public="false" autowire="true" >
+        <tag name="doctrine.repository_service"/>
+      </service>
+      <service id="Svc\VideoBundle\Repository\VideoRepository" alias="svc_video.rep.video" />
+
+    </services>
+</container>
