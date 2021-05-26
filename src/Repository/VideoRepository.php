@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace Svc\VideoBundle\Repository;
 
-use App\Entity\Video;
+use Svc\VideoBundle\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

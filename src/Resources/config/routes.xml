@@ -7,4 +7,8 @@
     <route id="svc_video_admin_index" controller="svc_video.controller.admin::index" path="/" >
         <!-- settings -->
     </route>
+
+    <route id="svc_video_admin_new" controller="svc_video.controller.admin::new" path="/new" >
+        <!-- settings -->
+    </route>
 </routes>

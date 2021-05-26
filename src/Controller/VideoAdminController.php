@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace Svc\VideoBundle\Controller;
 
-use App\Entity\Video;
-use App\Form\VideoType;
-use App\Repository\VideoRepository;
+use Svc\VideoBundle\Entity\Video;
+use Svc\VideoBundle\Form\VideoType;
+use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ class VideoAdminController extends AbstractController
    */
   public function index(VideoRepository $videoRepository): Response
   {
-    return $this->render('video_admin/index.html.twig', [
+    return $this->render('@SvcVideo/video_admin/index.html.twig', [
       'videos' => $videoRepository->findAll(),
     ]);
   }
@@ -42,10 +42,10 @@ class VideoAdminController extends AbstractController
       $entityManager->persist($video);
       $entityManager->flush();
 
-      return $this->redirectToRoute('video_admin_index');
+      return $this->redirectToRoute('svc_video_admin_index');
     }
 
-    return $this->render('video_admin/new.html.twig', [
+    return $this->render('@SvcVideo/video_admin/new.html.twig', [
       'video' => $video,
       'form' => $form->createView(),
     ]);
@@ -62,10 +62,10 @@ class VideoAdminController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
       $this->getDoctrine()->getManager()->flush();
 
-      return $this->redirectToRoute('video_admin_index');
+      return $this->redirectToRoute('svc_video_admin_index');
     }
 
-    return $this->render('video_admin/edit.html.twig', [
+    return $this->render('@SvcVideo/video_admin/edit.html.twig', [
       'video' => $video,
       'form' => $form->createView(),
     ]);
@@ -82,6 +82,6 @@ class VideoAdminController extends AbstractController
       $entityManager->flush();
     }
 
-    return $this->redirectToRoute('video_admin_index');
+    return $this->redirectToRoute('@SvcVideo/video_admin_index');
   }
 }

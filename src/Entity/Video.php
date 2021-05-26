@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace Svc\VideoBundle\Entity;
 
-use App\Repository\VideoRepository;
+use Svc\VideoBundle\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass=VideoRepository::class)
  * @UniqueEntity(fields={"title"}, message="There is already a video with this title")
  */
-class Video extends _DefaultSuperclass
+class Video
 {
 
   public const SOURCE_YOUTUBE = 0;

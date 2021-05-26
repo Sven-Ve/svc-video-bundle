@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Service;
+namespace Svc\VideoBundle\Service;
 
-use App\Repository\VideoRepository;
+use Svc\VideoBundle\Repository\VideoRepository;
 
 /**
  * helper function for videos

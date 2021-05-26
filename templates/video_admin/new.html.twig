@@ -6,9 +6,9 @@
 	<div class='form-md'>
 		<h1>{% trans %}Create new video{% endtrans %}</h1>
 
-		{{ include('video_admin/_form.html.twig') }}
+		{{ include('@SvcVideo/video_admin/_form.html.twig') }}
 
-		<a class='btn btn-secondary float-start' href="{{ path('video_admin_index') }}">{% trans %}Back to list{% endtrans %}</a>
+		<a class='btn btn-secondary float-start' href="{{ path('svc_video_admin_index') }}">{% trans %}Back to list{% endtrans %}</a>
 		<br/>
 		<br/>
 	</div>

@@ -17,7 +17,6 @@
       </service>
       <service id="Svc\VideoBundle\Service\VideoHelper" alias="svc_video.service.video-helper" />
 
-
       <service id="svc_video.rep.video" class="Svc\VideoBundle\Repository\VideoRepository" public="false" autowire="true" >
         <tag name="doctrine.repository_service"/>
       </service>

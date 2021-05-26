@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Form;
+namespace Svc\VideoBundle\Form;
 
-use App\Entity\Video;
-use App\Service\VideoHelper;
+use Svc\VideoBundle\Entity\Video;
+use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

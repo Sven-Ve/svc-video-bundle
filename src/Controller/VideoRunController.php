@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace Svc\VideoBundle\Controller;
 
 use App\Entity\Video;
 use App\Service\LikeHelper;
