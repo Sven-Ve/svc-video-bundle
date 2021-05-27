@@ -31,8 +31,8 @@
 						<td>{{ video.calls }}</td>
 						<td>{{ video.likes }}</td>
 						<td>
-							<a href="{{ path('video_admin_edit', {'id': video.id}) }}">{% trans %}Edit{% endtrans %}</a>
-							<a href="{{ path('video_run', {'id': video.id}) }}">{% trans %}Run{% endtrans %}</a>
+							<a href="{{ path('svc_video_admin_edit', {'id': video.id}) }}">{% trans %}Edit{% endtrans %}</a>
+							<a href="{{ path('svc_video_run', {'id': video.id}) }}">{% trans %}Run{% endtrans %}</a>
 						</td>
 					</tr>
 				{% else %}
