@@ -22,7 +22,7 @@ class VideoRunController extends AbstractController
   /**
    * @Route("/{id}", name="video_run", methods={"GET"})
    */
-  public function run(Video $video, /*LikeHelper $likeHelper*/): Response
+  public function run(Video $video /*, LikeHelper $likeHelper*/): Response
   {
 
     $video->incCalls();
