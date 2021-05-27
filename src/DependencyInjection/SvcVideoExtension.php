@@ -30,7 +30,7 @@ class SvcVideoExtension extends Extension
   {
     $fileName = $rootPath . "/config/routes/svc_video.yaml";
     if (!file_exists($fileName)) {
-      $text = "svc_video:\n";
+      $text = "_svc_video:\n";
       $text .= "    resource: '@SvcVideoBundle/src/Resources/config/routes.xml'\n";
       $text .= "    prefix: /svc-video/{_locale}\n";
       $text .= '    requirements: {"_locale": "%app.supported_locales%"}}\n';

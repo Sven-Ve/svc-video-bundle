@@ -16,6 +16,10 @@
         <!-- settings -->
     </route>
 
+    <route id="svc_video_admin_delete" controller="svc_video.controller.admin::delete" path="/delete/{id}" >
+        <!-- settings -->
+    </route>
+
     <route id="svc_video_run" controller="svc_video.controller.run::run" path="/run" >
         <!-- settings -->
     </route>

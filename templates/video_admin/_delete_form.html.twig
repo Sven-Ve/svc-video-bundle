@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('video_admin_delete', {'id': video.id}) }}"
+<form method="post" action="{{ path('svc_video_admin_delete', {'id': video.id}) }}"
   {{ stimulus_controller('submit-confirm', {
     title: 'Remove this video?' | trans,
     icon: 'warning',

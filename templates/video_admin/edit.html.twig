@@ -6,11 +6,11 @@
 	<div class='form-md'>
 		<h1>{% trans %}Edit Video{% endtrans %}</h1>
 
-		{{ include('video_admin/_form.html.twig', {'button_label': 'Update'}) }}
+		{{ include('@SvcVideo/video_admin/_form.html.twig', {'button_label': 'Update'}) }}
 
-		<a href="{{ path('video_admin_index') }}" class='btn btn-secondary float-start'>{% trans %}Back to list{% endtrans %}</a>
+		<a href="{{ path('svc_video_admin_index') }}" class='btn btn-secondary float-start'>{% trans %}Back to list{% endtrans %}</a>
 
-		{{ include('video_admin/_delete_form.html.twig') }}
+		{{ include('@SvcVideo/video_admin/_delete_form.html.twig') }}
 		<br/>
 		<br/>
 	</div>

@@ -26,14 +26,9 @@
       </service>
       <service id="Svc\VideoBundle\Service\VideoHelper" alias="svc_video.service.video-helper" />
 
-<<<<<<< HEAD
-      <service id="svc_video.rep.video" class="Svc\VideoBundle\Repository\VideoRepository" public="true" autowire="true" >
-=======
-      <service id="svc_video.repository.video" class="Svc\VideoBundle\Repository\VideoRepository" public="true" autowire="true" autoconfigure="false" >
->>>>>>> 44eed72ed1a5c6a559ba50307fadaf84b4ba7cdc
+      <service id="Svc\VideoBundle\Repository\VideoRepository" class="Svc\VideoBundle\Repository\VideoRepository" public="false" autowire="true" autoconfigure="true" >
         <tag name="doctrine.repository_service"/>
       </service>
-      <service id="Svc\VideoBundle\Repository\VideoRepository" alias="svc_video.repository.video" />
 
       <!-- <service id="svc_video.entity.video" class="Svc\VideoBundle\Entity\Video" public="false" autowire="true" >
         <tag name="doctrine.repository_service"/>
