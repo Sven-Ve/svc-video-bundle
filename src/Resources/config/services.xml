@@ -4,7 +4,16 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services
         http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+
       <service id="svc_video.controller.admin" class="Svc\VideoBundle\Controller\VideoAdminController" public="true" autowire="true" >
+        <call method="setContainer">
+            <argument type="service" id="Psr\Container\ContainerInterface"/>
+        </call>
+        <tag name="container.service_subscriber"/>
+        <tag name="controller.service_arguments"/>
+      </service>
+
+      <service id="svc_video.controller.run" class="Svc\VideoBundle\Controller\VideoRunController" public="true" autowire="true" >
         <call method="setContainer">
             <argument type="service" id="Psr\Container\ContainerInterface"/>
         </call>
@@ -17,10 +26,14 @@
       </service>
       <service id="Svc\VideoBundle\Service\VideoHelper" alias="svc_video.service.video-helper" />
 
+<<<<<<< HEAD
       <service id="svc_video.rep.video" class="Svc\VideoBundle\Repository\VideoRepository" public="true" autowire="true" >
+=======
+      <service id="svc_video.repository.video" class="Svc\VideoBundle\Repository\VideoRepository" public="true" autowire="true" autoconfigure="false" >
+>>>>>>> 44eed72ed1a5c6a559ba50307fadaf84b4ba7cdc
         <tag name="doctrine.repository_service"/>
       </service>
-      <service id="Svc\VideoBundle\Repository\VideoRepository" alias="svc_video.rep.video" />
+      <service id="Svc\VideoBundle\Repository\VideoRepository" alias="svc_video.repository.video" />
 
       <!-- <service id="svc_video.entity.video" class="Svc\VideoBundle\Entity\Video" public="false" autowire="true" >
         <tag name="doctrine.repository_service"/>

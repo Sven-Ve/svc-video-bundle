@@ -11,4 +11,13 @@
     <route id="svc_video_admin_new" controller="svc_video.controller.admin::new" path="/new" >
         <!-- settings -->
     </route>
+
+    <route id="svc_video_admin_edit" controller="svc_video.controller.admin::edit" path="/edit/{id}" >
+        <!-- settings -->
+    </route>
+
+    <route id="svc_video_run" controller="svc_video.controller.run::run" path="/run" >
+        <!-- settings -->
+    </route>
+
 </routes>

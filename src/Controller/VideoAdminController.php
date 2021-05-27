@@ -56,6 +56,7 @@ class VideoAdminController extends AbstractController
    */
   public function edit(Request $request, Video $video): Response
   {
+    dump('in');
     $form = $this->createForm(VideoType::class, $video);
     $form->handleRequest($request);
 
