@@ -17,10 +17,15 @@
       </service>
       <service id="Svc\VideoBundle\Service\VideoHelper" alias="svc_video.service.video-helper" />
 
-      <service id="svc_video.rep.video" class="Svc\VideoBundle\Repository\VideoRepository" public="false" autowire="true" >
+      <service id="svc_video.rep.video" class="Svc\VideoBundle\Repository\VideoRepository" public="true" autowire="true" >
         <tag name="doctrine.repository_service"/>
       </service>
       <service id="Svc\VideoBundle\Repository\VideoRepository" alias="svc_video.rep.video" />
+
+      <!-- <service id="svc_video.entity.video" class="Svc\VideoBundle\Entity\Video" public="false" autowire="true" >
+        <tag name="doctrine.repository_service"/>
+      </service>
+      <service id="Svc\VideoBundle\Entity\Video" alias="svc_video.entity.video" /> -->
 
     </services>
 </container>
