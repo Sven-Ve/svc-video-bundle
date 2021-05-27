@@ -2,9 +2,9 @@
 
 namespace Svc\VideoBundle\Controller;
 
-use App\Entity\Video;
 use App\Service\LikeHelper;
 use DateTime;
+use Svc\VideoBundle\Entity\Video;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,15 +22,15 @@ class VideoRunController extends AbstractController
   /**
    * @Route("/{id}", name="video_run", methods={"GET"})
    */
-  public function run(Video $video, LikeHelper $likeHelper): Response
+  public function run(Video $video, /*LikeHelper $likeHelper*/): Response
   {
 
     $video->incCalls();
     $this->getDoctrine()->getManager()->flush();
 
-    return $this->render('video/run.html.twig', [
+    return $this->render('@SvcVideo/video/run.html.twig', [
       'video' => $video,
-      'liked' => $likeHelper->isLiked(LikeHelper::SOURCE_VIDEO, $video->getId()),
+//      'liked' => $likeHelper->isLiked(LikeHelper::SOURCE_VIDEO, $video->getId()),
     ]);
   }
 

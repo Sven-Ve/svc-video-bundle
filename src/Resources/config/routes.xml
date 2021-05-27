@@ -20,7 +20,7 @@
         <!-- settings -->
     </route>
 
-    <route id="svc_video_run" controller="svc_video.controller.run::run" path="/run" >
+    <route id="svc_video_run" controller="svc_video.controller.run::run" path="/run/{id}" >
         <!-- settings -->
     </route>
 
