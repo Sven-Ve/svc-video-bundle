@@ -21,9 +21,8 @@ class SvcVideoExtension extends Extension
     $configuration = $this->getConfiguration($configs, $container);
     $config = $this->processConfiguration($configuration, $configs);
 
-    // set arguments for __construct in services
-//    $definition = $container->getDefinition('svc_profile.controller.change-pw');
-//    $definition->setArgument(1, $config['enableCaptcha']);
+    $definition = $container->getDefinition('svc_video.controller.run');
+    $definition->setArgument(0, $config['enableLikes']);
   }
 
   private function createConfigIfNotExists($rootPath)

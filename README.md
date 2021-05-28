@@ -9,3 +9,4 @@ Versions
 
 
 * Version 1.0.0: First released bundle to satis
+* Version 1.0.1: added translation

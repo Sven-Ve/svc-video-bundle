@@ -19,6 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class VideoRunController extends AbstractController
 {
 
+  private $enableLikes;
+  public function __construct(bool $enableLikes)
+  {
+    $this->enableLikes = $enableLikes;
+  }
+
   /**
    * display a video
    *
@@ -33,6 +39,7 @@ class VideoRunController extends AbstractController
 
     return $this->render('@SvcVideo/video/run.html.twig', [
       'video' => $video,
+      'enableLikes' => $this->enableLikes,
       'liked' => $likeHelper->isLiked(LikeHelper::SOURCE_VIDEO, $video->getId()),
     ]);
   }
