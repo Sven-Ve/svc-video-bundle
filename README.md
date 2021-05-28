@@ -7,3 +7,5 @@ Overview
 Versions
 --------
 
+
+* Version 1.0.0: First released bundle to satis

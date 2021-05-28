@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "0.0.1";
-$message = "?";
+$version = "1.0.0";
+$message = "First released bundle to satis";
 
 file_put_contents("README.md", "\n* Version " . $version . ": " . $message, FILE_APPEND);
 

@@ -21,10 +21,10 @@
 		{% if liked is defined and liked %}
 			<i class="fas fa-heart like-liked"></i> {{ video.likes }}
 		{% else %}
-{# 			<span data-controller='like' data-like-url-value='{{ path("video_inc_likes", {id: video.id}) }}'>
+ 			<span data-controller='like' data-like-url-value='{{ path("svc_video_inc_likes", {id: video.id}) }}'>
 				<i class="fas fa-heart like-not-liked" data-action="click->like#inc"></i>
 				<span data-like-target="counter">{{ video.likes }}</span>
-			</span> #}
+			</span> 
 		{% endif %}
     | <span title='{% trans %}Video watched{% endtrans %}'><i class="fas fa-eye"></i> {{ video.calls }}</span>
     </small>

@@ -24,4 +24,8 @@
         <!-- settings -->
     </route>
 
+    <route id="svc_video_inc_likes" controller="svc_video.controller.run::incLikes" path="/run/inc/{id}" >
+        <!-- settings -->
+    </route>
+
 </routes>
