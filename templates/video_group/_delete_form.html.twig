@@ -1,0 +1,5 @@
+{% trans_default_domain 'VideoBundle' %}
+<form method="post" action="{{ path('svc_video_group_delete', {'id': video_group.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video_group.id) }}">
+    <button class="btn">Delete</button>
+</form>

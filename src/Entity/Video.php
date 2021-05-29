@@ -3,6 +3,8 @@
 namespace Svc\VideoBundle\Entity;
 
 use Svc\VideoBundle\Repository\VideoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -46,6 +48,26 @@ class Video
   private $description;
 
   /**
+   * @ORM\Column(type="string", length=8, unique=true, nullable=true)
+   * @Assert\Regex(
+   *     pattern     = "/^[a-z0-9_\-]+$/",
+   *     message     = "Please use lowercase letters, numbers, minus and underscore only"
+   * )
+   * @Assert\Length(
+   *      min = 4,
+   *      max = 8,
+   *      minMessage = "Your shortname must be at least {{ limit }} characters long",
+   *      maxMessage = "Your shortname cannot be longer than {{ limit }} characters"
+   * )
+   */
+  private $shortName;
+
+  /**
+   * @ORM\Column(type="boolean", options={"default": false})
+   */
+  private $isPrivate = false;
+
+  /**
    * @ORM\Column(type="string", length=30)
    * @Assert\NotBlank
    */
@@ -76,6 +98,12 @@ class Video
    * @ORM\Column(type="integer")
    */
   private $calls = 0;
+
+  /**
+   * @ORM\ManyToOne(targetEntity=VideoGroup::class, inversedBy="videos")
+   * @ORM\JoinColumn(nullable=true)
+   */
+  private $videoGroup;
 
   public function getId(): ?int
   {
@@ -194,6 +222,42 @@ class Video
   public function setCalls(int $calls): self
   {
     $this->calls = $calls;
+
+    return $this;
+  }
+
+  public function getShortName(): ?string
+  {
+    return $this->shortName;
+  }
+
+  public function setShortName(string $shortName): self
+  {
+    $this->shortName = $shortName;
+
+    return $this;
+  }
+
+  public function getIsPrivate(): ?bool
+  {
+    return $this->isPrivate;
+  }
+
+  public function setIsPrivate(bool $isPrivate): self
+  {
+    $this->isPrivate = $isPrivate;
+
+    return $this;
+  }
+
+  public function getVideoGroup(): ?VideoGroup
+  {
+    return $this->videoGroup;
+  }
+
+  public function setVideoGroup(?VideoGroup $videoGroup): self
+  {
+    $this->videoGroup = $videoGroup;
 
     return $this;
   }

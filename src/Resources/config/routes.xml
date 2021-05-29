@@ -28,4 +28,20 @@
         <!-- settings -->
     </route>
 
+    <route id="svc_video_group_index" controller="svc_video.controller.group::index" path="/group" >
+      <!-- settings -->
+    </route>
+
+    <route id="svc_video_group_new" controller="svc_video.controller.group::new" path="/group/new" >
+      <!-- settings -->
+    </route>
+
+    <route id="svc_video_group_edit" controller="svc_video.controller.group::edit" path="/group/edit/{id}" >
+      <!-- settings -->
+    </route>
+
+    <route id="svc_video_group_delete" controller="svc_video.controller.group::delete" path="/group/delete/{id}" >
+      <!-- settings -->
+    </route>
+
 </routes>

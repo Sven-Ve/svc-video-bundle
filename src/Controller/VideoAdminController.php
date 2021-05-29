@@ -9,23 +9,34 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Svc\VideoBundle\Form\VideoType;
+use Svc\VideoBundle\Service\VideoGroupHelper;
 
 /**
  * @IsGranted("ROLE_ADMIN")
  */
 class VideoAdminController extends AbstractController
 {
-  public function index(VideoRepository $videoRepository): Response
+  private $enableShortNames;
+  public function __construct(bool $enableShortNames)
   {
+    $this->enableShortNames = $enableShortNames;
+  }
+
+  public function index(VideoRepository $videoRepository, VideoGroupHelper $videoGroupHelper): Response
+  {
+    $videoGroupHelper->initDefaultVideoGroup();
+
     return $this->render('@SvcVideo/video_admin/index.html.twig', [
       'videos' => $videoRepository->findAll(),
+      'enableShortNames' => $this->enableShortNames
     ]);
   }
 
-  public function new(Request $request): Response
+  public function new(Request $request, VideoGroupHelper $videoGroupHelper): Response
   {
     $video = new Video();
-    $form = $this->createForm(VideoType::class, $video);
+    $video->setVideoGroup($videoGroupHelper->getDefaultVideoGroup());
+    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
@@ -45,7 +56,7 @@ class VideoAdminController extends AbstractController
 
   public function edit(Request $request, Video $video): Response
   {
-    $form = $this->createForm(VideoType::class, $video);
+    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {

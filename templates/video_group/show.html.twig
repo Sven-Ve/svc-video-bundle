@@ -1,0 +1,31 @@
+{% trans_default_domain 'VideoBundle' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}VideoGroup{% endblock %}
+
+{% block body %}
+    <h1>VideoGroup</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ video_group.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ video_group.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ video_group.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('video_group_index') }}">back to list</a>
+
+    <a href="{{ path('video_group_edit', {'id': video_group.id}) }}">edit</a>
+
+    {{ include('video_group/_delete_form.html.twig') }}
+{% endblock %}

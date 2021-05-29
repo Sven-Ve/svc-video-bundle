@@ -7,6 +7,7 @@ use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,6 +19,23 @@ class VideoType extends AbstractType
       ->add('title')
       ->add('subTitle', null, [
         'required' => false
+      ])
+      ->add('videoGroup', null, [
+        'label' => 'Group'
+      ]);
+
+    if ($options['enableShortNames']) {
+      $builder
+        ->add('shortName', TextType::class, [
+          "help" => "The short name used in the link, please use lowercase letters, numbers, minus and underscore only",
+          "attr" => ["autofocus" => true, 'pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars']
+        ]);
+    }
+
+    $builder
+      ->add('isPrivate', null, [
+        'help' => 'Is the video private?',
+        'label' => 'Private'
       ])
       ->add('description', TextareaType::class, [
         'attr' => [
@@ -40,15 +58,15 @@ class VideoType extends AbstractType
         }
       ])
       ->add('likes')
-      ->add('calls')
-      ;
+      ->add('calls');
   }
 
   public function configureOptions(OptionsResolver $resolver)
   {
     $resolver->setDefaults([
       'data_class' => Video::class,
-      'translation_domain' => 'VideoBundle'
+      'translation_domain' => 'VideoBundle',
+      'enableShortNames' => false,
     ]);
   }
 }

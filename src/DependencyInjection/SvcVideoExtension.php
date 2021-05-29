@@ -23,6 +23,10 @@ class SvcVideoExtension extends Extension
 
     $definition = $container->getDefinition('svc_video.controller.run');
     $definition->setArgument(0, $config['enableLikes']);
+
+    $definition1 = $container->getDefinition('svc_video.controller.admin');
+    $definition1->setArgument(0, $config['enableShortNames']);
+
   }
 
   private function createConfigIfNotExists($rootPath)
@@ -46,6 +50,8 @@ class SvcVideoExtension extends Extension
       $text = "svc_video:\n";
       $text .= "    # Enable likes for videos\n";
       $text .= "    enableLikes: false\n";
+      $text .= "    # Enable short names for videos (for short URLs)?\n";
+      $text .= "    enableShortNames: false\n";
       try {
         file_put_contents($fileName, $text);
         dump("Please adapt config file $fileName");

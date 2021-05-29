@@ -17,6 +17,9 @@
 				<tr>
 					<th>{% trans %}Title{% endtrans %}</th>
 					<th>{% trans %}Sub title{% endtrans %}</th>
+          {% if enableShortNames | default(false) %}
+  					<th>{% trans %}Short name{% endtrans %}</th>
+          {% endif %}
 					<th>{% trans %}Source{% endtrans %}</th>
 					<th><i class="fas fa-eye"></i></th>
 					<th><i class="fas fa-heart like-liked"></i></th>
@@ -28,6 +31,9 @@
 					<tr>
 						<td>{{ video.title }}</td>
 						<td>{{ video.subTitle }}</td>
+            {% if enableShortNames | default(false) %}
+  						<td>{{ video.shortName }}</td>
+            {% endif %}
 						<td>{{ video.sourceText }}</td>
 						<td>{{ video.calls }}</td>
 						<td>{{ video.likes }}</td>

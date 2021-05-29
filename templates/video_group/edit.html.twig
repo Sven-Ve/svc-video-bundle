@@ -1,0 +1,17 @@
+{% trans_default_domain 'VideoBundle' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit VideoGroup{% endblock %}
+
+{% block body %}
+    <h1>Edit VideoGroup</h1>
+
+   {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">Save</button>
+  {{ form_end(form) }}
+
+    <a href="{{ path('svc_video_group_index') }}">Back to list</a>
+
+    {{ include('@SvcVideo/video_group/_delete_form.html.twig') }}
+{% endblock %}

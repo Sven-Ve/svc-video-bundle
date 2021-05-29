@@ -1,0 +1,39 @@
+{% trans_default_domain 'VideoBundle' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}VideoGroup index{% endblock %}
+
+{% block body %}
+    <h1>VideoGroup index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Default</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for video_group in video_groups %}
+            <tr>
+                <td>{{ video_group.id }}</td>
+                <td>{{ video_group.name }}</td>
+                <td>{{ video_group.description }}</td>
+                <td>{{ video_group.defaultGroup ? 'yes' | trans : 'no' | trans }}</td>
+                <td>
+                    <a href="{{ path('svc_video_group_edit', {'id': video_group.id}) }}">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('svc_video_group_new') }}">Create new</a>
+{% endblock %}
