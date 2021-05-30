@@ -100,6 +100,11 @@ class Video
   private $calls = 0;
 
   /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private $thumbnailUrl;
+
+  /**
    * @ORM\ManyToOne(targetEntity=VideoGroup::class, inversedBy="videos")
    * @ORM\JoinColumn(nullable=true)
    */
@@ -186,6 +191,23 @@ class Video
   public function setSubTitle(?string $subTitle): self
   {
     $this->subTitle = $subTitle;
+
+    return $this;
+  }
+
+  public function getThumbnailUrl(): ?string
+  {
+    return $this->thumbnailUrl;
+  }
+
+  public function isThumbnailUrl(): bool
+  {
+    return $this->thumbnailUrl !== null;
+  }
+
+  public function setThumbnailUrl(?string $thumbnailUrl): self
+  {
+    $this->thumbnailUrl = $thumbnailUrl;
 
     return $this;
   }
