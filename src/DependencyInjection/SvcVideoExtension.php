@@ -21,8 +21,9 @@ class SvcVideoExtension extends Extension
     $configuration = $this->getConfiguration($configs, $container);
     $config = $this->processConfiguration($configuration, $configs);
 
-    $definition = $container->getDefinition('svc_video.controller.run');
+    $definition = $container->getDefinition('svc_video.controller');
     $definition->setArgument(0, $config['enableLikes']);
+    $definition->setArgument(1, $config['enableGroups']);
 
     $definition1 = $container->getDefinition('svc_video.controller.admin');
     $definition1->setArgument(0, $config['enableShortNames']);
@@ -52,6 +53,8 @@ class SvcVideoExtension extends Extension
       $text .= "    enableLikes: false\n";
       $text .= "    # Enable short names for videos (for short URLs)?\n";
       $text .= "    enableShortNames: false\n";
+      $text .= "    # Enable videos groups?\n";
+      $text .= "    enableGroups: false\n";
       try {
         file_put_contents($fileName, $text);
         dump("Please adapt config file $fileName");

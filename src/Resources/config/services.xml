@@ -21,7 +21,7 @@
         <tag name="controller.service_arguments"/>
       </service>
 
-      <service id="svc_video.controller.run" class="Svc\VideoBundle\Controller\VideoRunController" public="true" autowire="true" >
+      <service id="svc_video.controller" class="Svc\VideoBundle\Controller\VideoController" public="true" autowire="true" >
         <call method="setContainer">
             <argument type="service" id="Psr\Container\ContainerInterface"/>
         </call>

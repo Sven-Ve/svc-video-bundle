@@ -18,11 +18,9 @@ use Svc\VideoBundle\Service\VideoHelper;
 class VideoAdminController extends AbstractController
 {
   private $enableShortNames;
-  private $videoHelper;
-  public function __construct(bool $enableShortNames, VideoHelper $videoHelper)
+  public function __construct(bool $enableShortNames)
   {
     $this->enableShortNames = $enableShortNames;
-    $this->videoHelper = $videoHelper;
   }
 
   public function index(VideoRepository $videoRepository, VideoGroupHelper $videoGroupHelper): Response
@@ -35,7 +33,7 @@ class VideoAdminController extends AbstractController
     ]);
   }
 
-  public function new(Request $request, VideoGroupHelper $videoGroupHelper): Response
+  public function new(Request $request, VideoGroupHelper $videoGroupHelper, VideoHelper $videoHelper): Response
   {
     $video = new Video();
     $video->setVideoGroup($videoGroupHelper->getDefaultVideoGroup());
@@ -43,6 +41,7 @@ class VideoAdminController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      $video->setThumbnailUrl($videoHelper->getThumbnailUrl($video));
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($video);
       $entityManager->flush();
@@ -57,7 +56,7 @@ class VideoAdminController extends AbstractController
   }
 
 
-  public function edit(Request $request, Video $video): Response
+  public function edit(Request $request, Video $video, VideoHelper $videoHelper): Response
   {
     $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames]);
     $form->handleRequest($request);
@@ -65,7 +64,7 @@ class VideoAdminController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
 
       if (!$video->isThumbnailUrl()) {
-        $video->setThumbnailUrl($this->videoHelper->getThumbnailUrl($video));
+        $video->setThumbnailUrl($videoHelper->getThumbnailUrl($video));
       }
       $this->getDoctrine()->getManager()->flush();
 

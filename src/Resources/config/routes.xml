@@ -4,27 +4,31 @@
     xsi:schemaLocation="http://symfony.com/schema/routing
         http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="svc_video_admin_index" controller="svc_video.controller.admin::index" path="/" >
+    <route id="svc_video_admin_index" controller="svc_video.controller.admin::index" path="/admin/" >
         <!-- settings -->
     </route>
 
-    <route id="svc_video_admin_new" controller="svc_video.controller.admin::new" path="/new" >
+    <route id="svc_video_admin_new" controller="svc_video.controller.admin::new" path="/admin/new" >
         <!-- settings -->
     </route>
 
-    <route id="svc_video_admin_edit" controller="svc_video.controller.admin::edit" path="/edit/{id}" >
+    <route id="svc_video_admin_edit" controller="svc_video.controller.admin::edit" path="/admin/edit/{id}" >
         <!-- settings -->
     </route>
 
-    <route id="svc_video_admin_delete" controller="svc_video.controller.admin::delete" path="/delete/{id}" >
+    <route id="svc_video_admin_delete" controller="svc_video.controller.admin::delete" path="/admin/delete/{id}" >
         <!-- settings -->
     </route>
 
-    <route id="svc_video_run" controller="svc_video.controller.run::run" path="/run/{id}" >
+    <route id="svc_video_run" controller="svc_video.controller::run" path="/run/{id}" >
         <!-- settings -->
     </route>
 
-    <route id="svc_video_inc_likes" controller="svc_video.controller.run::incLikes" path="/run/inc/{id}" >
+    <route id="svc_video_show" controller="svc_video.controller::show" path="/" >
+        <!-- settings -->
+    </route>
+
+    <route id="svc_video_inc_likes" controller="svc_video.controller::incLikes" path="/inc/{id}" >
         <!-- settings -->
     </route>
 

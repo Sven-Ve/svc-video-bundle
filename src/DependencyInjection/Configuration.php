@@ -16,6 +16,7 @@ class Configuration implements ConfigurationInterface
       ->children()
         ->booleanNode('enableLikes')->defaultFalse()->info('Enable likes for videos?')->end()
         ->booleanNode('enableShortNames')->defaultFalse()->info('Enable short names for videos (for short URLs)?')->end()
+        ->booleanNode('enableGroups')->defaultFalse()->info('Enable videos groups?')->end()
       ->end();
     return $treeBuilder;
 

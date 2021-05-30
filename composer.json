@@ -19,7 +19,8 @@
     "symfony/translation": "^5",
     "symfony/twig-bundle": "^4.3|^5.0",
     "twig/twig": "^2.12|^3.0",
-    "svc/like-bundle": "^1|dev-main"
+    "svc/like-bundle": "^1|dev-main",
+    "liip/imagine-bundle": "^2"
   },
   "autoload": {
     "psr-4": {

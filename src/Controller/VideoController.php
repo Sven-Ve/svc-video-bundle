@@ -5,28 +5,40 @@ namespace Svc\VideoBundle\Controller;
 use DateTime;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\VideoBundle\Entity\Video;
+use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 
-/**
- * @Route("/video/{_locale}", requirements={"_locale": "%app.supported_locales%"})
- */
 
-class VideoRunController extends AbstractController
+class VideoController extends AbstractController
 {
 
   private $enableLikes;
-  public function __construct(bool $enableLikes)
+  private $enableGroups;
+  public function __construct(bool $enableLikes, bool $enableGroups)
   {
     $this->enableLikes = $enableLikes;
+    $this->enableGroups = $enableGroups;
+  }
+
+
+  /**
+   * show a video overview
+   */
+  public function show(VideoRepository $videoRep): Response
+  {
+    return $this->render('@SvcVideo/video/show.html.twig', [
+      'videos' => $videoRep->findAll(),
+      'enableLikes' => $this->enableLikes,
+      'enableGroups' => $this->enableGroups
+    ]);
   }
 
   /**
-   * display a video
+   * run a video
    *
    * @param Video $video
    * @param LikeHelper $likeHelper
