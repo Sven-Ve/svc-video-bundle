@@ -9,21 +9,20 @@
     {% for video in videos %}
 			<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3 card-group">
 				<div class="card text-center border-warning" onClick="location.href='{{ path('svc_video_run', {'id': video.id}) }}'">
-					{% if video.thumbnailUrl %}
-						<img src="{{ video.thumbnailUrl }}" class='card-img-top'/>
+					{% if video.thumbnailPath %}
+						<img src="{{ asset('uploads/' ~  video.thumbnailPath) | imagine_filter('thumb_video_200') }}" class='card-img-top'/>
+					{% elseif video.thumbnailUrl %}
+ 						<img src="{{ video.thumbnailUrl | imagine_filter('thumb_video_200') }}" class='card-img-top'/>
 					{% else %}
-						<img src="{{ asset('build/images/runner.png') }}" class='card-img-top'/>
+					 	<img src="{{ asset('bundles/svcvideo/img/video_200.jpg') }}" class='card-img-top'/>
 					{% endif %}
 					<div class="card-body">
 						<h5 class="card-title">{{ video.title }}</h5>
 						<h6 class="card-subtitle mb-2 text-muted">{{ video.subTitle }}</h6>
-						<p class="card-text">
-              {{ video.likes }} <i class="fas fa-heart like-liked"></i> 
-              | <span title='{% trans %}Video watched{% endtrans %}'><i class="fas fa-eye"></i> {{ video.calls }}</span>
-						</p>
 					</div>
 					<div class="card-footer">
-						<a href="{{ path('svc_video_run', {'id': video.id}) }}">{% trans %}Start{% endtrans %}</a>
+              {{ video.likes }} <i class="fas fa-heart like-liked"></i> 
+              | <span title='{% trans %}Video watched{% endtrans %}'><i class="fas fa-eye"></i> {{ video.calls }}</span>
 					</div>
 				</div>
 			</div>

@@ -104,6 +104,11 @@ class Video
    */
   private $thumbnailUrl;
 
+    /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private $thumbnailPath;
+
   /**
    * @ORM\ManyToOne(targetEntity=VideoGroup::class, inversedBy="videos")
    * @ORM\JoinColumn(nullable=true)
@@ -211,6 +216,24 @@ class Video
 
     return $this;
   }
+
+  public function getThumbnailPath(): ?string
+  {
+    return $this->thumbnailPath;
+  }
+
+  public function isThumbnailPath(): bool
+  {
+    return $this->thumbnailPath !== null;
+  }
+
+  public function setThumbnailPath(?string $thumbnailPath): self
+  {
+    $this->thumbnailPath = $thumbnailPath;
+
+    return $this;
+  }
+
 
   public function getLikes(): ?int
   {
