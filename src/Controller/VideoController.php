@@ -32,14 +32,21 @@ class VideoController extends AbstractController
    */
   public function show(?int $group = null, VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper): Response
   {
+    $groups = null;
+    $currentGroup = null;
+    if ($this->enableGroups) {
+      $groups = $videoGroupHelper->getVideoGroups();
+      if ($group) {
+        $currentGroup = $videoGroupHelper->getVideoGroup($group);
+      }
+    }
 
-    dd($group);
     return $this->render('@SvcVideo/video/show.html.twig', [
       'videos' => $videoHelper->getVideoByGroup($group),
       'enableLikes' => $this->enableLikes,
       'enableGroups' => $this->enableGroups,
-      'groups' => $this->enableGroups ? $videoGroupHelper->getVideoGroups() : null,
-      'currentGroup' => $group
+      'groups' => $groups,
+      'currentGroup' => $currentGroup
     ]);
   }
 

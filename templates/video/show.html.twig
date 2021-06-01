@@ -1,40 +1,59 @@
 {% trans_default_domain 'VideoBundle' %}
 {% extends 'base.html.twig' %}
 
-{% block title %}Video overview
-{% endblock %}
+{% block title %}Video overview{% endblock %}
 
 {% block body %}
+	{% if enableGroups %}
+		<div class="row">
+			<aside class="col-sm-4 col-md-3 col-xl-2">
+				{{ include('@SvcVideo/video/_groupSidebar.html.twig') }}
+			</aside>
 
-{{ include('@SvcVideo/video/_groupSidebar.html.twig') }}
-	<div class='row'>
-		{% for video in videos %}
-			<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3 card-group">
-				<div class="card text-center border-warning" onclick="location.href='{{ path('svc_video_run', {'id': video.id}) }}'">
-					{% if video.thumbnailPath %}
-						<img src="{{ asset('uploads/' ~ video.thumbnailPath) | imagine_filter('thumb_video_200') }}" class='card-img-top'/>
-					{% elseif video.thumbnailUrl %}
-						<img src="{{ video.thumbnailUrl | imagine_filter('thumb_video_200') }}" class='card-img-top'/>
-					{% else %}
-						<img src="{{ asset('bundles/svcvideo/img/video_200.jpg') }}" class='card-img-top'/>
-					{% endif %}
-					<div class="card-body">
-						<h5 class="card-title">{{ video.title }}</h5>
-						<h6 class="card-subtitle mb-2 text-muted">{{ video.subTitle }}</h6>
+			<div class="col-sm-8 col-md-9 col-xl-10">
+      {% if currentGroup %}
+        <h3>{{ currentGroup.name }}</h3>
+      {% else %}
+        <h3>{% trans %}All Videos{% endtrans %}</h3>
+      {% endif %}
+
+	{% else %}
+    <h3>{% trans %}All Videos{% endtrans %}</h3>
+	{% endif %}
+
+			<div class='row'>
+				{% for video in videos %}
+					<div class="col-md-6 col-lg-4 col-xl-3 mb-3 card-group">
+						<div class="card text-center border-warning" onclick="location.href='{{ path('svc_video_run', {'id': video.id}) }}'">
+							{% if video.thumbnailPath %}
+								<img src="{{ asset('uploads/' ~ video.thumbnailPath) | imagine_filter('thumb_video_200') }}" class='card-img-top'/>
+							{% elseif video.thumbnailUrl %}
+								<img src="{{ video.thumbnailUrl | imagine_filter('thumb_video_200') }}" class='card-img-top'/>
+							{% else %}
+								<img src="{{ asset('bundles/svcvideo/img/video_200.jpg') }}" class='card-img-top'/>
+							{% endif %}
+							<div class="card-body">
+								<h5 class="card-title">{{ video.title }}</h5>
+								<small class="card-subtitle mb-2 text-muted">{{ video.subTitle }}</small>
+							</div>
+							<div class="card-footer">
+								{{ video.likes }}
+								<i class="fas fa-heart like-liked"></i>
+								|
+								<span title='{% trans %}Video watched{% endtrans %}'>
+									<i class="fas fa-eye"></i>
+									{{ video.calls }}
+                </span>
+							</div>
+						</div>
 					</div>
-					<div class="card-footer">
-						{{ video.likes }}
-						<i class="fas fa-heart like-liked"></i>
-						|
-						<span title='{% trans %}Video watched{% endtrans %}'>
-							<i class="fas fa-eye"></i>
-							{{ video.calls }}</span>
-					</div>
-				</div>
+				{% else %}
+					{% trans %}no videos found{% endtrans %}
+				{% endfor %}
 			</div>
-		{% else %}
-			{% trans %}no videos found{% endtrans %}
-		{% endfor %}
-	</div>
 
+	{% if enableGroups %}
+			</div>
+		</div>
+	{% endif %}
 {% endblock %}

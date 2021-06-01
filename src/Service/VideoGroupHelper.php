@@ -4,6 +4,7 @@ namespace Svc\VideoBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Entity\VideoGroup;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
 
@@ -63,4 +64,15 @@ class VideoGroupHelper
   public function getVideoGroups(): ?array {
     return $this->videoGroupRep->findAll();
   }
+
+  /**
+   * get a group for a specific id
+   *
+   * @param integer $id
+   * @return VideoGroup|null
+   */
+  public function getVideoGroup(int $id): ?VideoGroup {
+    return $this->videoGroupRep->find($id);
+  }
+
 }
