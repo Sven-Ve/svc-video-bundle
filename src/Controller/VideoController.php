@@ -6,6 +6,8 @@ use DateTime;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Repository\VideoRepository;
+use Svc\VideoBundle\Service\VideoGroupHelper;
+use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,12 +30,16 @@ class VideoController extends AbstractController
   /**
    * show a video overview
    */
-  public function show(VideoRepository $videoRep): Response
+  public function show(?int $group = null, VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper): Response
   {
+
+    dd($group);
     return $this->render('@SvcVideo/video/show.html.twig', [
-      'videos' => $videoRep->findAll(),
+      'videos' => $videoHelper->getVideoByGroup($group),
       'enableLikes' => $this->enableLikes,
-      'enableGroups' => $this->enableGroups
+      'enableGroups' => $this->enableGroups,
+      'groups' => $this->enableGroups ? $videoGroupHelper->getVideoGroups() : null,
+      'currentGroup' => $group
     ]);
   }
 

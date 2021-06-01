@@ -24,8 +24,8 @@
         <!-- settings -->
     </route>
 
-    <route id="svc_video_show" controller="svc_video.controller::show" path="/" >
-        <!-- settings -->
+    <route id="svc_video_show" controller="svc_video.controller::show" path="/{group?}" >
+      <requirement key="group">\d+</requirement>
     </route>
 
     <route id="svc_video_inc_likes" controller="svc_video.controller::incLikes" path="/inc/{id}" >

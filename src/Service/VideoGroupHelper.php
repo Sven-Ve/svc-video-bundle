@@ -54,4 +54,13 @@ class VideoGroupHelper
     }
     throw new Exception('Default video group not found. Please inialize the app.');
   }
+
+  /**
+   * get all video groups
+   *
+   * @return array|null array of video groups
+   */
+  public function getVideoGroups(): ?array {
+    return $this->videoGroupRep->findAll();
+  }
 }

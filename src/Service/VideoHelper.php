@@ -71,6 +71,20 @@ class VideoHelper
     return null;
   }
 
+  /**
+   * get videos for a group or all videos, if group = null
+   *
+   * @param integer|null $group
+   * @return array|null
+   */
+    public function getVideoByGroup(?int $group): ?array {
+    if ($group) {
+      return $this->videoRep->findBy(['videoGroup' => $group]);
+    } else {
+      return $this->videoRep->findAll();
+    }
+  }
+
   public function getVideos(): ?array
   {
     return $this->videoRep->findAll();
