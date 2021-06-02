@@ -4,7 +4,6 @@ namespace Svc\VideoBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Entity\VideoGroup;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
 

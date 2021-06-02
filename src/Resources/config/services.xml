@@ -47,6 +47,9 @@
         <tag name="doctrine.repository_service"/>
       </service>
 
+      <service id="Svc\VideoBundle\Command\SvcVideoManageCommand" class="Svc\VideoBundle\Command\SvcVideoManageCommand" public="false" autowire="true" autoconfigure="true" >
+        <tag name="console.command"/>
+      </service>
 
     </services>
 </container>

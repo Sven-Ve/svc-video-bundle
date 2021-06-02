@@ -5,7 +5,6 @@ namespace Svc\VideoBundle\Controller;
 use DateTime;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\VideoBundle\Entity\Video;
-use Svc\VideoBundle\Repository\VideoRepository;
 use Svc\VideoBundle\Service\VideoGroupHelper;
 use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

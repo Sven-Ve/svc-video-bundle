@@ -2,6 +2,7 @@
 
 namespace Svc\VideoBundle\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Repository\VideoRepository;
@@ -15,10 +16,12 @@ class VideoHelper
 
   private $videoRep;
   private $thumbnailDir;
-  public function __construct(string $thumbnailDir, VideoRepository $videoRep)
+  private $entityManager;
+  public function __construct(string $thumbnailDir, VideoRepository $videoRep, EntityManagerInterface $entityManager)
   {
     $this->videoRep = $videoRep;
     $this->thumbnailDir = $thumbnailDir;
+    $this->entityManager = $entityManager;
   }
 
   /**
@@ -56,17 +59,43 @@ class VideoHelper
     return null;
   }
 
+  /**
+   * load missing thumbnail URLs or all URLs, if $force = true
+   *
+   * @param boolean|null $force
+   * @param string|null $msg
+   * @return boolean
+   */
+  public function getMissingThumbnailUrl(?bool $force = false, ?string &$msg = null): bool
+  {
+    $videos = $force ? $this->videoRep->findAll() : $this->videoRep->findBy(['thumbnailUrl' => null]);
+
+    foreach ($videos as $video) {
+      $msg .= $video->getTitle() . ": ";
+      $url = $this->getThumbnailUrl($video);
+      if ($url) {
+        $msg .= "loaded.\n";
+        $video->setThumbnailUrl($url);
+      } else {
+        $msg .= "no thumbnail url found.\n";
+      }
+    }
+
+    $this->entityManager->flush();
+    return true;
+  }
+
   public function copyThumbnail(Video $video): ?string
   {
     // https://www.cluemediator.com/how-to-save-an-image-from-a-url-in-php
     if ($video->getSourceType() == Video::SOURCE_VIMEO) {
-//      try {
+      try {
         $imgName = 'thumb_' . $video->getId() . '.webp';
         $imgPath = $this->thumbnailDir . '/' . $imgName;
         file_put_contents($imgPath, file_get_contents($video->getThumbnailUrl()));
         return $imgName;
-//      } catch (Exception $e) {
-//      }
+      } catch (Exception $e) {
+      }
     }
     return null;
   }
@@ -77,7 +106,8 @@ class VideoHelper
    * @param integer|null $group
    * @return array|null
    */
-    public function getVideoByGroup(?int $group): ?array {
+  public function getVideoByGroup(?int $group): ?array
+  {
     if ($group) {
       return $this->videoRep->findBy(['videoGroup' => $group]);
     } else {
@@ -85,8 +115,30 @@ class VideoHelper
     }
   }
 
-  public function getVideos(): ?array
+  /**
+   * create the thumbnail directory
+   *
+   * @param string|null $errMsg by reference: give the error message back
+   * @return boolean true = successfull
+   */
+  public function createThumbnailDir(?string &$msg): bool
   {
-    return $this->videoRep->findAll();
+    if (file_exists($this->thumbnailDir)) {
+      if (is_dir($this->thumbnailDir)) {
+        $msg = "Directory $this->thumbnailDir exists.";
+        return true;
+      } else {
+        $msg = "Directory $this->thumbnailDir exists, but is a file";
+        return false;
+      }
+    }
+    try {
+      mkdir($this->thumbnailDir);
+    } catch (Exception $e) {
+      $msg = "Cannot create ThumbnailDir: " . $e->getMessage();
+      return false;
+    }
+    $msg = "Directory $this->thumbnailDir created.";
+    return true;
   }
 }
