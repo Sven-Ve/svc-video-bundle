@@ -28,7 +28,7 @@
 							{% if video.thumbnailPath %}
 								<img src="{{ asset('uploads/' ~ video.thumbnailPath) | imagine_filter('thumb_video_200') }}" class='card-img-top'/>
 							{% elseif video.thumbnailUrl %}
-								<img src="{{ video.thumbnailUrl | imagine_filter('thumb_video_200') }}" class='card-img-top'/>
+								<img src="{{ video.thumbnailUrl }}" class='card-img-top'/>
 							{% else %}
 								<img src="{{ asset('bundles/svcvideo/img/video_200.jpg') }}" class='card-img-top'/>
 							{% endif %}

@@ -104,7 +104,7 @@ class Video
    */
   private $thumbnailUrl;
 
-    /**
+  /**
    * @ORM\Column(type="string", length=255, nullable=true)
    */
   private $thumbnailPath;
@@ -114,6 +114,11 @@ class Video
    * @ORM\JoinColumn(nullable=true)
    */
   private $videoGroup;
+
+  /**
+   * @ORM\Column(type="datetime", nullable=true)
+   */
+  private $uploadDate;
 
   public function getId(): ?int
   {
@@ -303,6 +308,18 @@ class Video
   public function setVideoGroup(?VideoGroup $videoGroup): self
   {
     $this->videoGroup = $videoGroup;
+
+    return $this;
+  }
+
+  public function getUploadDate(): ?\DateTimeInterface
+  {
+    return $this->uploadDate;
+  }
+
+  public function setUploadDate(?\DateTimeInterface $uploadDate): self
+  {
+    $this->uploadDate = $uploadDate;
 
     return $this;
   }

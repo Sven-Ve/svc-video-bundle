@@ -5,13 +5,13 @@
 	</h5>
 	<ul class="nav flex-column mb4">
 		<li class="nav-item">
-			<a class="nav-link {{ not currentGroup|default ? 'selected' }}" href='{{ path('svc_video_show') }}'>
+			<a class="nav-link {{ not currentGroup|default ? 'selected' }}" href='{{ path('svc_video_list') }}'>
 				{% trans %}All Videos{% endtrans %}
 			</a>
 		</li>
 		{% for group in groups %}
 			<li class="nav-item">
-				<a class="nav-link {{ currentGroup|default is same as group ? 'selected' }}" href='{{ path('svc_video_show', {group: group.id}) }}'>
+				<a class="nav-link {{ currentGroup|default is same as group ? 'selected' }}" href='{{ path('svc_video_list', {group: group.id}) }}'>
 					{{ group.name }}
 				</a>
 			</li>

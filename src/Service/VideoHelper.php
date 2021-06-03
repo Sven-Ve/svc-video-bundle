@@ -50,11 +50,16 @@ class VideoHelper
       // see https://gist.github.com/anjan011/3b6d13a9f7a8642ecc4c
       try {
         $apiData = unserialize(file_get_contents("https://vimeo.com/api/v2/video/" . $video->getSourceID() . ".php"));
+
         if (is_array($apiData) and count($apiData) > 0) {
+          $uploadDate = date_create_from_format('Y-m-d G:i:s',$apiData[0]['upload_date']);
+          $video->setUploadDate($uploadDate);
           return $apiData[0]['thumbnail_large'];
         }
       } catch (Exception $e) {
       }
+    } elseif ($video->getSourceType() == Video::SOURCE_YOUTUBE) {
+      return "https://img.youtube.com/vi/" . $video->getSourceID() . "/mqdefault.jpg";
     }
     return null;
   }

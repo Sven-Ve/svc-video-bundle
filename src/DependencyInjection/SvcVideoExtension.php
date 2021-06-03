@@ -24,6 +24,7 @@ class SvcVideoExtension extends Extension
     $definition = $container->getDefinition('svc_video.controller');
     $definition->setArgument(0, $config['enableLikes']);
     $definition->setArgument(1, $config['enableGroups']);
+    $definition->setArgument(2, $config['homeRoute']);
 
     $definition1 = $container->getDefinition('svc_video.controller.admin');
     $definition1->setArgument(0, $config['enableShortNames']);
@@ -58,6 +59,8 @@ class SvcVideoExtension extends Extension
       $text .= "    enableShortNames: false\n";
       $text .= "    # Enable videos groups?\n";
       $text .= "    enableGroups: false\n";
+      $text .= "    # Default route, for redirect after errors (default = VideoOverview svc_video_list)\n";
+      $text .= "    homeRoute: svc_video_list\n";
       try {
         file_put_contents($fileName, $text);
         dump("Please adapt config file $fileName");

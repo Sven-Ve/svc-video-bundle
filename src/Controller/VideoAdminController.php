@@ -33,6 +33,9 @@ class VideoAdminController extends AbstractController
     ]);
   }
 
+  /**
+   * create a new video
+   */
   public function new(Request $request, VideoGroupHelper $videoGroupHelper, VideoHelper $videoHelper): Response
   {
     $video = new Video();
@@ -41,7 +44,11 @@ class VideoAdminController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $video->setThumbnailUrl($videoHelper->getThumbnailUrl($video));
+      $thumbnailUrl=$videoHelper->getThumbnailUrl($video);
+      if ($thumbnailUrl) {
+        $video->setThumbnailUrl($thumbnailUrl);
+        $video->setThumbnailPath($videoHelper->copyThumbnail($video));
+      }
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($video);
       $entityManager->flush();

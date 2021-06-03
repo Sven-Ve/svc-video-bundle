@@ -5,6 +5,7 @@ namespace Svc\VideoBundle\Controller;
 use DateTime;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\VideoBundle\Entity\Video;
+use Svc\VideoBundle\Repository\VideoRepository;
 use Svc\VideoBundle\Service\VideoGroupHelper;
 use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,17 +20,19 @@ class VideoController extends AbstractController
 
   private $enableLikes;
   private $enableGroups;
-  public function __construct(bool $enableLikes, bool $enableGroups)
+  private $homeRoute;
+  public function __construct(bool $enableLikes, bool $enableGroups, string $homeRoute)
   {
     $this->enableLikes = $enableLikes;
     $this->enableGroups = $enableGroups;
+    $this->homeRoute = $homeRoute;
   }
 
 
   /**
-   * show a video overview
+   * list videos 
    */
-  public function show(?int $group = null, VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper): Response
+  public function list(?int $group = null, VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper): Response
   {
     $groups = null;
     $currentGroup = null;
@@ -40,7 +43,7 @@ class VideoController extends AbstractController
       }
     }
 
-    return $this->render('@SvcVideo/video/show.html.twig', [
+    return $this->render('@SvcVideo/video/list.html.twig', [
       'videos' => $videoHelper->getVideoByGroup($group),
       'enableLikes' => $this->enableLikes,
       'enableGroups' => $this->enableGroups,
@@ -52,12 +55,24 @@ class VideoController extends AbstractController
   /**
    * run a video
    *
-   * @param Video $video
-   * @param LikeHelper $likeHelper
+   * @param string $id numeric id or shortName
    * @return Response
    */
-  public function run(Video $video, LikeHelper $likeHelper): Response
+  public function run(string $id, LikeHelper $likeHelper, VideoRepository $videoRep): Response
   {
+    $video = null;
+    if (ctype_digit($id)) {
+      $video = $videoRep->find($id);
+    }
+    if ($video === null) {
+      $video = $videoRep->findOneBy(['shortName' => $id]);
+    }
+
+    if ($video === null) {
+      $this->addFlash("danger", "Video not found.");
+      return $this->redirectToRoute($this->homeRoute);
+    }
+
     $video->incCalls();
     $this->getDoctrine()->getManager()->flush();
 

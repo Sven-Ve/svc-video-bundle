@@ -24,7 +24,7 @@
         <!-- settings -->
     </route>
 
-    <route id="svc_video_show" controller="svc_video.controller::show" path="/{group?}" >
+    <route id="svc_video_list" controller="svc_video.controller::list" path="/{group?}" >
       <requirement key="group">\d+</requirement>
     </route>
 
