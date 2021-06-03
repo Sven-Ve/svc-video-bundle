@@ -13,8 +13,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SvcVideoManageCommand extends Command
 {
-  protected static $defaultName = 'app:svc_video:manage';
-  protected static $defaultDescription = 'Manage the svc_video bundle';
+  // managed in services.yaml for lazy loading
+  //  protected static $defaultName = 'app:svc_video:manage';
+  //  protected static $defaultDescription = 'Manage the svc_video bundle';
 
   private $videoGroupHelper;
   private $videoHelper;
@@ -34,19 +35,20 @@ class SvcVideoManageCommand extends Command
       ->addOption('createThumbnailDir', null, InputOption::VALUE_NONE, 'Create the thumbnail directory')
       ->addOption('loadThumbnailUrl', null, InputOption::VALUE_NONE, 'Load missing thumbnail urls (or reload all, if --force set)')
       ->addOption('saveThumbnails', null, InputOption::VALUE_NONE, 'Save missing thumbnails (or reload all, if --force set), implicit --loadThumbnailUrl')
-      ->addOption('force', null, InputOption::VALUE_NONE, 'Re-create or re-load all files')
-      ;
+      ->addOption('force', null, InputOption::VALUE_NONE, 'Re-create or re-load all files');
   }
 
   protected function execute(InputInterface $input, OutputInterface $output): int
   {
     $io = new SymfonyStyle($input, $output);
     $force = $input->getOption('force');
+    $stepRun = 0;
 
     //      $arg1 = $input->getArgument('arg1');
 
     if ($input->getOption('createThumbnailDir') or $input->getOption('init')) {
       $msg = "";
+      $stepRun++;
       if ($this->videoHelper->createThumbnailDir($msg)) {
         $io->info($msg);
       } else {
@@ -56,6 +58,7 @@ class SvcVideoManageCommand extends Command
     }
 
     if ($input->getOption('loadThumbnailUrl') or $input->getOption('saveThumbnails') or $input->getOption('init')) {
+      $stepRun++;
       $msg = "";
       if ($this->videoHelper->getMissingThumbnailUrl($force, $msg)) {
         $io->info($msg);
@@ -65,7 +68,12 @@ class SvcVideoManageCommand extends Command
       }
     }
 
-    $io->success('Manage svc_video bundle done.');
+    if ($stepRun===0) {
+      $io->error("No steps runs. Please check your parameter, you have to set at least one parameter.");
+      return Command::FAILURE;
+    }
+
+    $io->success("Manage svc_video bundle done. $stepRun steps executed.");
     return Command::SUCCESS;
   }
 }
