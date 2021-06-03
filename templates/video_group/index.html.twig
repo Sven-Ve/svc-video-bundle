@@ -1,39 +1,39 @@
 {% trans_default_domain 'VideoBundle' %}
 {% extends 'base.html.twig' %}
 
-{% block title %}VideoGroup index{% endblock %}
+{% block title %}{% trans %}Video group index{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>VideoGroup index</h1>
+	<h1>
+		<i class="fas fa-photo-video"></i>
+		{% trans %}Video group index{% endtrans %}</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Default</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for video_group in video_groups %}
-            <tr>
-                <td>{{ video_group.id }}</td>
-                <td>{{ video_group.name }}</td>
-                <td>{{ video_group.description }}</td>
-                <td>{{ video_group.defaultGroup ? 'yes' | trans : 'no' | trans }}</td>
-                <td>
-                    <a href="{{ path('svc_video_group_edit', {'id': video_group.id}) }}">Edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{% trans %}Name{% endtrans %}</th>
+				<th>{% trans %}Description{% endtrans %}</th>
+				<th>{% trans %}Default{% endtrans %}</th>
+				<th>{% trans %}Actions{% endtrans %}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for video_group in video_groups %}
+				<tr>
+					<td>{{ video_group.name }}</td>
+					<td>{{ video_group.description }}</td>
+					<td>{{ video_group.defaultGroup ? 'yes' | trans : 'no' | trans }}</td>
+					<td>
+						<a href="{{ path('svc_video_group_edit', {'id': video_group.id}) }}">{% trans %}Edit{% endtrans %}</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">{% trans %}no records found{% endtrans %}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <a href="{{ path('svc_video_group_new') }}">Create new</a>
+	<a href="{{ path('svc_video_group_new') }}" class='btn btn-success'>{% trans %}Create new video{% endtrans %}</a>
 {% endblock %}

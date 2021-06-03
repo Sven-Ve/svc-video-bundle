@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.1.0";
-$message = "first sv-video deploy to prod";
+$version = "1.1.1";
+$message = "translations";
 
 file_put_contents("README.md", "\n* Version " . $version . ": " . $message, FILE_APPEND);
 
