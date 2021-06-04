@@ -44,9 +44,8 @@ class VideoAdminController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $thumbnailUrl=$videoHelper->getThumbnailUrl($video);
-      if ($thumbnailUrl) {
-        $video->setThumbnailUrl($thumbnailUrl);
+      $videoHelper->getVideoMetadata($video);
+      if ($video->getThumbnailUrl()) {
         $video->setThumbnailPath($videoHelper->copyThumbnail($video));
       }
       $entityManager = $this->getDoctrine()->getManager();
@@ -72,7 +71,7 @@ class VideoAdminController extends AbstractController
 
       if (!$video->isThumbnailPath()) {
         if (!$video->isThumbnailUrl()) {
-          $video->setThumbnailUrl($videoHelper->getThumbnailUrl($video));
+          $videoHelper->getVideoMetadata($video);
         }
         if ($video->isThumbnailUrl()) {
           $video->setThumbnailPath($videoHelper->copyThumbnail($video));

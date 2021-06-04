@@ -12,3 +12,4 @@ Versions
 * Version 1.0.1: added translation
 * Version 1.1.0: first sv-video deploy to prod
 * Version 1.1.1: translations
+* Version 1.1.2: extended console command

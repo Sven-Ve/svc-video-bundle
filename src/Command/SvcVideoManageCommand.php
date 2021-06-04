@@ -33,8 +33,8 @@ class SvcVideoManageCommand extends Command
       //            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
       ->addOption('init', null, InputOption::VALUE_NONE, 'Initialize the svc_video bundle (run all parts)')
       ->addOption('createThumbnailDir', null, InputOption::VALUE_NONE, 'Create the thumbnail directory')
-      ->addOption('loadThumbnailUrl', null, InputOption::VALUE_NONE, 'Load missing thumbnail urls (or reload all, if --force set)')
-      ->addOption('saveThumbnails', null, InputOption::VALUE_NONE, 'Save missing thumbnails (or reload all, if --force set), implicit --loadThumbnailUrl')
+      ->addOption('loadMetadata', null, InputOption::VALUE_NONE, 'Load missing metadata (or reload all, if --force set)')
+      ->addOption('copyThumbnails', null, InputOption::VALUE_NONE, 'Copy missing thumbnails (or reload all, if --force set), implicit --loadMetadata')
       ->addOption('force', null, InputOption::VALUE_NONE, 'Re-create or re-load all files');
   }
 
@@ -57,10 +57,22 @@ class SvcVideoManageCommand extends Command
       }
     }
 
-    if ($input->getOption('loadThumbnailUrl') or $input->getOption('saveThumbnails') or $input->getOption('init')) {
+    if ($input->getOption('loadMetadata') or $input->getOption('copyThumbnails') or $input->getOption('init')) {
       $stepRun++;
       $msg = "";
-      if ($this->videoHelper->getMissingThumbnailUrl($force, $msg)) {
+      if ($this->videoHelper->getMissingMetadata($force, $msg)) {
+        $io->info($msg);
+      } else {
+        $io->error($msg);
+        return Command::FAILURE;
+      }
+    }
+
+
+    if ($input->getOption('copyThumbnails') or $input->getOption('init')) {
+      $stepRun++;
+      $msg = "";
+      if ($this->videoHelper->getMissingThumbnails($force, $msg)) {
         $io->info($msg);
       } else {
         $io->error($msg);

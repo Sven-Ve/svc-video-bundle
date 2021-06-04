@@ -9,6 +9,7 @@ use Svc\VideoBundle\Repository\VideoRepository;
 
 /**
  * helper function for videos
+ * get metadata, load thumbnail, get video objects, ...
  */
 class VideoHelper
 {
@@ -39,12 +40,12 @@ class VideoHelper
   }
 
   /**
-   * try to get the thumbnail URL from streaming services
+   * load metadata from video streaming services
    *
-   * @param Video $video
-   * @return string|null the url to the thumbnail
+   * @param Video $video by reference
+   * @return boolean true = success
    */
-  public function getThumbnailUrl(Video $video): ?string
+  public function getVideoMetadata(Video &$video): bool
   {
     if ($video->getSourceType() == Video::SOURCE_VIMEO) {
       // see https://gist.github.com/anjan011/3b6d13a9f7a8642ecc4c
@@ -52,35 +53,36 @@ class VideoHelper
         $apiData = unserialize(file_get_contents("https://vimeo.com/api/v2/video/" . $video->getSourceID() . ".php"));
 
         if (is_array($apiData) and count($apiData) > 0) {
-          $uploadDate = date_create_from_format('Y-m-d G:i:s',$apiData[0]['upload_date']);
+          $uploadDate = date_create_from_format('Y-m-d G:i:s', $apiData[0]['upload_date']);
           $video->setUploadDate($uploadDate);
-          return $apiData[0]['thumbnail_large'];
+          $video->setThumbnailUrl($apiData[0]['thumbnail_large']);
+          return true;
         }
       } catch (Exception $e) {
+        return false;
       }
     } elseif ($video->getSourceType() == Video::SOURCE_YOUTUBE) {
-      return "https://img.youtube.com/vi/" . $video->getSourceID() . "/mqdefault.jpg";
+      $video->setThumbnailUrl("https://img.youtube.com/vi/" . $video->getSourceID() . "/mqdefault.jpg");
+      return true;
     }
-    return null;
+    return false;
   }
 
   /**
-   * load missing thumbnail URLs or all URLs, if $force = true
+   * load missing metadata (thumbnail, date) or all metadata, if $force = true
    *
    * @param boolean|null $force
    * @param string|null $msg
    * @return boolean
    */
-  public function getMissingThumbnailUrl(?bool $force = false, ?string &$msg = null): bool
+  public function getMissingMetadata(?bool $force = false, ?string &$msg = null): bool
   {
     $videos = $force ? $this->videoRep->findAll() : $this->videoRep->findBy(['thumbnailUrl' => null]);
 
     foreach ($videos as $video) {
       $msg .= $video->getTitle() . ": ";
-      $url = $this->getThumbnailUrl($video);
-      if ($url) {
+      if ($this->getVideoMetadata($video)) {
         $msg .= "loaded.\n";
-        $video->setThumbnailUrl($url);
       } else {
         $msg .= "no thumbnail url found.\n";
       }
@@ -90,12 +92,59 @@ class VideoHelper
     return true;
   }
 
-  public function copyThumbnail(Video $video): ?string
+  /**
+   * load missing thumbnails to local server or all thumbnails, if $force = true
+   *
+   * @param boolean|null $force
+   * @param string|null $msg
+   * @return boolean
+   */
+  public function getMissingThumbnails(?bool $force = false, ?string &$msg = null): bool
   {
-    // https://www.cluemediator.com/how-to-save-an-image-from-a-url-in-php
+    $videos = $force ? $this->videoRep->findAll() : $this->videoRep->findBy(['thumbnailPath' => null]);
+
+    foreach ($videos as $video) {
+      $msg .= $video->getTitle() . ": ";
+      $path = $this->copyThumbnail($video, $force);
+      if ($path) {
+        $video->setThumbnailPath($path);
+        $msg .= "copied.\n";
+      } else {
+        $msg .= "no thumbnail created.\n";
+      }
+    }
+
+    $this->entityManager->flush();
+    return true;
+  }
+
+  /**
+   * copy thumbnail from streaming service to our local server
+   *
+   * @param Video $video
+   * @param boolean|null $force
+   * @return string|null
+   */
+  public function copyThumbnail(Video $video, ?bool $force = false): ?string
+  {
+    if ($force and $video->getThumbnailPath()) {
+      try {
+        unlink($this->thumbnailDir . '/' . $video->getThumbnailPath());
+      } catch (Exception $e) {
+      }
+    }
+
     if ($video->getSourceType() == Video::SOURCE_VIMEO) {
       try {
-        $imgName = 'thumb_' . $video->getId() . '.webp';
+        $imgName = 'thumb_' . $video->getId() . '-' . uniqid() . '.webp';
+        $imgPath = $this->thumbnailDir . '/' . $imgName;
+        file_put_contents($imgPath, file_get_contents($video->getThumbnailUrl()));
+        return $imgName;
+      } catch (Exception $e) {
+      }
+    } elseif ($video->getSourceType() == Video::SOURCE_YOUTUBE) {
+      try {
+        $imgName = 'thumb_' . $video->getId() . '-' . uniqid() . '.jpg';
         $imgPath = $this->thumbnailDir . '/' . $imgName;
         file_put_contents($imgPath, file_get_contents($video->getThumbnailUrl()));
         return $imgName;
