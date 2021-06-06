@@ -58,7 +58,7 @@ class VideoController extends AbstractController
    * @param string $id numeric id or shortName
    * @return Response
    */
-  public function run(string $id, LikeHelper $likeHelper, VideoRepository $videoRep): Response
+  public function run(string $id, ?bool $hideNav = false, LikeHelper $likeHelper, VideoRepository $videoRep): Response
   {
     $video = null;
     if (ctype_digit($id)) {
@@ -75,11 +75,13 @@ class VideoController extends AbstractController
 
     $video->incCalls();
     $this->getDoctrine()->getManager()->flush();
+    $template = $hideNav ?  'run-hidenav.html.twig' : 'run.html.twig';
 
-    return $this->render('@SvcVideo/video/run.html.twig', [
+    return $this->render('@SvcVideo/video/' . $template, [
       'video' => $video,
       'enableLikes' => $this->enableLikes,
       'liked' => $likeHelper->isLiked(LikeHelper::SOURCE_VIDEO, $video->getId()),
+      'hideNav' => $hideNav,
     ]);
   }
 

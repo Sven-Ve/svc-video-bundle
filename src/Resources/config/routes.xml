@@ -24,6 +24,11 @@
         <!-- settings -->
     </route>
 
+    <route id="svc_video_run_hn" controller="svc_video.controller::run" path="/run/hn/{id}" >
+       <default key="hideNav">true</default>
+        <!-- settings -->
+    </route>
+
     <route id="svc_video_list" controller="svc_video.controller::list" path="/{group?}" >
       <requirement key="group">\d+</requirement>
     </route>

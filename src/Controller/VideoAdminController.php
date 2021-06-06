@@ -44,12 +44,14 @@ class VideoAdminController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->persist($video);
+      $entityManager->flush(); // save first because we need the id
+
       $videoHelper->getVideoMetadata($video);
       if ($video->getThumbnailUrl()) {
         $video->setThumbnailPath($videoHelper->copyThumbnail($video));
       }
-      $entityManager = $this->getDoctrine()->getManager();
-      $entityManager->persist($video);
       $entityManager->flush();
 
       return $this->redirectToRoute('svc_video_admin_index');

@@ -1,0 +1,30 @@
+<div class='form-lg'>
+  <h2>{{ video.title }}</h2>
+  <p class="fw-light">{{ video.subTitle }}</p>
+
+  <div class="ratio ratio-{{ video.ratio }}">
+    {% if video.sourceText == 'Vimeo' %}
+      <iframe src="https://player.vimeo.com/video/{{ video.sourceId }}?autoplay=1" allow="autoplay; fullscreen;" allowfullscreen></iframe>
+    {% elseif video.sourceText == 'Youtube' %}
+      <iframe src="https://www.youtube.com/embed/{{ video.sourceId }}?controls=0&rel=0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% endif %}
+  </div>
+
+  <small>
+  {% if enableLikes %}
+    {% if liked is defined and liked %}
+      <i class="fas fa-heart like-liked"></i> {{ video.likes }}
+    {% else %}
+      <span data-controller='like' data-like-url-value='{{ path("svc_video_inc_likes", {id: video.id}) }}'>
+        <i class="fas fa-heart like-not-liked" data-action="click->like#inc"></i>
+        <span data-like-target="counter">{{ video.likes }}</span>
+      </span> 
+    {% endif %}
+  | 
+  {% endif %}
+  <span title='{% trans %}Video watched{% endtrans %}'><i class="fas fa-eye"></i> {{ video.calls }}</span>
+  </small>
+
+  <br/>
+  {{ video.description | raw }}
+</div>

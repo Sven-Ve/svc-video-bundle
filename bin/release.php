@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.1.2";
-$message = "extended console command";
+$version = "1.2.0";
+$message = "hiding navs";
 
 file_put_contents("README.md", "\n* Version " . $version . ": " . $message, FILE_APPEND);
 
