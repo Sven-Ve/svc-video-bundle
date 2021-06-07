@@ -75,9 +75,8 @@ class VideoController extends AbstractController
 
     $video->incCalls();
     $this->getDoctrine()->getManager()->flush();
-    $template = $hideNav ?  'run-hidenav.html.twig' : 'run.html.twig';
 
-    return $this->render('@SvcVideo/video/' . $template, [
+    return $this->render('@SvcVideo/video/run.html.twig', [
       'video' => $video,
       'enableLikes' => $this->enableLikes,
       'liked' => $likeHelper->isLiked(LikeHelper::SOURCE_VIDEO, $video->getId()),

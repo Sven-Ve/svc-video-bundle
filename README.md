@@ -14,3 +14,4 @@ Versions
 * Version 1.1.1: translations
 * Version 1.1.2: extended console command
 * Version 1.2.0: hiding navs
+* Version 1.2.1: hiding navs, release back functionality in base.html.twig
