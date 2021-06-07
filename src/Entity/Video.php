@@ -6,6 +6,7 @@ use Svc\VideoBundle\Repository\VideoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Svc\UtilBundle\Service\EnvInfoHelper;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -322,5 +323,9 @@ class Video
     $this->uploadDate = $uploadDate;
 
     return $this;
+  }
+
+  public function getShortUrl(): string {
+    return EnvInfoHelper::getRootURLandPrefix() . "?" . $this->shortName ?? $this->id;
   }
 }

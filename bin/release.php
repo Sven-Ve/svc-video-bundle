@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.2.1";
-$message = "hiding navs, release back functionality in base.html.twig";
+$version = "1.2.2";
+$message = "added copy url to video";
 
 file_put_contents("README.md", "\n* Version " . $version . ": " . $message, FILE_APPEND);
 

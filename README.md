@@ -15,3 +15,4 @@ Versions
 * Version 1.1.2: extended console command
 * Version 1.2.0: hiding navs
 * Version 1.2.1: hiding navs, release back functionality in base.html.twig
+* Version 1.2.2: added copy url to video
