@@ -24,7 +24,12 @@
 			<div class='row'>
 				{% for video in videos %}
 					<div class="col-md-6 col-lg-4 col-xl-3 mb-3 card-group">
-						<div class="card text-center border-warning" onclick="location.href='{{ path('svc_video_run', {'id': video.id}) }}'">
+            {% if hideNav | default(false) %}
+              {% set run_path='svc_video_run_hn' %}
+            {% else %}
+              {% set run_path='svc_video_run' %}
+            {% endif %}
+						<div class="card text-center border-warning" onclick="location.href='{{ path(run_path, {'id': video.id}) }}'">
 							{% if video.thumbnailPath %}
 								<img src="{{ asset('uploads/' ~ video.thumbnailPath) | imagine_filter('thumb_video_200') }}" class='card-img-top'/>
 							{% elseif video.thumbnailUrl %}

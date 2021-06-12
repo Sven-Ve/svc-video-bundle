@@ -32,8 +32,11 @@ class VideoController extends AbstractController
   /**
    * list videos 
    */
-  public function list(?int $group = null, VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper): Response
+  public function list(?int $group = null, ?bool $hideNav = false, ?bool $hideGroups = false, VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper): Response
   {
+    if ($hideGroups) {
+      $this->enableGroups = false;
+    }
     $groups = null;
     $currentGroup = null;
     if ($this->enableGroups) {
@@ -48,7 +51,8 @@ class VideoController extends AbstractController
       'enableLikes' => $this->enableLikes,
       'enableGroups' => $this->enableGroups,
       'groups' => $groups,
-      'currentGroup' => $currentGroup
+      'currentGroup' => $currentGroup,
+      'hideNav' => $hideNav,
     ]);
   }
 

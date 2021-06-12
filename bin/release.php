@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.2.2";
-$message = "added copy url to video";
+$version = "1.2.3";
+$message = "extend copy url in admin page (with and without navigation";
 
 file_put_contents("README.md", "\n* Version " . $version . ": " . $message, FILE_APPEND);
 
