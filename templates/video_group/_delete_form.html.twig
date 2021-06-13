@@ -1,5 +1,15 @@
 {% trans_default_domain 'VideoBundle' %}
-<form method="post" action="{{ path('svc_video_group_delete', {'id': video_group.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('svc_video_group_delete', {'id': video_group.id}) }}"
+  {{ stimulus_controller('submit-confirm', {
+    title: 'Remove this video group?' | trans,
+    icon: 'warning',
+    confirmButtonText: 'Yes, remove it' | trans,
+    cancelButtonText: 'Cancel' | trans
+  }) }}
+  data-action="submit-confirm#onSubmit"
+>
+    <input type="hidden" name="_method" value="post">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video_group.id) }}">
-    <button class="btn">{% trans %}Delete{% endtrans %}</button>
+    <span class="float-end">&nbsp;&nbsp;</span>
+    <button class="btn btn-danger float-end">{% trans %}Delete{% endtrans %}</button>
 </form>

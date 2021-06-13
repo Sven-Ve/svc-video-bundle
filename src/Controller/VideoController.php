@@ -39,10 +39,17 @@ class VideoController extends AbstractController
     }
     $groups = null;
     $currentGroup = null;
+    
     if ($this->enableGroups) {
       $groups = $videoGroupHelper->getVideoGroups();
       if ($group) {
         $currentGroup = $videoGroupHelper->getVideoGroup($group);
+        if ($currentGroup->getHideGroups()) {
+          $this->enableGroups = false;
+        }
+        if ($currentGroup->getHideNav()) {
+          $hideNav = true;
+        }
       }
     }
 

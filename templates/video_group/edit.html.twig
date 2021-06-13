@@ -6,14 +6,15 @@
 {% endblock %}
 
 {% block body %}
+	<div class='form-md'>
 	<h1>{% trans %}Edit Video group{% endtrans %}</h1>
 
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	<button class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
-	{{ form_end(form) }}
+    {{ include('@SvcVideo/video_group/_form.html.twig', {'button_label': 'Update'}) }}
 
-	<a href="{{ path('svc_video_group_index') }}" class='btn btn-secondary'>{% trans %}Back to list{% endtrans %}</a>
+    <a href="{{ path('svc_video_group_index') }}" class='btn btn-secondary float-start'>{% trans %}Back to list{% endtrans %}</a>
 
-	{{ include('@SvcVideo/video_group/_delete_form.html.twig') }}
+    {{ include('@SvcVideo/video_group/_delete_form.html.twig') }}
+    <br />
+    <br />
+  </div>
 {% endblock %}

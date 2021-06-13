@@ -1,12 +1,16 @@
 {% trans_default_domain 'VideoBundle' %}
 {% extends 'base.html.twig' %}
 
-{% block title %}New VideoGroup{% endblock %}
+{% block title %}{% trans %}New video group{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Create new VideoGroup</h1>
+	<div class='form-md'>
+    <h1>{% trans %}New video group{% endtrans %}</h1>
 
     {{ include('@SvcVideo/video_group/_form.html.twig') }}
 
-    <a href="{{ path('svc_video_group_index') }}">Back to list</a>
+    <a href="{{ path('svc_video_group_index') }}" class="btn btn-secondary float-start">{% trans %}Back to list{% endtrans %}</a>
+    <br />
+    <br />
+  </div>
 {% endblock %}

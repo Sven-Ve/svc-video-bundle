@@ -13,7 +13,12 @@ class VideoGroupType extends AbstractType
   {
     $builder
       ->add('name')
-      ->add('description');
+      ->add('description')
+      ->add('hideNav', null, [
+        'label'=>'Hide navigation'
+      ])
+      ->add('hideGroups')
+      ;
   }
 
   public function configureOptions(OptionsResolver $resolver)

@@ -39,10 +39,20 @@ class VideoGroup
    */
   private $videos;
 
-    /**
+  /**
    * @ORM\Column(type="boolean", options={"default": false})
    */
   private $defaultGroup = false;
+
+  /**
+   * @ORM\Column(type="boolean", options={"default": false})
+   */
+  private $hideNav = false;
+
+  /**
+   * @ORM\Column(type="boolean", options={"default": false})
+   */
+  private $hideGroups = false;
 
   public function __construct()
   {
@@ -104,4 +114,28 @@ class VideoGroup
     return $this;
   }
 
+
+  public function getHideNav(): ?bool
+  {
+    return $this->hideNav;
+  }
+
+  public function setHideNav(bool $hideNav): self
+  {
+    $this->hideNav = $hideNav;
+
+    return $this;
+  }
+
+  public function getHideGroups(): ?bool
+  {
+    return $this->hideGroups;
+  }
+
+  public function setHideGroups(bool $hideGroups): self
+  {
+    $this->hideGroups = $hideGroups;
+
+    return $this;
+  }
 }

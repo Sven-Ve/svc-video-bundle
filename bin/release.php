@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.2.3";
-$message = "extend copy url in admin page (with and without navigation";
+$version = "1.2.4";
+$message = "Improve video group layout, added fields for hide nav/groups in video groups\n- you have do update the entities!";
 
 file_put_contents("README.md", "\n* Version " . $version . ": " . $message, FILE_APPEND);
 

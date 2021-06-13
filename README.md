@@ -17,3 +17,5 @@ Versions
 * Version 1.2.1: hiding navs, release back functionality in base.html.twig
 * Version 1.2.2: added copy url to video
 * Version 1.2.3: extend copy url in admin page (with and without navigation
+* Version 1.2.4: Improve video group layout, added fields for hide nav/groups in video groups
+- you have do update the entities!
