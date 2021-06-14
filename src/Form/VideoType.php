@@ -6,10 +6,13 @@ use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class VideoType extends AbstractType
 {
@@ -36,6 +39,23 @@ class VideoType extends AbstractType
       ->add('isPrivate', null, [
         'help' => 'Is the video private?',
         'label' => 'Private'
+      ])
+      ->add('plainPassword', TextType::class, [
+        'label' => 'Password (only used for private videos)',
+        'help' => 'Your password should be at least 6 characters',
+        'mapped' => false,
+        'data' => $options['plainPassword'],
+        'constraints' => [
+          new NotBlank([
+            'message' => 'Please enter a password',
+          ]),
+          new Length([
+            'min' => 6,
+            'minMessage' => 'Your password should be at least {{ limit }} characters',
+            // max length allowed by Symfony for security reasons
+            'max' => 4096,
+          ]),
+        ]
       ])
       ->add('description', TextareaType::class, [
         'attr' => [
@@ -67,6 +87,7 @@ class VideoType extends AbstractType
       'data_class' => Video::class,
       'translation_domain' => 'VideoBundle',
       'enableShortNames' => false,
+      'plainPassword' => null
     ]);
   }
 }

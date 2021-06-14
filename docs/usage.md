@@ -1,5 +1,8 @@
 # Usage
 
+## Entities
+Create tables (run `bin/console doctrine:schema:update --force`) or create a migration
+
 ## CSS
 - include the css file (assets/styles/layout/_svc_video.scss) in your global css
 
@@ -23,6 +26,7 @@ _svc_video:
 
 ## Enable/disable feature
 ```yaml
+# /config/packages/_svc_video.yaml
 svc_video:
     # Enable likes for videos?
     enableLikes:          false

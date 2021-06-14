@@ -18,6 +18,7 @@ class VideoHelper
   private $videoRep;
   private $thumbnailDir;
   private $entityManager;
+
   public function __construct(string $thumbnailDir, VideoRepository $videoRep, EntityManagerInterface $entityManager)
   {
     $this->videoRep = $videoRep;
@@ -194,5 +195,43 @@ class VideoHelper
     }
     $msg = "Directory $this->thumbnailDir created.";
     return true;
+  }
+
+
+  private $encKey = "a213123jsakdnjasdhquwhequez2eh328z4982zehqwkjdnaksjdniuhd";
+  private $encCipher = "AES-128-CBC";
+  /**
+   * hash the password for a video
+   *
+   * @param integer $id videoId
+   * @param string $plainPassword
+   * @return string
+   */
+  public function encryptVideoPassword(string $plainPassword): string
+  {
+    $ivlen = openssl_cipher_iv_length($this->encCipher);
+    $iv = openssl_random_pseudo_bytes($ivlen);
+    $ciphertext_raw = openssl_encrypt($plainPassword, $this->encCipher, $this->encKey, $options = OPENSSL_RAW_DATA, $iv);
+    $hmac = hash_hmac('sha256', $ciphertext_raw, $this->encKey, $as_binary = true);
+    $ciphertext = base64_encode($iv . $hmac . $ciphertext_raw);
+    return $ciphertext;
+  }
+
+  public function decryptVideoPassword(string $encPassword): string
+  {
+    $c = base64_decode($encPassword);
+    $ivlen = openssl_cipher_iv_length($this->encCipher);
+    $iv = substr($c, 0, $ivlen);
+    $hmac = substr($c, $ivlen, $sha2len = 32);
+    $ciphertext_raw = substr($c, $ivlen + $sha2len);
+    $original_plaintext = openssl_decrypt($ciphertext_raw, $this->encCipher, $this->encKey, $options = OPENSSL_RAW_DATA, $iv);
+    return $original_plaintext;
+
+    $calcmac = hash_hmac('sha256', $ciphertext_raw, $this->encKey, $as_binary = true);
+
+    if (hash_equals($hmac, $calcmac)) // PHP 5.6+ Rechenzeitangriff-sicherer Vergleich
+    {
+      echo $original_plaintext . "\n";
+    }
   }
 }

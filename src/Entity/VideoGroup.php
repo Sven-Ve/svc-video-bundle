@@ -54,6 +54,12 @@ class VideoGroup
    */
   private $hideGroups = false;
 
+
+  /**
+   * @ORM\Column(type="boolean", options={"default": false})
+   */
+  private $isPrivate = false;
+
   public function __construct()
   {
     $this->videos = new ArrayCollection();
@@ -135,6 +141,18 @@ class VideoGroup
   public function setHideGroups(bool $hideGroups): self
   {
     $this->hideGroups = $hideGroups;
+
+    return $this;
+  }
+
+  public function getIsPrivate(): ?bool
+  {
+    return $this->isPrivate;
+  }
+
+  public function setIsPrivate(bool $isPrivate): self
+  {
+    $this->isPrivate = $isPrivate;
 
     return $this;
   }

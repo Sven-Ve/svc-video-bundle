@@ -121,6 +121,12 @@ class Video
    */
   private $uploadDate;
 
+  /**
+   * @var string The hashed password
+   * @ORM\Column(type="string", nullable=true)
+   */
+  private $password;
+
   public function getId(): ?int
   {
     return $this->id;
@@ -325,7 +331,20 @@ class Video
     return $this;
   }
 
-  public function getShortUrl(): string {
+  public function getShortUrl(): string
+  {
     return EnvInfoHelper::getRootURLandPrefix() . "?" . $this->shortName ?? $this->id;
+  }
+
+  public function getPassword(): string
+  {
+      return $this->password;
+  }
+
+  public function setPassword(string $password): self
+  {
+      $this->password = $password;
+
+      return $this;
   }
 }

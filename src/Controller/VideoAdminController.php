@@ -44,6 +44,11 @@ class VideoAdminController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      $plainPassword = $form->get('plainPassword')->getData();
+      if ($plainPassword and $video->getIsPrivate()) {
+        $video->setPassword($videoHelper->encryptVideoPassword($plainPassword));
+      }
+
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($video);
       $entityManager->flush(); // save first because we need the id
@@ -57,19 +62,30 @@ class VideoAdminController extends AbstractController
       return $this->redirectToRoute('svc_video_admin_index');
     }
 
-    return $this->render('@SvcVideo/video_admin/new.html.twig', [
+    return $this->renderForm('@SvcVideo/video_admin/new.html.twig', [
       'video' => $video,
-      'form' => $form->createView(),
+      'form' => $form,
     ]);
   }
 
 
   public function edit(Request $request, Video $video, VideoHelper $videoHelper): Response
   {
-    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames]);
+    if ($video->getIsPrivate() and $video->getPassword()) {
+      $plainPassword = $videoHelper->decryptVideoPassword($video->getPassword());
+    } else {
+      $plainPassword = null;
+    }
+
+    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'plainPassword' => $plainPassword]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+
+      $plainPassword = $form->get('plainPassword')->getData();
+      if ($plainPassword and $video->getIsPrivate()) {
+        $video->setPassword($videoHelper->encryptVideoPassword($plainPassword));
+      }
 
       if (!$video->isThumbnailPath()) {
         if (!$video->isThumbnailUrl()) {
@@ -84,9 +100,9 @@ class VideoAdminController extends AbstractController
       return $this->redirectToRoute('svc_video_admin_index');
     }
 
-    return $this->render('@SvcVideo/video_admin/edit.html.twig', [
+    return $this->renderForm('@SvcVideo/video_admin/edit.html.twig', [
       'video' => $video,
-      'form' => $form->createView(),
+      'form' => $form,
     ]);
   }
 
