@@ -18,3 +18,7 @@
 *Sun, 13 Jun 2021 22:15:43 +0000*
 - Improve video group layout, added fields for hide nav/groups in video groups
 - you have do update the entities!
+
+## Version 1.2.5
+*Mon, 14 Jun 2021 13:25:43 +0000*
+- Prepare date for private recipe server

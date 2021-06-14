@@ -1,32 +1,45 @@
-Usage
-=====
+# Usage
 
-* adapt the default url prefix in config/routes/svc_profile.yaml and enable translation (if you like it)
+## CSS
+- include the css file (assets/styles/layout/_svc_video.scss) in your global css
+
+```scss
+// /assets/styles/app.sccs
+...
+@import './layout/_svc_video';
+...
+```
+
+## Routes
+- adapt the default url prefix in config/routes/svc_profile.yaml and enable translation (if you like it)
 
 ```yaml
-# /config/routes/svc_profile.yaml
-_svc_profile:
-    resource: '@SvcProfileBundle/src/Resources/config/routes.xml'
-    prefix: /svc-profile/{_locale}
+# /config/routes/_svc_video.yaml
+_svc_video:
+    resource: '@SvcPVideoBundle/src/Resources/config/routes.xml'
+    prefix: /_svc_video/{_locale}
     requirements: {"_locale": "%app.supported_locales%"}
 ```
 
-Generate a sha256-secret key (you can use https://passwordsgenerator.net/sha256-hash-generator for it) and store the key in .env (or better .env.local)
-```sh
-###> svc/profile-bundle ###
-SVC_PROFILE_HASH_SECRET=D9E143E74FC3E5AE3ED5305043FC67030C43CCDA5060EA2FD464BB8C0CC2D65A
-###< svc/profile-bundle ###
-```
-
-
-* integrate the change mail controller via path "svc_profile_change_mail_start"
-* integrate the change password controller via path "svc_profile_change_pw_start"
-
-* enable captcha (if installed and configured), default = false
-
+## Enable/disable feature
 ```yaml
-# /config/packages/svc_profile.yaml
-svc_profile:
-    # Enable captcha for change email/password forms?
-    enableCaptcha: true
+svc_video:
+    # Enable likes for videos?
+    enableLikes:          false
+
+    # Enable short names for videos (for short URLs)?
+    enableShortNames:     false
+
+    # Enable videos groups?
+    enableGroups:         false
+
+    # Default route, for redirect after errors
+    homeRoute:            svc_video_list
 ```
+
+
+## Paths
+- integrate the video controller via path "svc_video_run"
+- integrate the video admin controller via path "svc_video_admin_index"
+- integrate the video controller via path "svc_video_group_index"
+

@@ -1,7 +1,9 @@
 {% trans_default_domain 'VideoBundle' %}
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Video overview{% endtrans %}{% endblock %}
+{% block title %}
+	{% trans %}Video overview{% endtrans %}
+{% endblock %}
 
 {% block body %}
 	{% if enableGroups %}
@@ -11,27 +13,27 @@
 			</aside>
 
 			<div class="col-sm-8 col-md-9 col-xl-10">
-      {% if currentGroup %}
-        <h3>{{ currentGroup.name }}</h3>
-      {% else %}
-        <h3>{% trans %}All Videos{% endtrans %}</h3>
-      {% endif %}
+				{% if currentGroup %}
+					<h3>{{ currentGroup.name }}</h3>
+				{% else %}
+					<h3>{% trans %}All Videos{% endtrans %}</h3>
+				{% endif %}
 
-	{% else %}
-    <h3>{% trans %}All Videos{% endtrans %}</h3>
-	{% endif %}
+			{% else %}
+				<h3>{% trans %}All Videos{% endtrans %}</h3>
+			{% endif %}
 
 			<div class='row'>
 				{% for video in videos %}
 					<div class="col-md-6 col-lg-4 col-xl-3 mb-3 card-group">
-            {% if hideNav | default(false) %}
-              {% set run_path='svc_video_run_hn' %}
-            {% else %}
-              {% set run_path='svc_video_run' %}
-            {% endif %}
+						{% if hideNav | default(false) %}
+							{% set run_path='svc_video_run_hn' %}
+						{% else %}
+							{% set run_path='svc_video_run' %}
+						{% endif %}
 						<div class="card text-center border-warning" onclick="location.href='{{ path(run_path, {'id': video.id}) }}'">
 							{% if video.thumbnailPath %}
-								<img src="{{ asset('uploads/' ~ video.thumbnailPath) | imagine_filter('thumb_video_200') }}" class='card-img-top'/>
+								<img src="{{ asset('uploads/' ~ video.thumbnailPath) | imagine_filter('svcv_thumb_video_200') }}" class='card-img-top'/>
 							{% elseif video.thumbnailUrl %}
 								<img src="{{ video.thumbnailUrl }}" class='card-img-top'/>
 							{% else %}
@@ -48,7 +50,7 @@
 								<span title='{% trans %}Video watched{% endtrans %}'>
 									<i class="fas fa-eye"></i>
 									{{ video.calls }}
-                </span>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -57,7 +59,7 @@
 				{% endfor %}
 			</div>
 
-	{% if enableGroups %}
+			{% if enableGroups %}
 			</div>
 		</div>
 	{% endif %}

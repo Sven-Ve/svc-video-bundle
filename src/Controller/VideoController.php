@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 
-
 class VideoController extends AbstractController
 {
 
@@ -27,7 +26,6 @@ class VideoController extends AbstractController
     $this->enableGroups = $enableGroups;
     $this->homeRoute = $homeRoute;
   }
-
 
   /**
    * list videos 

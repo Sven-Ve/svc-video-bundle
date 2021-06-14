@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.2.4";
-$message = "Improve video group layout, added fields for hide nav/groups in video groups\n- you have do update the entities!";
+$version = "1.2.5";
+$message = "Prepare date for private recipe server";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);
