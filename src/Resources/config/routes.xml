@@ -68,4 +68,7 @@
       <!-- settings -->
     </route>
 
+    <route id="svc_video_pwd" controller="svc_video.controller::enterPwd" path="/pwd/{id}" >
+      <!-- settings -->
+    </route>
 </routes>

@@ -5,17 +5,21 @@ namespace Svc\VideoBundle\Controller;
 use DateTime;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\VideoBundle\Entity\Video;
+use Svc\VideoBundle\Form\EnterPasswordType;
 use Svc\VideoBundle\Repository\VideoRepository;
 use Svc\VideoBundle\Service\VideoGroupHelper;
 use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 
 class VideoController extends AbstractController
 {
+  private const SESS_ATTR_NAME = "svcv_password";
 
   private $enableLikes;
   private $enableGroups;
@@ -37,7 +41,7 @@ class VideoController extends AbstractController
     }
     $groups = null;
     $currentGroup = null;
-    
+
     if ($this->enableGroups) {
       $groups = $videoGroupHelper->getVideoGroups();
       if ($group) {
@@ -67,7 +71,7 @@ class VideoController extends AbstractController
    * @param string $id numeric id or shortName
    * @return Response
    */
-  public function run(string $id, ?bool $hideNav = false, LikeHelper $likeHelper, VideoRepository $videoRep): Response
+  public function run(string $id, ?bool $hideNav = false, LikeHelper $likeHelper, VideoRepository $videoRep, RequestStack $requestStack, VideoHelper $videoHelper): Response
   {
     $video = null;
     if (ctype_digit($id)) {
@@ -80,6 +84,13 @@ class VideoController extends AbstractController
     if ($video === null) {
       $this->addFlash("danger", "Video not found.");
       return $this->redirectToRoute($this->homeRoute);
+    }
+
+    if ($video->getIsPrivate()) {
+      $plainPassword = $requestStack->getSession()->get(self::SESS_ATTR_NAME, null);
+      if (!$plainPassword or $plainPassword != $videoHelper->decryptVideoPassword($video->getPassword())) {
+        return $this->redirectToRoute('svc_video_pwd', ['id' => $video->getId()]);
+      }
     }
 
     $video->incCalls();
@@ -120,5 +131,31 @@ class VideoController extends AbstractController
     }
 
     return $response;
+  }
+
+  /**
+   * enter the password for a private video
+   *
+   */
+  public function enterPwd(Video $video, Request $request, VideoHelper $videoHelper, RequestStack $requestStack)
+  {
+    $form = $this->createForm(EnterPasswordType::class);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+
+      $plainPassword = $form->get('plainPassword')->getData();
+      $plainPasswordStored = $videoHelper->decryptVideoPassword($video->getPassword());
+      if ($plainPassword == $plainPasswordStored) {
+        $requestStack->getSession()->set(self::SESS_ATTR_NAME, $plainPassword);
+        return $this->redirectToRoute('svc_video_run', ['id' => $video->getId()]);
+      }
+
+      $this->addFlash('danger', 'Wrong password');
+    }
+
+    return $this->renderForm('@SvcVideo/video_admin/password.html.twig', [
+      'form' => $form
+    ]);
   }
 }
