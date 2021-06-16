@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Repository\VideoRepository;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * helper function for videos
@@ -18,12 +19,18 @@ class VideoHelper
   private $videoRep;
   private $thumbnailDir;
   private $entityManager;
+  private $requestStack;
 
-  public function __construct(string $thumbnailDir, VideoRepository $videoRep, EntityManagerInterface $entityManager)
-  {
+  public function __construct(
+    string $thumbnailDir,
+    VideoRepository $videoRep,
+    EntityManagerInterface $entityManager,
+    RequestStack $requestStack
+  ) {
     $this->videoRep = $videoRep;
     $this->thumbnailDir = $thumbnailDir;
     $this->entityManager = $entityManager;
+    $this->requestStack = $requestStack;
   }
 
   /**
@@ -199,39 +206,68 @@ class VideoHelper
 
 
   private $encKey = "a213123jsakdnjasdhquwhequez2eh328z4982zehqwkjdnaksjdniuhd";
-  private $encCipher = "AES-128-CBC";
+  private const ENC_CIPHER = "AES-128-CBC";
+  private const SESS_ATTR_NAME = "svcv_password";
+
+
   /**
-   * hash the password for a video
+   * encrypt a password
    *
-   * @param integer $id videoId
    * @param string $plainPassword
    * @return string
    */
   public function encryptVideoPassword(string $plainPassword): string
   {
-    $ivlen = openssl_cipher_iv_length($this->encCipher);
+    $ivlen = openssl_cipher_iv_length(self::ENC_CIPHER);
     $iv = openssl_random_pseudo_bytes($ivlen);
-    $ciphertext_raw = openssl_encrypt($plainPassword, $this->encCipher, $this->encKey, $options = OPENSSL_RAW_DATA, $iv);
+    $ciphertext_raw = openssl_encrypt($plainPassword, self::ENC_CIPHER, $this->encKey, $options = OPENSSL_RAW_DATA, $iv);
     $hmac = hash_hmac('sha256', $ciphertext_raw, $this->encKey, $as_binary = true);
     $ciphertext = base64_encode($iv . $hmac . $ciphertext_raw);
     return $ciphertext;
   }
 
-  public function decryptVideoPassword(string $encPassword): string
+  /**
+   * decryped a password
+   *
+   * @param string $encPassword
+   * @return string|null
+   */
+  private function decryptPassword(string $encPassword): ?string
   {
     $c = base64_decode($encPassword);
-    $ivlen = openssl_cipher_iv_length($this->encCipher);
+    $ivlen = openssl_cipher_iv_length(self::ENC_CIPHER);
     $iv = substr($c, 0, $ivlen);
     $hmac = substr($c, $ivlen, $sha2len = 32);
     $ciphertext_raw = substr($c, $ivlen + $sha2len);
-    $original_plaintext = openssl_decrypt($ciphertext_raw, $this->encCipher, $this->encKey, $options = OPENSSL_RAW_DATA, $iv);
-    return $original_plaintext;
+    $original_plaintext = openssl_decrypt($ciphertext_raw, self::ENC_CIPHER, $this->encKey, $options = OPENSSL_RAW_DATA, $iv);
 
     $calcmac = hash_hmac('sha256', $ciphertext_raw, $this->encKey, $as_binary = true);
 
     if (hash_equals($hmac, $calcmac)) // PHP 5.6+ Rechenzeitangriff-sicherer Vergleich
     {
-      echo $original_plaintext . "\n";
+      return $original_plaintext;
     }
+
+    return null;
   }
+
+  public function checkPassword(string $plainPassword, string $encPassword): bool
+  {
+    if (!$plainPassword) {
+      $plainPassword = $this->requestStack->getSession()->get(self::SESS_ATTR_NAME, null);
+    }
+
+
+    $encrypedPassword = $this->decryptPassword($encPassword);
+    if (!$encPassword) {
+      return false;
+    }
+    
+    if ($plainPassword === $encrypedPassword) {
+      $this->requestStack->getSession()->set(self::SESS_ATTR_NAME, $plainPassword);
+      return true;
+    }
+    return false;
+  }
+
 }

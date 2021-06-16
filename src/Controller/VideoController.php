@@ -13,14 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 class VideoController extends AbstractController
 {
-  private const SESS_ATTR_NAME = "svcv_password";
-
   private $enableLikes;
   private $enableGroups;
   private $homeRoute;
@@ -71,7 +68,7 @@ class VideoController extends AbstractController
    * @param string $id numeric id or shortName
    * @return Response
    */
-  public function run(string $id, ?bool $hideNav = false, LikeHelper $likeHelper, VideoRepository $videoRep, RequestStack $requestStack, VideoHelper $videoHelper): Response
+  public function run(string $id, ?bool $hideNav = false, LikeHelper $likeHelper, VideoRepository $videoRep, Request $request, VideoHelper $videoHelper): Response
   {
     $video = null;
     if (ctype_digit($id)) {
@@ -87,9 +84,8 @@ class VideoController extends AbstractController
     }
 
     if ($video->getIsPrivate()) {
-      $plainPassword = $requestStack->getSession()->get(self::SESS_ATTR_NAME, null);
-      if (!$plainPassword or $plainPassword != $videoHelper->decryptVideoPassword($video->getPassword())) {
-        return $this->redirectToRoute('svc_video_pwd', ['id' => $video->getId()]);
+      if (!$videoHelper->checkPassword('', $video->getPassword())) {
+        return $this->redirectToRoute('svc_video_pwd', ['id' => $video->getId(), 'path' => $request->attributes->get('_route')]);
       }
     }
 
@@ -137,24 +133,26 @@ class VideoController extends AbstractController
    * enter the password for a private video
    *
    */
-  public function enterPwd(Video $video, Request $request, VideoHelper $videoHelper, RequestStack $requestStack)
+  public function enterPwd(Video $video, Request $request, VideoHelper $videoHelper)
   {
     $form = $this->createForm(EnterPasswordType::class);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-
-      $plainPassword = $form->get('plainPassword')->getData();
-      $plainPasswordStored = $videoHelper->decryptVideoPassword($video->getPassword());
-      if ($plainPassword == $plainPasswordStored) {
-        $requestStack->getSession()->set(self::SESS_ATTR_NAME, $plainPassword);
-        return $this->redirectToRoute('svc_video_run', ['id' => $video->getId()]);
+      if ($videoHelper->checkPassword($form->get('plainPassword')->getData(), $video->getPassword())) {
+        $path = $request->query->get('path') ?? 'svc_video_run';
+        try {
+          $url = $this->generateUrl($path, ['id' => $video->getId()]);
+          return $this->redirect($url);
+        } catch (RouteNotFoundException $e) {
+          $this->addFlash('danger', 'Wrong parameter...');
+          return $this->redirectToRoute('svc_video_list');
+        }
       }
-
       $this->addFlash('danger', 'Wrong password');
     }
 
-    return $this->renderForm('@SvcVideo/video_admin/password.html.twig', [
+    return $this->renderForm('@SvcVideo/video/password.html.twig', [
       'form' => $form
     ]);
   }
