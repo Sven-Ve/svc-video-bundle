@@ -6,20 +6,18 @@ use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class VideoType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('title')
+      ->add('title', null,  ["attr" => ["autofocus" => true]])
       ->add('subTitle', null, [
         'required' => false
       ])
@@ -31,24 +29,23 @@ class VideoType extends AbstractType
       $builder
         ->add('shortName', TextType::class, [
           "help" => "The short name used in the link, please use lowercase letters, numbers, minus and underscore only",
-          "attr" => ["autofocus" => true, 'pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars']
+          "attr" => ['pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars']
         ]);
     }
 
     $builder
       ->add('isPrivate', null, [
         'help' => 'Is the video private?',
-        'label' => 'Private'
+        'label' => 'Private',
+        'label_attr' => [ 'class' => 'checkbox-switch']
       ])
       ->add('plainPassword', TextType::class, [
         'label' => 'Password (only used for private videos)',
         'help' => 'Your password should be at least 6 characters',
         'mapped' => false,
+        'required' => false,
         'data' => $options['plainPassword'],
         'constraints' => [
-          new NotBlank([
-            'message' => 'Please enter a password',
-          ]),
           new Length([
             'min' => 6,
             'minMessage' => 'Your password should be at least {{ limit }} characters',

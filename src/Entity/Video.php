@@ -336,15 +336,15 @@ class Video
     return EnvInfoHelper::getRootURLandPrefix() . "?" . $this->shortName ?? $this->id;
   }
 
-  public function getPassword(): string
+  public function getPassword(): ?string
   {
-      return $this->password;
+    return $this->password;
   }
 
-  public function setPassword(string $password): self
+  public function setPassword(?string $password = null): self
   {
-      $this->password = $password;
+    $this->password = $password;
 
-      return $this;
+    return $this;
   }
 }

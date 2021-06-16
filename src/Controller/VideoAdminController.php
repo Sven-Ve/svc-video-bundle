@@ -72,7 +72,7 @@ class VideoAdminController extends AbstractController
   public function edit(Request $request, Video $video, VideoHelper $videoHelper): Response
   {
     if ($video->getIsPrivate() and $video->getPassword()) {
-      $plainPassword = $videoHelper->decryptVideoPassword($video->getPassword());
+      $plainPassword = $videoHelper->decryptPassword($video->getPassword());
     } else {
       $plainPassword = null;
     }

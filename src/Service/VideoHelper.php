@@ -232,7 +232,7 @@ class VideoHelper
    * @param string $encPassword
    * @return string|null
    */
-  private function decryptPassword(string $encPassword): ?string
+  public function decryptPassword(string $encPassword): ?string
   {
     $c = base64_decode($encPassword);
     $ivlen = openssl_cipher_iv_length(self::ENC_CIPHER);
@@ -251,18 +251,24 @@ class VideoHelper
     return null;
   }
 
-  public function checkPassword(string $plainPassword, string $encPassword): bool
+  /**
+   * check if password is correct
+   *
+   * @param string $plainPassword the plain text password or '' if session password should be used
+   * @param string $encryptedPassword then encrypted password
+   * @return boolean true if passwords match
+   */
+  public function checkPassword(string $plainPassword, string $encryptedPassword): bool
   {
     if (!$plainPassword) {
       $plainPassword = $this->requestStack->getSession()->get(self::SESS_ATTR_NAME, null);
     }
 
-
-    $encrypedPassword = $this->decryptPassword($encPassword);
-    if (!$encPassword) {
+    $encrypedPassword = $this->decryptPassword($encryptedPassword);
+    if (!$encryptedPassword) {
       return false;
     }
-    
+
     if ($plainPassword === $encrypedPassword) {
       $this->requestStack->getSession()->set(self::SESS_ATTR_NAME, $plainPassword);
       return true;

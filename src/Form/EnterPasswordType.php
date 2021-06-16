@@ -15,7 +15,8 @@ class EnterPasswordType extends AbstractType
       ->add('plainPassword', PasswordType::class, [
         'label' => 'Password',
         'mapped' => false,
-        'attr' => ['autofocus' => true]
+        'attr' => ['autofocus' => true, 'placeholder' => 'Password'],
+        'row_attr' => ['class' => 'form-floating']
       ]);
   }
 
