@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.2.5";
-$message = "Prepare date for private recipe server";
+$version = "1.3.0";
+$message = "added password check for videos\n- added 'hideOnHomePage' for groups";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

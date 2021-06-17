@@ -19,32 +19,16 @@ class VideoGroupRepository extends ServiceEntityRepository
         parent::__construct($registry, VideoGroup::class);
     }
 
-    // /**
-    //  * @return VideoGroup[] Returns an array of VideoGroup objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllExceptHidenOnHomePage()
     {
         return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('v.hideOnHomePage = false')
+            ->orderBy('v.name', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?VideoGroup
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
+
 }

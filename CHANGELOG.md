@@ -22,3 +22,9 @@
 ## Version 1.2.5
 *Mon, 14 Jun 2021 13:25:43 +0000*
 - Prepare date for private recipe server
+
+
+## Version 1.3.0
+*Thu, 17 Jun 2021 20:58:49 +0000*
+- added password check for videos
+- added 'hideOnHomePage' for groups

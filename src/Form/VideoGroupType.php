@@ -15,9 +15,16 @@ class VideoGroupType extends AbstractType
       ->add('name')
       ->add('description')
       ->add('hideNav', null, [
-        'label'=>'Hide navigation'
+        'label'=>'Hide navigation',
+        'label_attr' => [ 'class' => 'checkbox-switch']
       ])
-      ->add('hideGroups')
+      ->add('hideGroups', null, [
+        'label_attr' => [ 'class' => 'checkbox-switch']
+      ])
+      ->add('hideOnHomePage', null, [
+        'label_attr' => [ 'class' => 'checkbox-switch'],
+        'help' => 'You should set "Hide groups" too.'
+      ])
       ;
   }
 

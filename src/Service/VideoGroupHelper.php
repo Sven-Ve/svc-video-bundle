@@ -58,10 +58,15 @@ class VideoGroupHelper
   /**
    * get all video groups
    *
-   * @return array|null array of video groups
+   * @param boolean|null $onlyVisiblesOnHomePage if true, only videos with hideOnHomePage=false are returned
+   * @return array|null
    */
-  public function getVideoGroups(): ?array {
-    return $this->videoGroupRep->findAll();
+  public function getVideoGroups(?bool $onlyVisiblesOnHomePage = false): ?array {
+    if ($onlyVisiblesOnHomePage) {
+      return $this->videoGroupRep->findAllExceptHidenOnHomePage();
+    } else {
+      return $this->videoGroupRep->findAll();
+    }
   }
 
   /**

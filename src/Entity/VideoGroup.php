@@ -54,6 +54,10 @@ class VideoGroup
    */
   private $hideGroups = false;
 
+  /**
+   * @ORM\Column(type="boolean", options={"default": false})
+   */
+  private $hideOnHomePage = false;
 
   /**
    * @ORM\Column(type="boolean", options={"default": false})
@@ -153,6 +157,18 @@ class VideoGroup
   public function setIsPrivate(bool $isPrivate): self
   {
     $this->isPrivate = $isPrivate;
+
+    return $this;
+  }
+
+  public function getHideOnHomePage(): ?bool
+  {
+    return $this->hideOnHomePage;
+  }
+
+  public function setHideOnHomePage(bool $hideOnHomePage): self
+  {
+    $this->hideOnHomePage = $hideOnHomePage;
 
     return $this;
   }
