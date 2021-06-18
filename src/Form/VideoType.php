@@ -19,7 +19,7 @@ class VideoType extends AbstractType
     $builder
       ->add('title', null,  ["attr" => ["autofocus" => true]])
       ->add('subTitle', null, [
-        'required' => false
+        'required' => false,
       ])
       ->add('videoGroup', null, [
         'label' => 'Group'
@@ -42,15 +42,14 @@ class VideoType extends AbstractType
       ->add('plainPassword', TextType::class, [
         'label' => 'Password (only used for private videos)',
         'help' => 'Your password should be at least 6 characters',
-        'mapped' => false,
+//        'mapped' => false,
         'required' => false,
         'data' => $options['plainPassword'],
         'constraints' => [
           new Length([
             'min' => 6,
             'minMessage' => 'Your password should be at least {{ limit }} characters',
-            // max length allowed by Symfony for security reasons
-            'max' => 4096,
+            'max' => 12,
           ]),
         ]
       ])
@@ -84,7 +83,7 @@ class VideoType extends AbstractType
       'data_class' => Video::class,
       'translation_domain' => 'VideoBundle',
       'enableShortNames' => false,
-      'plainPassword' => null
+      'plainPassword' => null,
     ]);
   }
 }
