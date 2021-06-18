@@ -7,6 +7,18 @@
 
 {% block body %}
   <div class='form-lg'>
+    {% if enableGroups %}
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ path('svc_video_list') }}">Home</a></li>
+          <li class="breadcrumb-item">
+            <a href="{{ path('svc_video_list', {group: video.videoGroup.id}) }}">{{ video.videoGroup.name }}</a>
+          </li>
+        </ol>
+      </nav>
+
+      
+    {% endif %}
     <h2>{{ video.title }}</h2>
     <p class="fw-light">{{ video.subTitle }}</p>
 

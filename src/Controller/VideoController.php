@@ -43,6 +43,10 @@ class VideoController extends AbstractController
       $groups = $videoGroupHelper->getVideoGroups(true);
       if ($group) {
         $currentGroup = $videoGroupHelper->getVideoGroup($group);
+        if (!$currentGroup) {
+          return $this->redirectToRoute('svc_video_list');
+        }
+
         if ($currentGroup->getHideGroups()) {
           $this->enableGroups = false;
         }
@@ -89,6 +93,7 @@ class VideoController extends AbstractController
       }
     }
 
+
     $video->incCalls();
     $this->getDoctrine()->getManager()->flush();
 
@@ -97,6 +102,7 @@ class VideoController extends AbstractController
       'enableLikes' => $this->enableLikes,
       'liked' => $likeHelper->isLiked(LikeHelper::SOURCE_VIDEO, $video->getId()),
       'hideNav' => $hideNav,
+      'enableGroups' => $this->enableGroups
     ]);
   }
 

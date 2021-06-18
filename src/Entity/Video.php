@@ -110,6 +110,8 @@ class Video
    */
   private $thumbnailPath;
 
+  public $plainPassword;
+
   /**
    * @ORM\ManyToOne(targetEntity=VideoGroup::class, inversedBy="videos")
    * @ORM\JoinColumn(nullable=true)

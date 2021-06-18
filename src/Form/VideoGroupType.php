@@ -12,8 +12,17 @@ class VideoGroupType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('name')
-      ->add('description')
+      ->add('name', null, [
+        'label' => 'Name',
+        'attr' => ['autofocus' => true, 'placeholder' => 'Name'],
+        'row_attr' => ['class' => 'form-floating mb-3'],
+//        'help' => 'Name of this video group'
+      ])
+      ->add('description', null, [
+        'label' => 'Description',
+        'attr' => ['placeholder' => 'Description'],
+        'row_attr' => ['class' => 'form-floating mb-3']
+      ])
       ->add('hideNav', null, [
         'label'=>'Hide navigation',
         'label_attr' => [ 'class' => 'checkbox-switch']
