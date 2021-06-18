@@ -33,7 +33,8 @@ class VideoType extends AbstractType
         ]);
     }
 
-    $builder
+    if ($options['enablePrivate']) {
+      $builder
       ->add('isPrivate', null, [
         'help' => 'Is the video private?',
         'label' => 'Private',
@@ -41,18 +42,25 @@ class VideoType extends AbstractType
       ])
       ->add('plainPassword', TextType::class, [
         'label' => 'Password (only used for private videos)',
-        'help' => 'Your password should be at least 6 characters',
+        'help' => 'It should have between 6 and 12 characters',
 //        'mapped' => false,
         'required' => false,
-        'data' => $options['plainPassword'],
         'constraints' => [
           new Length([
             'min' => 6,
-            'minMessage' => 'Your password should be at least {{ limit }} characters',
             'max' => 12,
           ]),
+        ],
+        'attr' => ['data-show-password-target' => "passwordFld"],
+        'row_attr' => [
+          'data-controller' => "show-password",
+          'data-show-password-show-text-value' => "Show password",
+          'data-show-password-hide-text-value' => "Hide password"
         ]
-      ])
+      ]);
+    }
+
+    $builder
       ->add('description', TextareaType::class, [
         'attr' => [
           'data-controller' => 'wysiwyg'
@@ -83,7 +91,7 @@ class VideoType extends AbstractType
       'data_class' => Video::class,
       'translation_domain' => 'VideoBundle',
       'enableShortNames' => false,
-      'plainPassword' => null,
+      'enablePrivate' => true
     ]);
   }
 }

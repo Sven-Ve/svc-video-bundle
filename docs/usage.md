@@ -37,6 +37,9 @@ svc_video:
     # Enable videos groups?
     enableGroups:         false
 
+    # Enable private viceos?
+    enablePrivate:        true
+
     # Default route, for redirect after errors
     homeRoute:            svc_video_list
 ```

@@ -110,7 +110,15 @@ class Video
    */
   private $thumbnailPath;
 
-  public $plainPassword;
+  /**
+   * helper type to store password in form, not stored in database
+   *
+   * @var string
+   * @Assert\Expression(
+   *     "this.getPlainPassword() or !this.getIsPrivate()",
+   *     message="You have to define a password for private videos"
+   * )   */
+  private $plainPassword;
 
   /**
    * @ORM\ManyToOne(targetEntity=VideoGroup::class, inversedBy="videos")
@@ -346,6 +354,18 @@ class Video
   public function setPassword(?string $password = null): self
   {
     $this->password = $password;
+
+    return $this;
+  }
+
+  public function getPlainPassword(): ?string
+  {
+    return $this->plainPassword;
+  }
+
+  public function setPlainPassword(?string $plainPassword = null): self
+  {
+    $this->plainPassword = $plainPassword;
 
     return $this;
   }

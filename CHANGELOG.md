@@ -28,3 +28,10 @@
 *Thu, 17 Jun 2021 20:58:49 +0000*
 - added password check for videos
 - added 'hideOnHomePage' for groups
+
+
+## Version 1.3.1
+*Fri, 18 Jun 2021 19:11:33 +0000*
+- added breadcrumb
+- expression validation for private video password
+- new parameter enablePrivate

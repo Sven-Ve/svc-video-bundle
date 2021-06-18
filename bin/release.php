@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.3.0";
-$message = "added password check for videos\n- added 'hideOnHomePage' for groups";
+$version = "1.3.1";
+$message = "added breadcrumb\n- expression validation for private video password\n- new parameter enablePrivate";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

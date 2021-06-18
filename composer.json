@@ -16,6 +16,7 @@
     "doctrine/doctrine-bundle": "^2.2",
     "doctrine/orm": "^2.8",
     "symfony/validator": "^5",
+    "symfony/expression-language": "^5",
     "symfony/translation": "^5",
     "symfony/twig-bundle": "^4.3|^5.0",
     "twig/twig": "^2.12|^3.0",

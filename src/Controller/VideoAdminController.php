@@ -18,9 +18,11 @@ use Svc\VideoBundle\Service\VideoHelper;
 class VideoAdminController extends AbstractController
 {
   private $enableShortNames;
-  public function __construct(bool $enableShortNames)
+  private $enablePrivate;
+  public function __construct(bool $enableShortNames, bool $enablePrivate)
   {
     $this->enableShortNames = $enableShortNames;
+    $this->enablePrivate = $enablePrivate;
   }
 
   public function index(VideoRepository $videoRepository, VideoGroupHelper $videoGroupHelper): Response
@@ -72,19 +74,18 @@ class VideoAdminController extends AbstractController
   public function edit(Request $request, Video $video, VideoHelper $videoHelper): Response
   {
     if ($video->getIsPrivate() and $video->getPassword()) {
-      $plainPassword = $videoHelper->decryptPassword($video->getPassword());
+      $video->setPlainPassword($videoHelper->decryptPassword($video->getPassword()));
     } else {
-      $plainPassword = null;
+      $video->setPlainPassword(null);
     }
 
-    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'plainPassword' => $plainPassword]);
+    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
 
-      $plainPassword = $form->get('plainPassword')->getData();
-      if ($plainPassword and $video->getIsPrivate()) {
-        $video->setPassword($videoHelper->encryptVideoPassword($plainPassword));
+      if ($video->getPlainPassword() and $video->getIsPrivate()) {
+        $video->setPassword($videoHelper->encryptVideoPassword($video->getPlainPassword()));
       }
 
       if (!$video->isThumbnailPath()) {
