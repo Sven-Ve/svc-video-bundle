@@ -33,7 +33,7 @@
 						{% endif %}
 						<div class="card text-center border-warning" onclick="location.href='{{ path(run_path, {'id': video.id}) }}'">
 							{% if video.thumbnailPath %}
-								<img src="{{ asset('uploads/' ~ video.thumbnailPath) | imagine_filter('svcv_thumb_video_200') }}" class='card-img-top' style='max-height:112px'/>
+								<img src="{{ asset('uploads/' ~ video.thumbnailPath) | imagine_filter('svcv_thumb_video_200') }}" class='card-img-top'/>
 							{% elseif video.thumbnailUrl %}
 								<img src="{{ video.thumbnailUrl }}" class='card-img-top'/>
 							{% else %}

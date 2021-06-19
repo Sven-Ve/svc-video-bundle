@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\Collection;
  * @ORM\Entity(repositoryClass=VideoGroupRepository::class)
  * @UniqueEntity(fields={"name"}, message="There is already a video group with this name")
  */
-class VideoGroup
+class VideoGroup extends _VideoSuperclass
 {
   /**
    * @ORM\Id
@@ -54,15 +54,6 @@ class VideoGroup
    */
   private $hideGroups = false;
 
-  /**
-   * @ORM\Column(type="boolean", options={"default": false})
-   */
-  private $hideOnHomePage = false;
-
-  /**
-   * @ORM\Column(type="boolean", options={"default": false})
-   */
-  private $isPrivate = false;
 
   public function __construct()
   {
@@ -149,27 +140,4 @@ class VideoGroup
     return $this;
   }
 
-  public function getIsPrivate(): ?bool
-  {
-    return $this->isPrivate;
-  }
-
-  public function setIsPrivate(bool $isPrivate): self
-  {
-    $this->isPrivate = $isPrivate;
-
-    return $this;
-  }
-
-  public function getHideOnHomePage(): ?bool
-  {
-    return $this->hideOnHomePage;
-  }
-
-  public function setHideOnHomePage(bool $hideOnHomePage): self
-  {
-    $this->hideOnHomePage = $hideOnHomePage;
-
-    return $this;
-  }
 }

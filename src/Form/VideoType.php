@@ -33,6 +33,12 @@ class VideoType extends AbstractType
         ]);
     }
 
+    $builder
+    ->add('hideOnHomePage', null, [
+      'label_attr' => [ 'class' => 'checkbox-switch']
+    ]);
+
+
     if ($options['enablePrivate']) {
       $builder
       ->add('isPrivate', null, [

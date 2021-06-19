@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass=VideoRepository::class)
  * @UniqueEntity(fields={"title"}, message="There is already a video with this title")
  */
-class Video
+class Video extends _VideoSuperclass
 {
 
   public const SOURCE_YOUTUBE = 0;
@@ -48,25 +48,6 @@ class Video
    */
   private $description;
 
-  /**
-   * @ORM\Column(type="string", length=8, unique=true, nullable=true)
-   * @Assert\Regex(
-   *     pattern     = "/^[a-z0-9_\-]+$/",
-   *     message     = "Please use lowercase letters, numbers, minus and underscore only"
-   * )
-   * @Assert\Length(
-   *      min = 4,
-   *      max = 8,
-   *      minMessage = "Your shortname must be at least {{ limit }} characters long",
-   *      maxMessage = "Your shortname cannot be longer than {{ limit }} characters"
-   * )
-   */
-  private $shortName;
-
-  /**
-   * @ORM\Column(type="boolean", options={"default": false})
-   */
-  private $isPrivate = false;
 
   /**
    * @ORM\Column(type="string", length=30)
@@ -110,15 +91,6 @@ class Video
    */
   private $thumbnailPath;
 
-  /**
-   * helper type to store password in form, not stored in database
-   *
-   * @var string
-   * @Assert\Expression(
-   *     "this.getPlainPassword() or !this.getIsPrivate()",
-   *     message="You have to define a password for private videos"
-   * )   */
-  private $plainPassword;
 
   /**
    * @ORM\ManyToOne(targetEntity=VideoGroup::class, inversedBy="videos")
@@ -131,11 +103,6 @@ class Video
    */
   private $uploadDate;
 
-  /**
-   * @var string The hashed password
-   * @ORM\Column(type="string", nullable=true)
-   */
-  private $password;
 
   public function getId(): ?int
   {
@@ -293,30 +260,6 @@ class Video
     return $this;
   }
 
-  public function getShortName(): ?string
-  {
-    return $this->shortName;
-  }
-
-  public function setShortName(string $shortName): self
-  {
-    $this->shortName = $shortName;
-
-    return $this;
-  }
-
-  public function getIsPrivate(): ?bool
-  {
-    return $this->isPrivate;
-  }
-
-  public function setIsPrivate(bool $isPrivate): self
-  {
-    $this->isPrivate = $isPrivate;
-
-    return $this;
-  }
-
   public function getVideoGroup(): ?VideoGroup
   {
     return $this->videoGroup;
@@ -346,27 +289,4 @@ class Video
     return EnvInfoHelper::getRootURLandPrefix() . "?" . $this->shortName ?? $this->id;
   }
 
-  public function getPassword(): ?string
-  {
-    return $this->password;
-  }
-
-  public function setPassword(?string $password = null): self
-  {
-    $this->password = $password;
-
-    return $this;
-  }
-
-  public function getPlainPassword(): ?string
-  {
-    return $this->plainPassword;
-  }
-
-  public function setPlainPassword(?string $plainPassword = null): self
-  {
-    $this->plainPassword = $plainPassword;
-
-    return $this;
-  }
 }
