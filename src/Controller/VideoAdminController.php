@@ -42,13 +42,12 @@ class VideoAdminController extends AbstractController
   {
     $video = new Video();
     $video->setVideoGroup($videoGroupHelper->getDefaultVideoGroup());
-    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames]);
+    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $plainPassword = $form->get('plainPassword')->getData();
-      if ($plainPassword and $video->getIsPrivate()) {
-        $video->setPassword($videoHelper->encryptVideoPassword($plainPassword));
+      if ($video->getPlainPassword() and $video->getIsPrivate()) {
+        $video->setPassword($videoHelper->encryptVideoPassword($video->getPlainPassword()));
       }
 
       $entityManager = $this->getDoctrine()->getManager();
@@ -86,6 +85,8 @@ class VideoAdminController extends AbstractController
 
       if ($video->getPlainPassword() and $video->getIsPrivate()) {
         $video->setPassword($videoHelper->encryptVideoPassword($video->getPlainPassword()));
+      } else {
+        $video->setPassword(null);
       }
 
       if (!$video->isThumbnailPath()) {
@@ -94,7 +95,7 @@ class VideoAdminController extends AbstractController
         }
         if ($video->isThumbnailUrl()) {
           $video->setThumbnailPath($videoHelper->copyThumbnail($video));
-        }  
+        }
       }
       $this->getDoctrine()->getManager()->flush();
 

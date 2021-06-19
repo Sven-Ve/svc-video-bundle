@@ -43,7 +43,6 @@ class VideoType extends AbstractType
       ->add('plainPassword', TextType::class, [
         'label' => 'Password (only used for private videos)',
         'help' => 'It should have between 6 and 12 characters',
-//        'mapped' => false,
         'required' => false,
         'constraints' => [
           new Length([
