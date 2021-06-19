@@ -35,3 +35,8 @@
 - added breadcrumb
 - expression validation for private video password
 - new parameter enablePrivate
+
+
+## Version 1.3.2
+*Sat, 19 Jun 2021 18:48:48 +0000*
+- added VideoShortCallTrait to implement standardizied short urls

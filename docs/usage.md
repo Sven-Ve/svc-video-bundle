@@ -44,6 +44,21 @@ svc_video:
     homeRoute:            svc_video_list
 ```
 
+## Short URLs
+you have to call the trait VideoShortCallTrait in your home controller to use the short URLs
+```php
+<?php
+
+namespace App\Controller;
+
+use Svc\VideoBundle\Controller\VideoShortCallTrait;
+...
+
+class HomeController extends AbstractController
+{
+  use VideoShortCallTrait;
+...
+```
 
 ## Paths
 - integrate the video controller via path "svc_video_run"

@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.3.1";
-$message = "added breadcrumb\n- expression validation for private video password\n- new parameter enablePrivate";
+$version = "1.3.2";
+$message = "added VideoShortCallTrait to implement standardizied short urls";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);
