@@ -33,9 +33,6 @@ class VideoController extends AbstractController
    */
   public function list(?int $group = null, ?bool $hideNav = false, ?bool $hideGroups = false, VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper): Response
   {
-    if ($hideGroups) {
-      $this->enableGroups = false;
-    }
     $groups = null;
     $currentGroup = null;
 
@@ -46,22 +43,18 @@ class VideoController extends AbstractController
         if (!$currentGroup) {
           return $this->redirectToRoute('svc_video_list');
         }
-
-        if ($currentGroup->getHideGroups()) {
-          $this->enableGroups = false;
-        }
-        if ($currentGroup->getHideNav()) {
-          $hideNav = true;
-        }
+        $hideGroups = $hideGroups ? true : $currentGroup->getHideGroups();
+        $hideNav = $hideNav ? true : $currentGroup->getHideNav();
       }
+
     }
 
     return $this->render('@SvcVideo/video/list.html.twig', [
       'videos' => $videoHelper->getVideoByGroup($group),
       'enableLikes' => $this->enableLikes,
-      'enableGroups' => $this->enableGroups,
       'groups' => $groups,
       'currentGroup' => $currentGroup,
+      'hideGroups' => $hideGroups,
       'hideNav' => $hideNav,
     ]);
   }

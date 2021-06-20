@@ -6,22 +6,22 @@
 {% endblock %}
 
 {% block body %}
-	{% if enableGroups %}
+	{% if not hideGroups %}
 		<div class="row">
 			<aside class="col-sm-4 col-md-3 col-xl-2">
 				{{ include('@SvcVideo/video/_groupSidebar.html.twig') }}
 			</aside>
 
 			<div class="col-sm-8 col-md-9 col-xl-10">
-				{% if currentGroup %}
-					<h3>{{ currentGroup.name }}</h3>
-				{% else %}
-					<h3>{% trans %}All Videos{% endtrans %}</h3>
-				{% endif %}
+	{% endif %}
 
-			{% else %}
-				<h3>{% trans %}All Videos{% endtrans %}</h3>
-			{% endif %}
+      {% if currentGroup %}
+        <h2>{{ currentGroup.name }}</h2>
+        <p class="fw-light">{{ currentGroup.description }}</p>
+        <hr />
+      {% else %}
+        <h2>{% trans %}All Videos{% endtrans %}</h2>
+      {% endif %}
 
 			<div class='row'>
 				{% for video in videos %}
@@ -59,7 +59,7 @@
 				{% endfor %}
 			</div>
 
-			{% if enableGroups %}
+			{% if not hideGroups %}
 			</div>
 		</div>
 	{% endif %}
