@@ -4,8 +4,10 @@ namespace Svc\VideoBundle\Form;
 
 use Svc\VideoBundle\Entity\VideoGroup;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class VideoGroupType extends AbstractType
 {
@@ -14,15 +16,21 @@ class VideoGroupType extends AbstractType
     $builder
       ->add('name', null, [
         'label' => 'Name',
-        'attr' => ['autofocus' => true, 'placeholder' => 'Name'],
-        'row_attr' => ['class' => 'form-floating mb-3'],
-//        'help' => 'Name of this video group'
+        'attr' => ['autofocus' => true],
       ])
       ->add('description', null, [
         'label' => 'Description',
-        'attr' => ['placeholder' => 'Description'],
-        'row_attr' => ['class' => 'form-floating mb-3']
-      ])
+      ]);
+    
+      if ($options['enableShortNames']) {
+        $builder
+          ->add('shortName', TextType::class, [
+            "help" => "The short name used in the link, please use lowercase letters, numbers, minus and underscore only",
+            "attr" => ['pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars']
+          ]);
+      }
+
+    $builder
       ->add('hideNav', null, [
         'label'=>'Hide navigation',
         'label_attr' => [ 'class' => 'checkbox-switch']
@@ -35,13 +43,40 @@ class VideoGroupType extends AbstractType
         'help' => 'You should set "Hide groups" too.'
       ])
       ;
+      if ($options['enablePrivate']) {
+        $builder
+        ->add('isPrivate', null, [
+          'help' => 'Is the video group private?',
+          'label' => 'Private',
+          'label_attr' => [ 'class' => 'checkbox-switch']
+        ])
+        ->add('plainPassword', TextType::class, [
+          'label' => 'Password (only used for private video groups)',
+          'help' => 'It should have between 6 and 12 characters',
+          'required' => false,
+          'constraints' => [
+            new Length([
+              'min' => 6,
+              'max' => 12,
+            ]),
+          ],
+          'attr' => ['data-show-password-target' => "passwordFld"],
+          'row_attr' => [
+            'data-controller' => "show-password",
+            'data-show-password-show-text-value' => "Show password",
+            'data-show-password-hide-text-value' => "Hide password"
+          ]
+        ]);
+      }
   }
 
   public function configureOptions(OptionsResolver $resolver)
   {
     $resolver->setDefaults([
       'data_class' => VideoGroup::class,
-      'translation_domain' => 'VideoBundle'
+      'translation_domain' => 'VideoBundle',
+      'enableShortNames' => false,
+      'enablePrivate' => true
     ]);
   }
 }

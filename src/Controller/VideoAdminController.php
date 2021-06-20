@@ -46,9 +46,7 @@ class VideoAdminController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      if ($video->getPlainPassword() and $video->getIsPrivate()) {
-        $video->setPassword($videoHelper->encryptVideoPassword($video->getPlainPassword()));
-      }
+      $video->setPassword($videoHelper->getEncPassword($video));
 
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($video);
@@ -83,11 +81,7 @@ class VideoAdminController extends AbstractController
 
     if ($form->isSubmitted() && $form->isValid()) {
 
-      if ($video->getPlainPassword() and $video->getIsPrivate()) {
-        $video->setPassword($videoHelper->encryptVideoPassword($video->getPlainPassword()));
-      } else {
-        $video->setPassword(null);
-      }
+      $video->setPassword($videoHelper->getEncPassword($video));
 
       if (!$video->isThumbnailPath()) {
         if (!$video->isThumbnailUrl()) {

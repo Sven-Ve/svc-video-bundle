@@ -10,12 +10,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Svc\VideoBundle\Service\VideoHelper;
 
 /**
  * @IsGranted("ROLE_ADMIN")
  */
 class VideoGroupController extends AbstractController
 {
+
+  private $enableShortNames;
+  private $enablePrivate;
+  public function __construct(bool $enableShortNames, bool $enablePrivate)
+  {
+    $this->enableShortNames = $enableShortNames;
+    $this->enablePrivate = $enablePrivate;
+  }
 
   public function index(VideoGroupRepository $videoGroupRepository, VideoGroupHelper $videoGroupHelper): Response
   {
@@ -26,13 +35,16 @@ class VideoGroupController extends AbstractController
     ]);
   }
 
-  public function new(Request $request): Response
+  public function new(Request $request, VideoHelper $videoHelper): Response
   {
     $videoGroup = new VideoGroup();
-    $form = $this->createForm(VideoGroupType::class, $videoGroup);
+    $form = $this->createForm(VideoGroupType::class, $videoGroup, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+
+      $videoGroup->setPassword($videoHelper->getEncPassword($videoGroup));
+
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($videoGroup);
       $entityManager->flush();
@@ -40,27 +52,34 @@ class VideoGroupController extends AbstractController
       return $this->redirectToRoute('svc_video_group_index');
     }
 
-    return $this->render('@SvcVideo/video_group/new.html.twig', [
+    return $this->renderForm('@SvcVideo/video_group/new.html.twig', [
       'video_group' => $videoGroup,
-      'form' => $form->createView(),
+      'form' => $form,
     ]);
   }
 
-
-  public function edit(Request $request, VideoGroup $videoGroup): Response
+  /**
+   * edit the video group
+   */
+  public function edit(Request $request, VideoGroup $videoGroup, VideoHelper $videoHelper): Response
   {
-    $form = $this->createForm(VideoGroupType::class, $videoGroup);
+    $videoGroup->setPlainPassword($videoHelper->getDecrypedPassword($videoGroup));
+
+    $form = $this->createForm(VideoGroupType::class, $videoGroup, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+
+      $videoGroup->setPassword($videoHelper->getEncPassword($videoGroup));
+
       $this->getDoctrine()->getManager()->flush();
 
       return $this->redirectToRoute('svc_video_group_index');
     }
 
-    return $this->render('@SvcVideo/video_group/edit.html.twig', [
+    return $this->renderForm('@SvcVideo/video_group/edit.html.twig', [
       'video_group' => $videoGroup,
-      'form' => $form->createView(),
+      'form' => $form,
     ]);
   }
 

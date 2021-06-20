@@ -4,6 +4,7 @@ namespace Svc\VideoBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Svc\VideoBundle\Entity\_VideoSuperclass;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -14,20 +15,21 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class VideoHelper
 {
-
-
   private $videoRep;
   private $thumbnailDir;
   private $entityManager;
   private $requestStack;
+  private $enablePrivate;
 
   public function __construct(
     string $thumbnailDir,
+    bool $enablePrivate,
     VideoRepository $videoRep,
     EntityManagerInterface $entityManager,
     RequestStack $requestStack
   ) {
     $this->videoRep = $videoRep;
+    $this->enablePrivate = $enablePrivate;
     $this->thumbnailDir = $thumbnailDir;
     $this->entityManager = $entityManager;
     $this->requestStack = $requestStack;
@@ -216,7 +218,7 @@ class VideoHelper
    * @param string $plainPassword
    * @return string
    */
-  public function encryptVideoPassword(string $plainPassword): string
+  private function encryptVideoPassword(string $plainPassword): string
   {
     $ivlen = openssl_cipher_iv_length(self::ENC_CIPHER);
     $iv = openssl_random_pseudo_bytes($ivlen);
@@ -232,7 +234,7 @@ class VideoHelper
    * @param string $encPassword
    * @return string|null
    */
-  public function decryptPassword(string $encPassword): ?string
+  private function decryptPassword(string $encPassword): ?string
   {
     $c = base64_decode($encPassword);
     $ivlen = openssl_cipher_iv_length(self::ENC_CIPHER);
@@ -260,6 +262,9 @@ class VideoHelper
    */
   public function checkPassword(string $plainPassword, string $encryptedPassword): bool
   {
+    if (!$this->enablePrivate) {
+      return true;
+    }
     if (!$plainPassword) {
       $plainPassword = $this->requestStack->getSession()->get(self::SESS_ATTR_NAME, null);
     }
@@ -276,4 +281,34 @@ class VideoHelper
     return false;
   }
 
+
+  /**
+   * get encrypted password or null, if video / videogroup not private
+   *
+   * @param _VideoSuperclass $obj (Video or VideoGroup)
+   * @return string|null
+   */
+  function getEncPassword(_VideoSuperclass $obj): ?string
+  {
+    if ($this->enablePrivate and $obj->getPlainPassword() and $obj->getIsPrivate()) {
+      return $this->encryptVideoPassword($obj->getPlainPassword());
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * get decrypted password or null, if video / videogroup not private
+   *
+   * @param _VideoSuperclass $obj
+   * @return string|null
+   */
+  function getDecrypedPassword(_VideoSuperclass $obj): ?string
+  {
+    if ($this->enablePrivate and $obj->getIsPrivate() and $obj->getPassword()) {
+      return $this->decryptPassword($obj->getPassword());
+    } else {
+      return null;
+    }
+  }
 }
