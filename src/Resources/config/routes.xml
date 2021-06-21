@@ -28,22 +28,22 @@
        <default key="hideNav">true</default>
     </route>
 
-    <route id="svc_video_list" controller="svc_video.controller::list" path="/{group?}" >
-      <requirement key="group">\d+</requirement>
+    <route id="svc_video_list" controller="svc_video.controller::list" path="/{id?}" >
+      <requirement key="id">\d+</requirement>
     </route>
 
-    <route id="svc_video_list_hn" controller="svc_video.controller::list" path="/hn/{group?}" >
-      <requirement key="group">\d+</requirement>
+    <route id="svc_video_list_hn" controller="svc_video.controller::list" path="/hn/{id?}" >
+      <requirement key="id">\d+</requirement>
       <default key="hideNav">true</default>
     </route>
 
-    <route id="svc_video_list_hg" controller="svc_video.controller::list" path="/hg/{group?}" >
-      <requirement key="group">\d+</requirement>
+    <route id="svc_video_list_hg" controller="svc_video.controller::list" path="/hg/{id?}" >
+      <requirement key="id">\d+</requirement>
       <default key="hideGroups">true</default>
     </route>
 
-    <route id="svc_video_list_he" controller="svc_video.controller::list" path="/he/{group?}" >
-      <requirement key="group">\d+</requirement>
+    <route id="svc_video_list_he" controller="svc_video.controller::list" path="/he/{id?}" >
+      <requirement key="id">\d+</requirement>
       <default key="hideGroups">true</default>
       <default key="hideNav">true</default>
     </route>
@@ -68,7 +68,7 @@
       <!-- settings -->
     </route>
 
-    <route id="svc_video_pwd" controller="svc_video.controller::enterPwd" path="/pwd/{id}" >
+    <route id="svc_video_pwd" controller="svc_video.controller::enterPwd" path="/pwd/{id}/{ot?}" >
       <!-- settings -->
     </route>
 </routes>

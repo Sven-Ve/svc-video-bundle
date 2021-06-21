@@ -6,6 +6,7 @@ use DateTime;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Form\EnterPasswordType;
+use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Svc\VideoBundle\Repository\VideoRepository;
 use Svc\VideoBundle\Service\VideoGroupHelper;
 use Svc\VideoBundle\Service\VideoHelper;
@@ -18,6 +19,9 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 class VideoController extends AbstractController
 {
+
+  private const OBJ_TYPE_VIDEO = 1;
+  private const OBJ_TYPE_VGROUP = 2;
   private $enableLikes;
   private $enableGroups;
   private $homeRoute;
@@ -31,26 +35,32 @@ class VideoController extends AbstractController
   /**
    * list videos 
    */
-  public function list(?int $group = null, ?bool $hideNav = false, ?bool $hideGroups = false, VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper): Response
+  public function list(?int $id = null, ?bool $hideNav = false, ?bool $hideGroups = false, VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request): Response
   {
     $groups = null;
     $currentGroup = null;
 
     if ($this->enableGroups) {
       $groups = $videoGroupHelper->getVideoGroups(true);
-      if ($group) {
-        $currentGroup = $videoGroupHelper->getVideoGroup($group);
+      if ($id) {
+        $currentGroup = $videoGroupHelper->getVideoGroup($id);
         if (!$currentGroup) {
           return $this->redirectToRoute('svc_video_list');
         }
         $hideGroups = $hideGroups ? true : $currentGroup->getHideGroups();
         $hideNav = $hideNav ? true : $currentGroup->getHideNav();
+
+        if ($currentGroup->getIsPrivate()) {
+          if (!$videoHelper->checkPassword('', $currentGroup->getPassword())) {
+            return $this->redirectToRoute('svc_video_pwd', ['id' => $currentGroup->getId(), 'ot' => self::OBJ_TYPE_VGROUP, 'path' => $request->attributes->get('_route')]);
+          }
+        }
       }
 
     }
 
     return $this->render('@SvcVideo/video/list.html.twig', [
-      'videos' => $videoHelper->getVideoByGroup($group),
+      'videos' => $videoHelper->getVideoByGroup($id),
       'enableLikes' => $this->enableLikes,
       'groups' => $groups,
       'currentGroup' => $currentGroup,
@@ -132,16 +142,23 @@ class VideoController extends AbstractController
    * enter the password for a private video
    *
    */
-  public function enterPwd(Video $video, Request $request, VideoHelper $videoHelper)
+  public function enterPwd(int $id, ?int $ot=1, Request $request, VideoHelper $videoHelper, VideoGroupRepository $videoGroupRep, VideoRepository $videoRep)
   {
     $form = $this->createForm(EnterPasswordType::class);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      if ($videoHelper->checkPassword($form->get('plainPassword')->getData(), $video->getPassword())) {
+      
+      if ($ot == self::OBJ_TYPE_VGROUP) {
+        $videoObj=$videoGroupRep->find($id);
+      } else {
+        $videoObj = $videoRep->find($id);
+      }
+
+      if ($videoHelper->checkPassword($form->get('plainPassword')->getData(), $videoObj->getPassword())) {
         $path = $request->query->get('path') ?? 'svc_video_run';
         try {
-          $url = $this->generateUrl($path, ['id' => $video->getId()]);
+          $url = $this->generateUrl($path, ['id' => $videoObj->getId()]);
           return $this->redirect($url);
         } catch (RouteNotFoundException $e) {
           $this->addFlash('danger', 'Wrong parameter...');

@@ -11,7 +11,7 @@
 		</li>
 		{% for group in groups %}
 			<li class="nav-item">
-				<a class="nav-link {{ currentGroup|default is same as group ? 'selected' }}" href='{{ path('svc_video_list', {group: group.id}) }}'>
+				<a class="nav-link {{ currentGroup|default is same as group ? 'selected' }}" href='{{ path('svc_video_list', {id: group.id}) }}'>
 					{{ group.name }}
 				</a>
 			</li>
