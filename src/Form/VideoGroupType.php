@@ -21,34 +21,34 @@ class VideoGroupType extends AbstractType
       ->add('description', null, [
         'label' => 'Description',
       ]);
-    
-      if ($options['enableShortNames']) {
-        $builder
-          ->add('shortName', TextType::class, [
-            "help" => "The short name used in the link, please use lowercase letters, numbers, minus and underscore only",
-            "attr" => ['pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars']
-          ]);
-      }
+
+    if ($options['enableShortNames']) {
+      $builder
+        ->add('shortName', TextType::class, [
+          "help" => "The short name used in the link, please use lowercase letters, numbers, minus and underscore only",
+          "attr" => ['pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars']
+        ]);
+    }
 
     $builder
       ->add('hideNav', null, [
-        'label'=>'Hide navigation',
-        'label_attr' => [ 'class' => 'checkbox-switch']
+        'label' => 'Hide navigation',
+        'label_attr' => ['class' => 'checkbox-switch']
       ])
       ->add('hideGroups', null, [
-        'label_attr' => [ 'class' => 'checkbox-switch']
+        'label_attr' => ['class' => 'checkbox-switch']
       ])
       ->add('hideOnHomePage', null, [
-        'label_attr' => [ 'class' => 'checkbox-switch'],
+        'label_attr' => ['class' => 'checkbox-switch'],
         'help' => 'You should set "Hide groups" too.'
-      ])
-      ;
-      if ($options['enablePrivate']) {
-        $builder
+      ]);
+      
+    if ($options['enablePrivate']) {
+      $builder
         ->add('isPrivate', null, [
           'help' => 'Is the video group private?',
           'label' => 'Private',
-          'label_attr' => [ 'class' => 'checkbox-switch']
+          'label_attr' => ['class' => 'checkbox-switch']
         ])
         ->add('plainPassword', TextType::class, [
           'label' => 'Password (only used for private video groups)',
@@ -67,7 +67,7 @@ class VideoGroupType extends AbstractType
             'data-show-password-hide-text-value' => "Hide password"
           ]
         ]);
-      }
+    }
   }
 
   public function configureOptions(OptionsResolver $resolver)
