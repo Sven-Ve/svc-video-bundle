@@ -3,6 +3,7 @@
 namespace Svc\VideoBundle\Controller;
 
 use DateTime;
+use Exception;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Form\EnterPasswordType;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class VideoController extends AbstractController
 {
@@ -24,11 +26,14 @@ class VideoController extends AbstractController
   private const OBJ_TYPE_VGROUP = 2;
   private $enableLikes;
   private $enableGroups;
+  private $enableShortNames;
   private $homeRoute;
-  public function __construct(bool $enableLikes, bool $enableGroups, string $homeRoute)
+
+  public function __construct(bool $enableLikes, bool $enableGroups, bool $enableShortNames, string $homeRoute)
   {
     $this->enableLikes = $enableLikes;
     $this->enableGroups = $enableGroups;
+    $this->enableShortNames = $enableShortNames;
     $this->homeRoute = $homeRoute;
   }
 
@@ -90,22 +95,38 @@ class VideoController extends AbstractController
       return $this->redirectToRoute($this->homeRoute);
     }
 
+    $currentRoute = $request->attributes->get('_route');
     if ($video->getIsPrivate()) {
       if (!$videoHelper->checkPassword('', $video->getPassword())) {
-        return $this->redirectToRoute('svc_video_pwd', ['id' => $video->getId(), 'path' => $request->attributes->get('_route')]);
+        return $this->redirectToRoute('svc_video_pwd', ['id' => $video->getId(), 'path' => $currentRoute]);
       }
     }
 
-
     $video->incCalls();
     $this->getDoctrine()->getManager()->flush();
+
+    $url=$this->generateUrl($currentRoute, ['id' => $video->getIDorShortname() ], UrlGeneratorInterface::ABSOLUTE_URL);
+    if ($currentRoute=="svc_video_run") {
+      try { // not sure, if trait is enabled...
+        if ($this->enableShortNames) {
+          $url=$this->generateUrl('svc_video_short_run1', ['id' => $video->getIDorShortname() ], UrlGeneratorInterface::ABSOLUTE_URL);
+        } else {
+          $url=$this->generateUrl('svc_video_short_run', ['id' => $video->getId() ], UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+      } catch (Exception $e) {}
+    } elseif ($currentRoute == 'svc_video_run_hn') {
+      try { // not sure, if trait is enabled...
+          $url=$this->generateUrl('svc_video_short_runHideNav', ['id' => $video->getIDorShortname() ], UrlGeneratorInterface::ABSOLUTE_URL);
+      } catch (Exception $e) {}      
+    }
 
     return $this->render('@SvcVideo/video/run.html.twig', [
       'video' => $video,
       'enableLikes' => $this->enableLikes,
       'liked' => $likeHelper->isLiked(LikeHelper::SOURCE_VIDEO, $video->getId()),
       'hideNav' => $hideNav,
-      'enableGroups' => $this->enableGroups
+      'enableGroups' => $this->enableGroups,
+      'copyUrl' => $url
     ]);
   }
 

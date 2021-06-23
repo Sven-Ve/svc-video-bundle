@@ -70,11 +70,8 @@ class VideoAdminController extends AbstractController
 
   public function edit(Request $request, Video $video, VideoHelper $videoHelper): Response
   {
-    if ($video->getIsPrivate() and $video->getPassword()) {
-      $video->setPlainPassword($videoHelper->decryptPassword($video->getPassword()));
-    } else {
-      $video->setPlainPassword(null);
-    }
+    $video->setPlainPassword($videoHelper->getDecrypedPassword($video));
+
 
     $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
     $form->handleRequest($request);

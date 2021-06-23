@@ -24,20 +24,20 @@ class SvcVideoExtension extends Extension
     $definition = $container->getDefinition('svc_video.controller');
     $definition->setArgument(0, $config['enableLikes']);
     $definition->setArgument(1, $config['enableGroups']);
-    $definition->setArgument(2, $config['homeRoute']);
+    $definition->setArgument(2, $config['enableShortNames']);
+    $definition->setArgument(3, $config['homeRoute']);
 
-    $definition1 = $container->getDefinition('svc_video.controller.admin');
-    $definition1->setArgument(0, $config['enableShortNames']);
-    $definition1->setArgument(1, $config['enablePrivate']);
+    $definition = $container->getDefinition('svc_video.controller.admin');
+    $definition->setArgument(0, $config['enableShortNames']);
+    $definition->setArgument(1, $config['enablePrivate']);
 
-    $definition2 = $container->getDefinition('svc_video.service.video-helper');
-    $definition2->setArgument(0, $config['thumbnailDir']);
-    $definition2->setArgument(1, $config['enablePrivate']);
+    $definition = $container->getDefinition('svc_video.service.video-helper');
+    $definition->setArgument(0, $config['thumbnailDir']);
+    $definition->setArgument(1, $config['enablePrivate']);
 
-    $definition3 = $container->getDefinition('svc_video.controller.group');
-    $definition3->setArgument(0, $config['enableShortNames']);
-    $definition3->setArgument(1, $config['enablePrivate']);
-
+    $definition = $container->getDefinition('svc_video.controller.group');
+    $definition->setArgument(0, $config['enableShortNames']);
+    $definition->setArgument(1, $config['enablePrivate']);
   }
 
   private function createConfigIfNotExists($rootPath)

@@ -24,7 +24,7 @@ class _VideoSuperclass
    *      maxMessage = "Your shortname cannot be longer than {{ limit }} characters"
    * )
    */
-  private $shortName;
+  protected $shortName;
 
   /**
    * @ORM\Column(type="boolean", options={"default": false})
