@@ -37,7 +37,8 @@ class VideoType extends AbstractType
 
     $builder
       ->add('hideOnHomePage', null, [
-        'label_attr' => ['class' => 'checkbox-switch']
+        'label_attr' => ['class' => 'checkbox-switch'],
+        'help' => "Should video be displayed at 'All Videos'?"
       ]);
 
 

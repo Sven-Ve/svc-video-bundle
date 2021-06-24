@@ -182,7 +182,7 @@ class VideoHelper
     if ($group) {
       return $this->videoRep->findBy(['videoGroup' => $group]);
     } else {
-      return $this->videoRep->findAll();
+      return $this->videoRep->findBy(['hideOnHomePage' => false]);
     }
   }
 

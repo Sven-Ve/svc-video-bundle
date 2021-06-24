@@ -45,3 +45,8 @@
 ## Version 1.3.3
 *Thu, 24 Jun 2021 15:52:59 +0000*
 - added private groups, using shortname for video links
+
+
+## Version 1.3.4
+*Thu, 24 Jun 2021 17:05:36 +0000*
+- added hideOnHomePage

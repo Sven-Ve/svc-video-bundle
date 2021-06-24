@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.3.3";
-$message = "added private groups, using shortname for video links";
+$version = "1.3.4";
+$message = "added hideOnHomePage";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

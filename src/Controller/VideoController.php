@@ -95,7 +95,7 @@ class VideoController extends AbstractController
     }
 
     $currentRoute = $request->attributes->get('_route');
-    if ($video->getIsPrivate()) {
+    if ($video->getIsPrivate() and $video->getPassword()) {
       if (!$videoHelper->checkPassword('', $video->getPassword())) {
         return $this->redirectToRoute('svc_video_pwd', ['id' => $video->getId(), 'path' => $currentRoute]);
       }
