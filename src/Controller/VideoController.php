@@ -40,7 +40,7 @@ class VideoController extends AbstractController
   /**
    * list videos 
    */
-  public function list(?int $id = null, ?bool $hideNav = false, ?bool $hideGroups = false, VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request): Response
+  public function list(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request, ?int $id = null, ?bool $hideNav = false, ?bool $hideGroups = false): Response
   {
     $groups = null;
     $currentGroup = null;
@@ -61,7 +61,6 @@ class VideoController extends AbstractController
           }
         }
       }
-
     }
 
     return $this->render('@SvcVideo/video/list.html.twig', [
@@ -105,28 +104,13 @@ class VideoController extends AbstractController
     $video->incCalls();
     $this->getDoctrine()->getManager()->flush();
 
-    $url=$this->generateUrl($currentRoute, ['id' => $video->getIDorShortname() ], UrlGeneratorInterface::ABSOLUTE_URL);
-    if ($currentRoute=="svc_video_run") {
-      try { // not sure, if trait is enabled...
-        if ($this->enableShortNames) {
-          $url=$this->generateUrl('svc_video_short_run1', ['id' => $video->getIDorShortname() ], UrlGeneratorInterface::ABSOLUTE_URL);
-        } else {
-          $url=$this->generateUrl('svc_video_short_run', ['id' => $video->getId() ], UrlGeneratorInterface::ABSOLUTE_URL);
-        }
-      } catch (Exception $e) {}
-    } elseif ($currentRoute == 'svc_video_run_hn') {
-      try { // not sure, if trait is enabled...
-          $url=$this->generateUrl('svc_video_short_runHideNav', ['id' => $video->getIDorShortname() ], UrlGeneratorInterface::ABSOLUTE_URL);
-      } catch (Exception $e) {}      
-    }
-
     return $this->render('@SvcVideo/video/run.html.twig', [
       'video' => $video,
       'enableLikes' => $this->enableLikes,
       'liked' => $likeHelper->isLiked(LikeHelper::SOURCE_VIDEO, $video->getId()),
       'hideNav' => $hideNav,
       'enableGroups' => $this->enableGroups,
-      'copyUrl' => $url
+      'copyUrl' => $videoHelper->generateVideoUrl($video, $currentRoute)
     ]);
   }
 
@@ -163,15 +147,15 @@ class VideoController extends AbstractController
    * enter the password for a private video
    *
    */
-  public function enterPwd(int $id, ?int $ot=1, Request $request, VideoHelper $videoHelper, VideoGroupRepository $videoGroupRep, VideoRepository $videoRep)
+  public function enterPwd(int $id, ?int $ot = 1, Request $request, VideoHelper $videoHelper, VideoGroupRepository $videoGroupRep, VideoRepository $videoRep)
   {
     $form = $this->createForm(EnterPasswordType::class);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      
+
       if ($ot == self::OBJ_TYPE_VGROUP) {
-        $videoObj=$videoGroupRep->find($id);
+        $videoObj = $videoGroupRep->find($id);
       } else {
         $videoObj = $videoRep->find($id);
       }

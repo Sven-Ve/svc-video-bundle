@@ -8,6 +8,7 @@ use Svc\VideoBundle\Entity\_VideoSuperclass;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * helper function for videos
@@ -20,19 +21,25 @@ class VideoHelper
   private $entityManager;
   private $requestStack;
   private $enablePrivate;
+  private $enableShortNames;
+  private $router;
 
   public function __construct(
     string $thumbnailDir,
     bool $enablePrivate,
+    bool $enableShortNames,
     VideoRepository $videoRep,
     EntityManagerInterface $entityManager,
-    RequestStack $requestStack
+    RequestStack $requestStack,
+    UrlGeneratorInterface $router
   ) {
     $this->videoRep = $videoRep;
     $this->enablePrivate = $enablePrivate;
+    $this->enableShortNames = $enableShortNames;
     $this->thumbnailDir = $thumbnailDir;
     $this->entityManager = $entityManager;
     $this->requestStack = $requestStack;
+    $this->router = $router;
   }
 
   /**
@@ -310,5 +317,30 @@ class VideoHelper
     } else {
       return null;
     }
+  }
+
+  /**
+   * generate a url for a video, using short forms if possible
+   *
+   * @param Video $video
+   * @param string $currentRoute
+   * @return string
+   */
+  function generateVideoUrl(Video $video, string $currentRoute): string
+  {
+    $url = $this->router->generate($currentRoute, ['id' => $video->getIDorShortname()], UrlGeneratorInterface::ABSOLUTE_URL);
+    try { // not sure, if trait is enabled...
+      if ($currentRoute == "svc_video_run") {
+        if ($this->enableShortNames) {
+          $url = $this->router->generate('svc_video_short_run1', ['id' => $video->getIDorShortname()], UrlGeneratorInterface::ABSOLUTE_URL);
+        } else {
+          $url = $this->router->generate('svc_video_short_run', ['id' => $video->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+      } elseif ($currentRoute == 'svc_video_run_hn') {
+        $url = $this->router->generate('svc_video_short_runHideNav', ['id' => $video->getIDorShortname()], UrlGeneratorInterface::ABSOLUTE_URL);
+      }
+    } catch (Exception $e) {
+    }
+    return $url;
   }
 }

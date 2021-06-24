@@ -40,3 +40,8 @@
 ## Version 1.3.2
 *Sat, 19 Jun 2021 18:48:48 +0000*
 - added VideoShortCallTrait to implement standardizied short urls
+
+
+## Version 1.3.3
+*Thu, 24 Jun 2021 15:52:59 +0000*
+- added private groups, using shortname for video links
