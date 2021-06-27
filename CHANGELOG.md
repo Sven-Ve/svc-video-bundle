@@ -50,3 +50,8 @@
 ## Version 1.3.4
 *Thu, 24 Jun 2021 17:05:36 +0000*
 - added hideOnHomePage
+
+
+## Version 1.3.5
+*Sun, 27 Jun 2021 17:25:11 +0000*
+- readded _list.html.twig, used in some 3party apps

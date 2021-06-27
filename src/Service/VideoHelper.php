@@ -177,7 +177,7 @@ class VideoHelper
    * @param integer|null $group
    * @return array|null
    */
-  public function getVideoByGroup(?int $group): ?array
+  public function getVideoByGroup(?int $group = null): ?array
   {
     if ($group) {
       return $this->videoRep->findBy(['videoGroup' => $group]);

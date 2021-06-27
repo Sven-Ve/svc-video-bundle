@@ -56,7 +56,7 @@ return array (
   'Hide on home page' => 'Auf Homepage verbergen',
   'Enter password' => 'Bitte Passwort eingeben',
   'Password' => 'Passwort',
-  '' => '',
+  'no videos found' => 'keine Videos gefunden',
   '' => '',
   '' => '',
   '' => '',

@@ -1,0 +1,14 @@
+{% trans_default_domain 'VideoBundle' %}
+<ul>
+  {% for video in videos %}
+    <li>
+      <a href='{{ path('svc_video_run', {'id': video.id}) }}'>{{ video.title }}</a>
+      <small>
+        {{ video.subTitle }}
+        <br />
+        {{ video.likes }} <i class="fas fa-heart like-liked"></i> 
+        | <span title='{% trans %}Video watched{% endtrans %}'><i class="fas fa-eye"></i> {{ video.calls }}</span>
+      </small>
+    </li>
+  {% endfor %}
+</ul>
