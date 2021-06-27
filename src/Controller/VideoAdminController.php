@@ -19,10 +19,12 @@ class VideoAdminController extends AbstractController
 {
   private $enableShortNames;
   private $enablePrivate;
-  public function __construct(bool $enableShortNames, bool $enablePrivate)
+  private $enableGroups;
+  public function __construct(bool $enableShortNames, bool $enablePrivate, bool $enableGroups)
   {
     $this->enableShortNames = $enableShortNames;
     $this->enablePrivate = $enablePrivate;
+    $this->enableGroups = $enableGroups;
   }
 
   public function index(VideoRepository $videoRepository, VideoGroupHelper $videoGroupHelper): Response
@@ -42,7 +44,7 @@ class VideoAdminController extends AbstractController
   {
     $video = new Video();
     $video->setVideoGroup($videoGroupHelper->getDefaultVideoGroup());
-    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
+    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate, 'enableGroups' => $this->enableGroups]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
@@ -73,7 +75,7 @@ class VideoAdminController extends AbstractController
     $video->setPlainPassword($videoHelper->getDecrypedPassword($video));
 
 
-    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
+    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate, 'enableGroups' => $this->enableGroups]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {

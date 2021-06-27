@@ -55,3 +55,8 @@
 ## Version 1.3.5
 *Sun, 27 Jun 2021 17:25:11 +0000*
 - readded _list.html.twig, used in some 3party apps
+
+
+## Version 1.3.6
+*Sun, 27 Jun 2021 17:40:37 +0000*
+- hide group on video admin edit, if enableGroups == false

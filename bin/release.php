@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.3.5";
-$message = "readded _list.html.twig, used in some 3party apps";
+$version = "1.3.6";
+$message = "hide group on video admin edit, if enableGroups == false";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

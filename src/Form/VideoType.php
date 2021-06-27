@@ -20,11 +20,15 @@ class VideoType extends AbstractType
       ->add('title', null,  ["attr" => ["autofocus" => true]])
       ->add('subTitle', null, [
         'required' => false,
-      ])
-      ->add('videoGroup', null, [
-        'label' => 'Group'
-      ])
-    ;
+      ]);
+
+    if ($options['enableGroups']) {
+      $builder
+        ->add('videoGroup', null, [
+          'label' => 'Group'
+        ])
+      ;
+    }
 
     if ($options['enableShortNames']) {
       $builder
@@ -100,7 +104,8 @@ class VideoType extends AbstractType
       'data_class' => Video::class,
       'translation_domain' => 'VideoBundle',
       'enableShortNames' => false,
-      'enablePrivate' => true
+      'enablePrivate' => true,
+      'enableGroups' => true
     ]);
   }
 }
