@@ -1,1 +1,0 @@
-The root file for the Bundle documentation

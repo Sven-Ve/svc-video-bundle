@@ -60,3 +60,8 @@
 ## Version 1.3.6
 *Sun, 27 Jun 2021 17:40:37 +0000*
 - hide group on video admin edit, if enableGroups == false
+
+
+## Version 1.4.0
+*Wed, 30 Jun 2021 18:49:03 +0000*
+- first public
