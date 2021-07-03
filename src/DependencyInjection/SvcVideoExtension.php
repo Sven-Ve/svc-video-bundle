@@ -40,6 +40,10 @@ class SvcVideoExtension extends Extension
     $definition = $container->getDefinition('svc_video.controller.group');
     $definition->setArgument(0, $config['enableShortNames']);
     $definition->setArgument(1, $config['enablePrivate']);
+
+    $definition = $container->getDefinition('svc_video.service.video-group-helper');
+    $definition->setArgument(0, $config['enableShortNames']);
+
   }
 
   private function createConfigIfNotExists($rootPath)

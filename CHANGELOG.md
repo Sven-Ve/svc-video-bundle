@@ -65,3 +65,8 @@
 ## Version 1.4.0
 *Wed, 30 Jun 2021 18:49:03 +0000*
 - first public
+
+
+## Version 1.4.1
+*Sat, 03 Jul 2021 21:11:25 +0000*
+- added video group share urls and copy link in video group lists

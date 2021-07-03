@@ -284,11 +284,6 @@ class Video extends _VideoSuperclass
     return $this;
   }
 
-  public function getIDorShortname(): string
-  {
-    return $this->shortName ?? $this->id;
-  }
-
   public function getShortUrl(): string
   {
     return EnvInfoHelper::getRootURLandPrefix() . "?" . $this->getIDorShortname();

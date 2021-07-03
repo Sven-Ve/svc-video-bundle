@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.4.0";
-$message = "first public";
+$version = "1.4.1";
+$message = "added video group share urls and copy link in video group lists";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);
@@ -15,5 +15,4 @@ $res = shell_exec('git push');
 $res = shell_exec('git tag -a -s ' . $version . ' -m "' . $message . '"');
 $res = shell_exec('git push origin ' . $version);
 
-$res = shell_exec('ssh svenvett@svenvett.myhostpoint.ch  "cd /home/svenvett/www/satis; bin/satis build satis.json"');
 ?>

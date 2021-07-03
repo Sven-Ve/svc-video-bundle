@@ -16,7 +16,18 @@
 	{% endif %}
 
       {% if currentGroup %}
-        <h2>{{ currentGroup.name }}</h2>
+        <div class='row'>
+          <div class="col-xl-10 col-lg-9 col-md-8 col-sm-6"> 
+            <h2>{{ currentGroup.name }}</h2>
+          </div>
+          <span data-controller="clipboard-multi" class="d-none col text-sm-end"
+            {{ stimulus_controller('clipboard-multi', { 
+              'link': copyUrl
+            } ) }}
+          >
+            <button type="button" class="btn btn-warning btn-sm" data-action="clipboard-multi#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
+          </span>
+        </div>
         <p class="fw-light">{{ currentGroup.description }}</p>
         <hr />
       {% else %}

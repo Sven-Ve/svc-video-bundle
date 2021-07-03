@@ -111,4 +111,9 @@ class _VideoSuperclass
 
     return $this;
   }
+
+  public function getIDorShortname(): string
+  {
+    return $this->shortName ?? $this->getId();
+  }
 }

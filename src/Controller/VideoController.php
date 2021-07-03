@@ -70,6 +70,7 @@ class VideoController extends AbstractController
       'currentGroup' => $currentGroup,
       'hideGroups' => $hideGroups,
       'hideNav' => $hideNav,
+      'copyUrl' => $videoGroupHelper->generateVideoGroupUrl($currentGroup, $hideNav, $hideGroups)
     ]);
   }
 
