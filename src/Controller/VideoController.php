@@ -40,8 +40,11 @@ class VideoController extends AbstractController
   /**
    * list videos 
    */
-  public function list(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request, ?int $id = null, ?bool $hideNav = false, ?bool $hideGroups = false): Response
+  public function list(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request, ?int $id = null): Response
   {
+    $hideNav = false;
+    $hideGroups = false;
+
     $groups = null;
     $currentGroup = null;
 
@@ -61,6 +64,8 @@ class VideoController extends AbstractController
           }
         }
       }
+    } else {
+      $hideGroups = true;
     }
 
     return $this->render('@SvcVideo/video/list.html.twig', [

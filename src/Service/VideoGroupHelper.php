@@ -108,6 +108,12 @@ class VideoGroupHelper
     return null;
   }
 
+  /**
+   * generate the url for a video group, try to use the short form
+   *
+   * @param VideoGroup|null $group
+   * @return string
+   */
   public function generateVideoGroupUrl(?VideoGroup $group): string
   {
     if (!$group) {
@@ -120,7 +126,7 @@ class VideoGroupHelper
     } catch (Exception $e) {
       return $this->router->generate('svc_video_list', ['group' => $shortName], UrlGeneratorInterface::ABSOLUTE_URL);
     }
-    
+
     return $this->router->generate('svc_video_list');
   }
 }

@@ -57,8 +57,8 @@ return array (
   'Enter password' => 'Bitte Passwort eingeben',
   'Password' => 'Passwort',
   'no videos found' => 'keine Videos gefunden',
-  '' => '',
-  '' => '',
-  '' => '',
+  'Is the video group private?' => 'Ist diese Videogruppe privat?',
+  'Password (only used for private video groups)' => 'Passwort (nur für private Gruppen benutzt)',
+  'You should set "Hide groups" too.' => 'Du solltest auch "Verberge Gruppen" setzen.',
   '' => '',
 );

@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.4.1";
-$message = "added video group share urls and copy link in video group lists";
+$version = "1.4.2";
+$message = "video groups improved, code cleaned";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

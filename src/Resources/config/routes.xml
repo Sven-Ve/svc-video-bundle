@@ -32,22 +32,6 @@
       <requirement key="id">\d+</requirement>
     </route>
 
-    <route id="svc_video_list_hn" controller="svc_video.controller::list" path="/hn/{id?}" >
-      <requirement key="id">\d+</requirement>
-      <default key="hideNav">true</default>
-    </route>
-
-    <route id="svc_video_list_hg" controller="svc_video.controller::list" path="/hg/{id?}" >
-      <requirement key="id">\d+</requirement>
-      <default key="hideGroups">true</default>
-    </route>
-
-    <route id="svc_video_list_he" controller="svc_video.controller::list" path="/he/{id?}" >
-      <requirement key="id">\d+</requirement>
-      <default key="hideGroups">true</default>
-      <default key="hideNav">true</default>
-    </route>
-
     <route id="svc_video_inc_likes" controller="svc_video.controller::incLikes" path="/inc/{id}" >
         <!-- settings -->
     </route>

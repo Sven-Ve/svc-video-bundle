@@ -16,11 +16,23 @@ class VideoGroupType extends AbstractType
     $builder
       ->add('name', null, [
         'label' => 'Name',
-        'attr' => ['autofocus' => true],
+        'attr' => ['autofocus' => 'autofocus'],
+        'constraints' => [
+          new Length([
+            'min' => 3,
+            'max' => 15,
+          ]),
+        ],
       ])
       ->add('description', null, [
         'label' => 'Description',
-      ]);
+        'constraints' => [
+          new Length([
+            'min' => 6,
+            'max' => 200,
+          ]),
+        ],
+    ]);
 
     if ($options['enableShortNames']) {
       $builder

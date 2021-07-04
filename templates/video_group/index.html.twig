@@ -27,23 +27,11 @@
 						<a href="{{ path('svc_video_group_edit', {'id': video_group.id}) }}" class='btn btn-sm btn-secondary'>{% trans %}Edit{% endtrans %}</a>
             <span data-controller="clipboard-multi" class="d-none"
               {{ stimulus_controller('clipboard-multi', { 
-                'link': url('svc_video_list', {id: video_group.id} ),
-                'link1': url('svc_video_list_hn', {id: video_group.id} ),
-                'link2': url('svc_video_list_hg', {id: video_group.id} ),
-                'link3': url('svc_video_list_he', {id: video_group.id} )
-              } ) }}
+                'link': url('svc_video_list', {id: video_group.id} )
+                }) 
+              }}
             >
-              <div class="btn-group">
-                <button type="button" class="btn btn-warning btn-sm" data-action="clipboard-multi#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
-                <button class="btn btn-warning dropdown-toggle dropdown-toggle-split btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class='dropdown-item' data-action="clipboard-multi#copy1">{% trans %}without nav{% endtrans %}</a></li>
-                  <li><a class='dropdown-item' data-action="clipboard-multi#copy2">{% trans %}without groups{% endtrans %}</a></li>
-                  <li><a class='dropdown-item' data-action="clipboard-multi#copy3">{% trans %}without groups and nav{% endtrans %}</a></li>
-                </ul>
-              </div>
+              <button type="button" class="btn btn-warning btn-sm" data-action="clipboard-multi#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
             </span>
 					</td>
 				</tr>
