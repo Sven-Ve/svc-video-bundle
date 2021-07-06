@@ -343,4 +343,9 @@ class VideoHelper
     }
     return $url;
   }
+
+  public function getVideoStats() {
+    return $this->videoRep->videoStatsByGroup();
+  }
+
 }

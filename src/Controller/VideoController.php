@@ -3,7 +3,6 @@
 namespace Svc\VideoBundle\Controller;
 
 use DateTime;
-use Exception;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Form\EnterPasswordType;
@@ -17,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class VideoController extends AbstractController
 {
@@ -181,6 +180,18 @@ class VideoController extends AbstractController
 
     return $this->renderForm('@SvcVideo/video/password.html.twig', [
       'form' => $form
+    ]);
+  }
+
+  /**
+   * video statistics 
+   * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
+   */
+  public function videoStats(VideoHelper $videoHelper): Response
+  {
+    return $this->render('@SvcVideo/video/stats.html.twig', [
+      'hideGroups' => !$this->enableGroups,
+      'stats' => $videoHelper->getVideoStats()
     ]);
   }
 }

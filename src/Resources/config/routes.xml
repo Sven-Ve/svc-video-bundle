@@ -32,6 +32,9 @@
       <requirement key="id">\d+</requirement>
     </route>
 
+    <route id="svc_video_stats" controller="svc_video.controller::videoStats" path="/stats" >
+    </route>
+
     <route id="svc_video_inc_likes" controller="svc_video.controller::incLikes" path="/inc/{id}" >
         <!-- settings -->
     </route>

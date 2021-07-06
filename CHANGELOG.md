@@ -75,3 +75,8 @@
 ## Version 1.4.2
 *Sun, 04 Jul 2021 20:40:37 +0000*
 - video groups improved, code cleaned
+
+
+## Version 1.4.3
+*Tue, 06 Jul 2021 20:33:35 +0000*
+- added basic video statistics

@@ -60,5 +60,9 @@ return array (
   'Is the video group private?' => 'Ist diese Videogruppe privat?',
   'Password (only used for private video groups)' => 'Passwort (nur für private Gruppen benutzt)',
   'You should set "Hide groups" too.' => 'Du solltest auch "Verberge Gruppen" setzen.',
+  'Video statistics' => 'Videostatistiken',
+  'Views' => 'Aufrufe',
+  '' => '',
+  '' => '',
   '' => '',
 );

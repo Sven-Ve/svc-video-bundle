@@ -70,6 +70,9 @@ class VideoAdminController extends AbstractController
   }
 
 
+  /**
+   * edit the video definition
+   */
   public function edit(Request $request, Video $video, VideoHelper $videoHelper): Response
   {
     $video->setPlainPassword($videoHelper->getDecrypedPassword($video));

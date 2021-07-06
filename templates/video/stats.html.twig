@@ -1,0 +1,33 @@
+{% trans_default_domain 'VideoBundle' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% trans %}Video statistics{% endtrans %}
+{% endblock %}
+
+{% block body %}
+	<h2>{% trans %}Video statistics{% endtrans %}</h2>
+	{% if not hideGroups %}
+    <div class='table-responsive'>
+    <table class='table table-striped table-sm'>
+      <thead>
+        <tr>
+          <th>{% trans %}Group{% endtrans %}</th>
+          <th>{% trans %}Videos{% endtrans %}</th>
+          <th>{% trans %}Views{% endtrans %}</th>
+          <th>{% trans %}Likes{% endtrans %}</th>
+        </tr>
+      </thead>
+      {% for stat in stats %}
+        <tr>
+          <td>{{ stat.name }}
+          <td>{{ stat.cnt }}
+          <td>{{ stat.calls }}
+          <td>{{ stat.likes }}
+        </tr>
+      {% endfor %}
+    </table>
+    </div>
+	{% else %}
+	{% endif %}
+{% endblock %}

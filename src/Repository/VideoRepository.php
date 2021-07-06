@@ -14,8 +14,19 @@ use Svc\VideoBundle\Entity\Video;
  */
 class VideoRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Video::class);
-    }
+  public function __construct(ManagerRegistry $registry)
+  {
+    parent::__construct($registry, Video::class);
+  }
+
+  public function videoStatsByGroup()
+  {
+    return $this->createQueryBuilder('v')
+      ->select('vg.name, vg.description, sum(v.likes) as likes, sum(v.calls) as calls, count(v.id) as cnt')
+      ->groupby('vg.name')
+      ->join('v.videoGroup', 'vg')
+      ->orderBy('vg.name', 'ASC')
+      ->getQuery()
+      ->getResult();
+  }
 }
