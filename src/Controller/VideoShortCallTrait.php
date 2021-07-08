@@ -13,7 +13,7 @@ trait VideoShortCallTrait
    */
   public function shortRunHideNav($id): Response
   {
-    return $this->redirectToRoute('svc_video_run_hn', ['id' => $id]);
+    return $this->redirectToRoute('svc_video_run_hn', ['id' => $id], 303);
   }
 
   /**
@@ -21,7 +21,7 @@ trait VideoShortCallTrait
    */
   public function shortRun($id): Response
   {
-    return $this->redirectToRoute('svc_video_run', ['id' => $id]);
+    return $this->redirectToRoute('svc_video_run', ['id' => $id], 303);
   }
 
   /**
@@ -29,7 +29,7 @@ trait VideoShortCallTrait
    */
   public function shortRun1($id): Response
   {
-    return $this->redirectToRoute('svc_video_run', ['id' => $id]);
+    return $this->redirectToRoute('svc_video_run', ['id' => $id], 303);
   }
 
   /**
@@ -38,6 +38,6 @@ trait VideoShortCallTrait
   public function shortGroup($group, VideoGroupHelper $videoGroupHelper): Response
   {
     $id = $videoGroupHelper->getVideoGroupIDbyShortName($group);
-    return $this->redirectToRoute('svc_video_list', ['id' => $id]);
+    return $this->redirectToRoute('svc_video_list', ['id' => $id], 303);
   }
 }

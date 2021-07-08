@@ -60,7 +60,7 @@ class VideoAdminController extends AbstractController
       }
       $entityManager->flush();
 
-      return $this->redirectToRoute('svc_video_admin_index');
+      return $this->redirectToRoute('svc_video_admin_index', [], 303);
     }
 
     return $this->renderForm('@SvcVideo/video_admin/new.html.twig', [
@@ -95,7 +95,7 @@ class VideoAdminController extends AbstractController
       }
       $this->getDoctrine()->getManager()->flush();
 
-      return $this->redirectToRoute('svc_video_admin_index');
+      return $this->redirectToRoute('svc_video_admin_index', [], 303);
     }
 
     return $this->renderForm('@SvcVideo/video_admin/edit.html.twig', [
@@ -112,6 +112,6 @@ class VideoAdminController extends AbstractController
       $entityManager->flush();
     }
 
-    return $this->redirectToRoute('svc_video_admin_index');
+    return $this->redirectToRoute('svc_video_admin_index', [], 303);
   }
 }

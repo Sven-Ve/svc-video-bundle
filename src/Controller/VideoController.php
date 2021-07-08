@@ -59,7 +59,7 @@ class VideoController extends AbstractController
 
         if ($currentGroup->getIsPrivate()) {
           if (!$videoHelper->checkPassword('', $currentGroup->getPassword())) {
-            return $this->redirectToRoute('svc_video_pwd', ['id' => $currentGroup->getId(), 'ot' => self::OBJ_TYPE_VGROUP, 'path' => $request->attributes->get('_route')]);
+            return $this->redirectToRoute('svc_video_pwd', ['id' => $currentGroup->getId(), 'ot' => self::OBJ_TYPE_VGROUP, 'path' => $request->attributes->get('_route')], 303);
           }
         }
       }

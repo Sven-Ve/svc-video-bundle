@@ -49,7 +49,7 @@ class VideoGroupController extends AbstractController
       $entityManager->persist($videoGroup);
       $entityManager->flush();
 
-      return $this->redirectToRoute('svc_video_group_index');
+      return $this->redirectToRoute('svc_video_group_index', [], 303);
     }
 
     return $this->renderForm('@SvcVideo/video_group/new.html.twig', [
@@ -74,7 +74,7 @@ class VideoGroupController extends AbstractController
 
       $this->getDoctrine()->getManager()->flush();
 
-      return $this->redirectToRoute('svc_video_group_index');
+      return $this->redirectToRoute('svc_video_group_index', [], 303);
     }
 
     return $this->renderForm('@SvcVideo/video_group/edit.html.twig', [
@@ -91,6 +91,6 @@ class VideoGroupController extends AbstractController
       $entityManager->flush();
     }
 
-    return $this->redirectToRoute('svc_video_group_index');
+    return $this->redirectToRoute('svc_video_group_index', [], 303);
   }
 }
