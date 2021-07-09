@@ -27,20 +27,24 @@ class VideoController extends AbstractController
   private $enableGroups;
   private $enableShortNames;
   private $homeRoute;
+  private $enableVideoSort;
 
-  public function __construct(bool $enableLikes, bool $enableGroups, bool $enableShortNames, string $homeRoute)
+  public function __construct(bool $enableLikes, bool $enableGroups, bool $enableShortNames, bool $enableVideoSort, string $homeRoute)
   {
     $this->enableLikes = $enableLikes;
     $this->enableGroups = $enableGroups;
     $this->enableShortNames = $enableShortNames;
+    $this->enableVideoSort = $enableVideoSort;
     $this->homeRoute = $homeRoute;
   }
 
   /**
    * list videos 
    */
-  public function list(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request, ?int $id = null): Response
+  public function list(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request, ?int $id = null, ?int $sort = 0): Response
   {
+    $sort = $request->query->get('sort');
+
     $hideNav = false;
     $hideGroups = false;
 
@@ -59,7 +63,7 @@ class VideoController extends AbstractController
 
         if ($currentGroup->getIsPrivate()) {
           if (!$videoHelper->checkPassword('', $currentGroup->getPassword())) {
-            return $this->redirectToRoute('svc_video_pwd', ['id' => $currentGroup->getId(), 'ot' => self::OBJ_TYPE_VGROUP, 'path' => $request->attributes->get('_route')], 303);
+            return $this->redirectToRoute('svc_video_pwd', ['id' => $currentGroup->getId(), 'ot' => self::OBJ_TYPE_VGROUP, 'path' => $request->attributes->get('_route')]);
           }
         }
       }
@@ -68,13 +72,15 @@ class VideoController extends AbstractController
     }
 
     return $this->render('@SvcVideo/video/list.html.twig', [
-      'videos' => $videoHelper->getVideoByGroup($id),
+      'videos' => $videoHelper->getVideoByGroup($id, $sort),
       'enableLikes' => $this->enableLikes,
       'groups' => $groups,
       'currentGroup' => $currentGroup,
       'hideGroups' => $hideGroups,
       'hideNav' => $hideNav,
-      'copyUrl' => $videoGroupHelper->generateVideoGroupUrl($currentGroup, $hideNav, $hideGroups)
+      'enableVideoSort' => $this->enableVideoSort,
+      'sortOpts' => VideoRepository::SORT_FIELDS,
+      'copyUrl' => $videoGroupHelper->generateVideoGroupUrl($currentGroup)
     ]);
   }
 
@@ -90,7 +96,7 @@ class VideoController extends AbstractController
     if (ctype_digit($id)) {
       $video = $videoRep->find($id);
     }
-    if ($video === null) {
+    if ($video === null and $this->enableShortNames) {
       $video = $videoRep->findOneBy(['shortName' => $id]);
     }
 

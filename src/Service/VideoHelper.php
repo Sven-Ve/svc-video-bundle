@@ -175,14 +175,23 @@ class VideoHelper
    * get videos for a group or all videos, if group = null
    *
    * @param integer|null $group
+   * @param integer|null $sort
    * @return array|null
    */
-  public function getVideoByGroup(?int $group = null): ?array
+  public function getVideoByGroup(?int $group = null, ?int $sort = VideoRepository::SORT_BY_TITLE): ?array
   {
-    if ($group) {
-      return $this->videoRep->findBy(['videoGroup' => $group]);
+    if ($sort!==null and array_key_exists($sort, VideoRepository::SORT_FIELDS)) {
+      $sortField=VideoRepository::SORT_FIELDS[$sort]['f'];
+      $sortDirect=VideoRepository::SORT_FIELDS[$sort]['d'];
     } else {
-      return $this->videoRep->findBy(['hideOnHomePage' => false]);
+      $sortField=VideoRepository::SORT_FIELDS[VideoRepository::SORT_BY_TITLE]['f'];
+      $sortDirect=VideoRepository::SORT_FIELDS[VideoRepository::SORT_BY_TITLE]['d'];
+    }
+
+    if ($group) {
+      return $this->videoRep->findBy(['videoGroup' => $group], [$sortField => $sortDirect ]);
+    } else {
+      return $this->videoRep->findBy(['hideOnHomePage' => false], [$sortField => $sortDirect ]);
     }
   }
 

@@ -19,6 +19,7 @@
         <div class='row'>
           <div class="col-xl-10 col-lg-9 col-md-8 col-sm-6"> 
             <h2>{{ currentGroup.name }}</h2>
+            <p class="fw-light">{{ currentGroup.description }}</p>
           </div>
           <span data-controller="clipboard-multi" class="d-none col text-sm-end"
             {{ stimulus_controller('clipboard-multi', { 
@@ -26,10 +27,21 @@
             } ) }}
           >
             <button type="button" class="btn btn-warning btn-sm" data-action="clipboard-multi#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
+
+            {% if enableVideoSort %}
+              <div class="input-group mb-3 mt-1" title='{% trans %}Sort by{% endtrans %}'>
+                <label class="input-group-text" for="inputSortSelect"> <i class="fas fa-sort-amount-up-alt"></i> </label>
+                <select class="form-select form-select-sm" id="inputSortSelect" aria-label="{% trans %}Sort videos{% endtrans %}">
+                  <option selected>{% trans %}Sort by{% endtrans %}</option>
+                  {% for key, sortOpt in sortOpts %}
+                    <option value="{{ key }}">{{ sortOpt.t }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            {% endif %}
+
           </span>
         </div>
-        <p class="fw-light">{{ currentGroup.description }}</p>
-        <hr />
       {% else %}
         <h2>{% trans %}All Videos{% endtrans %}</h2>
       {% endif %}

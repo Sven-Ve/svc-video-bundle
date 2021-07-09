@@ -25,7 +25,8 @@ class SvcVideoExtension extends Extension
     $definition->setArgument(0, $config['enableLikes']);
     $definition->setArgument(1, $config['enableGroups']);
     $definition->setArgument(2, $config['enableShortNames']);
-    $definition->setArgument(3, $config['homeRoute']);
+    $definition->setArgument(3, $config['enableVideoSort']);
+    $definition->setArgument(4, $config['homeRoute']);
 
     $definition = $container->getDefinition('svc_video.controller.admin');
     $definition->setArgument(0, $config['enableShortNames']);

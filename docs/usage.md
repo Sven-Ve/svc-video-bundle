@@ -40,6 +40,9 @@ svc_video:
     # Enable private viceos?
     enablePrivate:        true
 
+    # Enable video sort combox in video overview?
+    enableVideoSort:      true
+
     # Default route, for redirect after errors
     homeRoute:            svc_video_list
 ```
@@ -63,5 +66,6 @@ class HomeController extends AbstractController
 ## Paths
 - integrate the video controller via path "svc_video_run"
 - integrate the video admin controller via path "svc_video_admin_index"
-- integrate the video controller via path "svc_video_group_index"
+- integrate the video group controller via path "svc_video_group_index"
+- video overview (some statistics) via path "svc_video_stats"
 

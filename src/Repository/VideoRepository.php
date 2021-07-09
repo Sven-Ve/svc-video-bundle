@@ -14,6 +14,22 @@ use Svc\VideoBundle\Entity\Video;
  */
 class VideoRepository extends ServiceEntityRepository
 {
+  public const SORT_BY_TITLE=0;
+  public const SORT_BY_LIKES=1;
+  public const SORT_BY_VIEWS=2;
+  public const SORT_BY_DATE=3;
+  public const SORT_BY_DATE_DESC=4;
+
+  // t = text, f = field, d = direction
+  public const SORT_FIELDS = [
+    self::SORT_BY_TITLE=>['t' => 'title', 'f' => 'title', 'd' => 'asc'],
+    self::SORT_BY_LIKES=>['t' => 'likes', 'f' => 'likes', 'd' => 'desc'],
+    self::SORT_BY_VIEWS=>['t' => 'views', 'f' => 'calls', 'd' => 'desc'],
+    self::SORT_BY_DATE=>['t' => 'date', 'f' => 'uploadDate', 'd' => 'asc'],
+    self::SORT_BY_DATE_DESC=>['t' => 'date desc', 'f' => 'uploadDate', 'd' => 'desc'],
+  ];
+
+
   public function __construct(ManagerRegistry $registry)
   {
     parent::__construct($registry, Video::class);

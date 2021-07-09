@@ -18,6 +18,7 @@ class Configuration implements ConfigurationInterface
         ->booleanNode('enableShortNames')->defaultFalse()->info('Enable short names for videos (for short URLs)?')->end()
         ->booleanNode('enableGroups')->defaultFalse()->info('Enable videos groups?')->end()
         ->booleanNode('enablePrivate')->defaultTrue()->info('Enable private videos?')->end()
+        ->booleanNode('enableVideoSort')->defaultTrue()->info('Enable video sort combox in video overview?')->end()
         ->scalarNode('thumbnailDir')->defaultValue('%kernel.project_dir%/public/uploads')->cannotBeEmpty()->end()
         ->scalarNode('homeRoute')->defaultValue("svc_video_list")->info('Default route, for redirect after errors')->cannotBeEmpty()->end()
       ->end();
