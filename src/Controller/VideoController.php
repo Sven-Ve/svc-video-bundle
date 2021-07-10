@@ -80,6 +80,7 @@ class VideoController extends AbstractController
       'hideNav' => $hideNav,
       'enableVideoSort' => $this->enableVideoSort,
       'sortOpts' => VideoRepository::SORT_FIELDS,
+      'currentSort' => $sort,
       'copyUrl' => $videoGroupHelper->generateVideoGroupUrl($currentGroup)
     ]);
   }

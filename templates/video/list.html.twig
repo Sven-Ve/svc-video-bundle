@@ -21,26 +21,33 @@
             <h2>{{ currentGroup.name }}</h2>
             <p class="fw-light">{{ currentGroup.description }}</p>
           </div>
-          <span data-controller="clipboard-multi" class="d-none col text-sm-end"
-            {{ stimulus_controller('clipboard-multi', { 
-              'link': copyUrl
-            } ) }}
-          >
-            <button type="button" class="btn btn-warning btn-sm" data-action="clipboard-multi#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
+          <div class='col text-sm-end'>
+            <span data-controller="clipboard-multi" class="d-none"
+              {{ stimulus_controller('clipboard-multi', { 
+                'link': copyUrl
+              } ) }}
+            >
+              <button type="button" class="btn btn-warning btn-sm" data-action="clipboard-multi#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
+            </span>
 
             {% if enableVideoSort %}
-              <div class="input-group mb-3 mt-1" title='{% trans %}Sort by{% endtrans %}'>
-                <label class="input-group-text" for="inputSortSelect"> <i class="fas fa-sort-amount-up-alt"></i> </label>
-                <select class="form-select form-select-sm" id="inputSortSelect" aria-label="{% trans %}Sort videos{% endtrans %}">
-                  <option selected>{% trans %}Sort by{% endtrans %}</option>
-                  {% for key, sortOpt in sortOpts %}
-                    <option value="{{ key }}">{{ sortOpt.t }}</option>
-                  {% endfor %}
-                </select>
-              </div>
+              <span data-controller="svcv-sort" 
+                {{ stimulus_controller('svcv-sort', { 
+                  'url': path('svc_video_list', {id: currentGroup.id})
+                } ) }}
+              >
+                <div class="input-group mb-3 mt-1" title='{% trans %}Sort by{% endtrans %}'>
+                  <label class="input-group-text" for="inputSortSelect"> <i class="fas fa-sort-amount-up-alt"></i> </label>
+                  <select class="form-select form-select-sm" id="inputSortSelect" aria-label="{% trans %}Sort videos{% endtrans %}" data-action="svcv-sort#sort">
+                    {% for key, sortOpt in sortOpts %}
+                      <option value="{{ key }}" {{ currentSort == key ? 'selected' }}>{{ sortOpt.t }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              <span>
             {% endif %}
 
-          </span>
+          </div>
         </div>
       {% else %}
         <h2>{% trans %}All Videos{% endtrans %}</h2>
