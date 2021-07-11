@@ -85,3 +85,8 @@
 ## Version 1.4.4
 *Thu, 08 Jul 2021 12:53:31 +0000*
 - changed html status code to 303 for shortname and form redirects
+
+
+## Version 1.5.0
+*Sun, 11 Jul 2021 20:27:10 +0000*
+- added sort videos

@@ -3,6 +3,7 @@
 namespace Svc\VideoBundle\Controller;
 
 use Svc\VideoBundle\Service\VideoGroupHelper;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 trait VideoShortCallTrait
@@ -35,9 +36,10 @@ trait VideoShortCallTrait
   /**
    * @Route("/g/{group}", name="svc_video_shortGroup")
    */
-  public function shortGroup($group, VideoGroupHelper $videoGroupHelper): Response
+  public function shortGroup($group, VideoGroupHelper $videoGroupHelper, Request $request): Response
   {
+    $sort = $request->query->get('sort') ?? 0;
     $id = $videoGroupHelper->getVideoGroupIDbyShortName($group);
-    return $this->redirectToRoute('svc_video_list', ['id' => $id], 303);
+    return $this->redirectToRoute('svc_video_list', ['id' => $id, 'sort' => $sort], 303);
   }
 }

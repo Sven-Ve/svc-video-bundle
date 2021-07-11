@@ -22,7 +22,7 @@
             <p class="fw-light">{{ currentGroup.description }}</p>
           </div>
           <div class='col text-sm-end'>
-            <span data-controller="clipboard-multi" class="d-none"
+            <span data-controller="clipboard-multi" class="d-none d-grid"
               {{ stimulus_controller('clipboard-multi', { 
                 'link': copyUrl
               } ) }}
@@ -38,9 +38,9 @@
               >
                 <div class="input-group mb-3 mt-1" title='{% trans %}Sort by{% endtrans %}'>
                   <label class="input-group-text" for="inputSortSelect"> <i class="fas fa-sort-amount-up-alt"></i> </label>
-                  <select class="form-select form-select-sm" id="inputSortSelect" aria-label="{% trans %}Sort videos{% endtrans %}" data-action="svcv-sort#sort">
+                  <select class="form-select form-select-sm" id="inputSortSelect" aria-label="{% trans %}Sort by{% endtrans %}" data-action="svcv-sort#sort">
                     {% for key, sortOpt in sortOpts %}
-                      <option value="{{ key }}" {{ currentSort == key ? 'selected' }}>{{ sortOpt.t }}</option>
+                      <option value="{{ key }}" {{ currentSort == key ? 'selected' }}>{{ sortOpt.t | trans }}</option>
                     {% endfor %}
                   </select>
                 </div>

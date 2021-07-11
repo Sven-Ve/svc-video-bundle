@@ -112,9 +112,10 @@ class VideoGroupHelper
    * generate the url for a video group, try to use the short form
    *
    * @param VideoGroup|null $group
+   * @param integer|null $sort
    * @return string
    */
-  public function generateVideoGroupUrl(?VideoGroup $group): string
+  public function generateVideoGroupUrl(?VideoGroup $group, ?int $sort = 0): string
   {
     if (!$group) {
       return false;
@@ -122,9 +123,9 @@ class VideoGroupHelper
     $shortName = $group->getIDorShortname();
 
     try { // not sure, if trait is enabled...
-      return $this->router->generate('svc_video_shortGroup', ['group' => $shortName], UrlGeneratorInterface::ABSOLUTE_URL);
+      return $this->router->generate('svc_video_shortGroup', ['group' => $shortName, 'sort' => $sort ?? 0], UrlGeneratorInterface::ABSOLUTE_URL);
     } catch (Exception $e) {
-      return $this->router->generate('svc_video_list', ['group' => $shortName], UrlGeneratorInterface::ABSOLUTE_URL);
+      return $this->router->generate('svc_video_list', ['group' => $shortName, 'sort' => $sort ?? 0], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     return $this->router->generate('svc_video_list');
