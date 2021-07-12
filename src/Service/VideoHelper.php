@@ -190,6 +190,8 @@ class VideoHelper
 
     if ($group) {
       return $this->videoRep->findBy(['videoGroup' => $group], [$sortField => $sortDirect ]);
+    } elseif (!$this->enablePrivate) {
+      return $this->videoRep->findBy([], [$sortField => $sortDirect ]);
     } else {
       return $this->videoRep->findBy(['hideOnHomePage' => false], [$sortField => $sortDirect ]);
     }

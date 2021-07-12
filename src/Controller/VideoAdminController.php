@@ -2,6 +2,7 @@
 
 namespace Svc\VideoBundle\Controller;
 
+use DateTime;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,6 +45,7 @@ class VideoAdminController extends AbstractController
   {
     $video = new Video();
     $video->setVideoGroup($videoGroupHelper->getDefaultVideoGroup());
+    $video->setUploadDate(new DateTime());
     $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate, 'enableGroups' => $this->enableGroups]);
     $form->handleRequest($request);
 

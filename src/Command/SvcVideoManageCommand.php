@@ -5,7 +5,6 @@ namespace Svc\VideoBundle\Command;
 use Svc\VideoBundle\Service\VideoGroupHelper;
 use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,10 +13,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class SvcVideoManageCommand extends Command
 {
   // managed in services.yaml for lazy loading
-  //  protected static $defaultName = 'app:svc_video:manage';
+  //  protected static $defaultName = 'svc_video:manage';
   //  protected static $defaultDescription = 'Manage the svc_video bundle';
 
-  private $videoGroupHelper;
   private $videoHelper;
 
   public function __construct(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper)
@@ -30,12 +28,11 @@ class SvcVideoManageCommand extends Command
   protected function configure(): void
   {
     $this
-      //            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-      ->addOption('init', null, InputOption::VALUE_NONE, 'Initialize the svc_video bundle (run all parts)')
-      ->addOption('createThumbnailDir', null, InputOption::VALUE_NONE, 'Create the thumbnail directory')
-      ->addOption('loadMetadata', null, InputOption::VALUE_NONE, 'Load missing metadata (or reload all, if --force set)')
-      ->addOption('copyThumbnails', null, InputOption::VALUE_NONE, 'Copy missing thumbnails (or reload all, if --force set), implicit --loadMetadata')
-      ->addOption('force', null, InputOption::VALUE_NONE, 'Re-create or re-load all files');
+      ->addOption('init', 'i', InputOption::VALUE_NONE, 'Initialize the svc_video bundle (run all parts)')
+      ->addOption('createThumbnailDir', 'd', InputOption::VALUE_NONE, 'Create the thumbnail directory')
+      ->addOption('loadMetadata', 'l', InputOption::VALUE_NONE, 'Load missing metadata (or reload all, if --force set)')
+      ->addOption('copyThumbnails', 'c', InputOption::VALUE_NONE, 'Copy missing thumbnails (or reload all, if --force set), implicit --loadMetadata')
+      ->addOption('force', 'f', InputOption::VALUE_NONE, 'Re-create or re-load all files');
   }
 
   protected function execute(InputInterface $input, OutputInterface $output): int
@@ -43,8 +40,6 @@ class SvcVideoManageCommand extends Command
     $io = new SymfonyStyle($input, $output);
     $force = $input->getOption('force');
     $stepRun = 0;
-
-    //      $arg1 = $input->getArgument('arg1');
 
     if ($input->getOption('createThumbnailDir') or $input->getOption('init')) {
       $msg = "";

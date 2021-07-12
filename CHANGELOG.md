@@ -90,3 +90,8 @@
 ## Version 1.5.0
 *Sun, 11 Jul 2021 20:27:10 +0000*
 - added sort videos
+
+
+## Version 1.5.1
+*Mon, 12 Jul 2021 19:53:15 +0000*
+- small enhancements
