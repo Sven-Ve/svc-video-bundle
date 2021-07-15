@@ -1,0 +1,18 @@
+{% trans_default_domain 'VideoBundle' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% trans %}Video statistics{% endtrans %}
+{% endblock %}
+
+{% block body %}
+	<h1>
+		<i class="fas fa-chart-bar"></i>
+		{% trans %}Video statistics{% endtrans %}
+	</h1>
+
+		<a href="{{ path('svc_video_admin_index') }}" class='btn btn-secondary float-start'>{% trans %}Back to list{% endtrans %}</a>
+
+    {{ include('@SvcLog/stats/_stats.html.twig') }}
+
+{% endblock %}

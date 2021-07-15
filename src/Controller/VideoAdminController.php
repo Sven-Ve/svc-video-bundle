@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Svc\LogBundle\Service\LogStatistics;
 use Svc\VideoBundle\Form\VideoType;
 use Svc\VideoBundle\Service\VideoGroupHelper;
 use Svc\VideoBundle\Service\VideoHelper;
@@ -115,5 +116,16 @@ class VideoAdminController extends AbstractController
     }
 
     return $this->redirectToRoute('svc_video_admin_index');
+  }
+
+  /**
+   * show statistics
+   */
+  public function stats(Video $video, LogStatistics $logStatistics): Response
+  {
+    return $this->render('@SvcVideo/video_admin/stats.html.twig', [
+      'video' => $video,
+      'logData' => $logStatistics->reportOneId($video->getId(), VideoController::OBJ_TYPE_VIDEO)
+    ]);    
   }
 }

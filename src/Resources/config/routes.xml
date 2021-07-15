@@ -20,6 +20,10 @@
         <!-- settings -->
     </route>
 
+    <route id="svc_video_admin_stats" controller="svc_video.controller.admin::stats" path="/admin/stats/{id}" >
+        <!-- settings -->
+    </route>
+
     <route id="svc_video_run" controller="svc_video.controller::run" path="/run/{id}" >
         <!-- settings -->
     </route>

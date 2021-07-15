@@ -40,6 +40,7 @@
 						<td>
 							<a href="{{ path('svc_video_admin_edit', {'id': video.id}) }}" class='btn btn-sm btn-secondary'>{% trans %}Edit{% endtrans %}</a>
 							<a href="{{ path('svc_video_run', {'id': video.id}) }}" class='btn btn-sm btn-primary'>{% trans %}Run{% endtrans %}</a>
+							<a href="{{ path('svc_video_admin_stats', {'id': video.id}) }}" class='btn btn-sm btn-info'>{% trans %}Statistics{% endtrans %}</a>
               <span data-controller="clipboard-multi" class="d-none"
                 {{ stimulus_controller('clipboard-multi', { 
                   'link': url('svc_video_run', {id: video.id} ),
