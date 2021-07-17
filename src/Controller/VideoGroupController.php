@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Svc\LogBundle\Service\LogStatistics;
 use Svc\VideoBundle\Service\VideoHelper;
 
 /**
@@ -92,5 +93,16 @@ class VideoGroupController extends AbstractController
     }
 
     return $this->redirectToRoute('svc_video_group_index');
+  }
+
+  /**
+   * show group statistics
+   */
+  public function stats(VideoGroup $videoGroup, LogStatistics $logStatistics): Response
+  {
+    return $this->render('@SvcVideo/video_group/stats.html.twig', [
+      'video' => $videoGroup,
+      'logData' => $logStatistics->reportOneId($videoGroup->getId(), VideoController::OBJ_TYPE_VGROUP)
+    ]);
   }
 }

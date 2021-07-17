@@ -25,6 +25,7 @@
 					<td>{{ video_group.defaultGroup ? 'yes' | trans : 'no' | trans }}</td>
 					<td>
 						<a href="{{ path('svc_video_group_edit', {'id': video_group.id}) }}" class='btn btn-sm btn-secondary'>{% trans %}Edit{% endtrans %}</a>
+						<a href="{{ path('svc_video_group_stats', {'id': video_group.id}) }}" class='btn btn-sm btn-info'>{% trans %}Statistics{% endtrans %}</a>
             <span data-controller="clipboard-multi" class="d-none"
               {{ stimulus_controller('clipboard-multi', { 
                 'link': url('svc_video_list', {id: video_group.id} )
