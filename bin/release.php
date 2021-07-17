@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.5.1";
-$message = "small enhancements";
+$version = "1.6.0";
+$message = "integrate video statistics";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

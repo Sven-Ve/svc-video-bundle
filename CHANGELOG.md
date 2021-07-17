@@ -95,3 +95,8 @@
 ## Version 1.5.1
 *Mon, 12 Jul 2021 19:53:15 +0000*
 - small enhancements
+
+
+## Version 1.6.0
+*Sat, 17 Jul 2021 16:52:55 +0000*
+- integrate video statistics
