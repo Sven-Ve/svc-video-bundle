@@ -100,3 +100,8 @@
 ## Version 1.6.0
 *Sat, 17 Jul 2021 16:52:55 +0000*
 - integrate video statistics
+
+
+## Version 1.6.1
+*Sun, 18 Jul 2021 20:48:05 +0000*
+- integrate video statistic overview(for all videos)

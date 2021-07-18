@@ -1,0 +1,53 @@
+{% trans_default_domain 'VideoBundle' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% trans %}Video statistics{% endtrans %}
+{% endblock %}
+
+{% block body %}
+	<h1>
+		<i class="fas fa-video"></i>
+		{% trans %}Video statistics{% endtrans %}
+	</h1>
+
+	<div class='table-responsive'>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>{% trans %}Title{% endtrans %}</th>
+					<th>{{ statHeader.0 }}</th>
+					<th>{{ statHeader.1 }}</th>
+					<th>{{ statHeader.2 }}</th>
+					<th>{{ statHeader.3 }}</th>
+					<th>{{ statHeader.4 }}</th>
+					<th><i class="fas fa-heart like-liked"></i></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for video in videos %}
+					<tr>
+						<td>{{ video.title }}</td>
+            {% if video.statistics is defined %}
+              <td>{{ video.statistics.month0 }}</td>
+              <td>{{ video.statistics.month1 }}</td>
+              <td>{{ video.statistics.month2 }}</td>
+              <td>{{ video.statistics.month3 }}</td>
+              <td>{{ video.statistics.month4 }}</td>
+            {% else %}
+              {% for i in 0..4 %}
+                <td>0</td>
+              {% endfor %}
+            {% endif %}
+            <td>{{ video.likes }}</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">{% trans %}no records found{% endtrans %}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

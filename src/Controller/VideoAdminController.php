@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Svc\LogBundle\Service\EventLog;
 use Svc\LogBundle\Service\LogStatistics;
 use Svc\VideoBundle\Form\VideoType;
 use Svc\VideoBundle\Service\VideoGroupHelper;
@@ -119,13 +120,34 @@ class VideoAdminController extends AbstractController
   }
 
   /**
-   * show statistics
+   * show statistics for a video
    */
-  public function stats(Video $video, LogStatistics $logStatistics): Response
+  public function stats1(Video $video, LogStatistics $logStatistics): Response
   {
     return $this->render('@SvcVideo/video_admin/stats.html.twig', [
       'video' => $video,
       'logData' => $logStatistics->reportOneId($video->getId(), VideoController::OBJ_TYPE_VIDEO)
+    ]);    
+  }
+
+  public function allStats(VideoRepository $videoRepo, LogStatistics $logStatistics) {
+    $videos = $videoRepo->findAll();
+    $statistics = $logStatistics->pivotMonthly(VideoController::OBJ_TYPE_VIDEO, EventLog::LEVEL_DATA);
+//    dd($statistics);
+
+    foreach ($videos as $video) {
+      foreach ($statistics['data'] as $statistic) {
+        if ($statistic['sourceID'] == $video->getId() /*and $video->getId()!=4 */) {
+          $video->statistics = $statistic;
+          continue;
+        }
+      }
+    }
+
+ //   dd($videos);
+    return $this->render('@SvcVideo/video_admin/all_stats.html.twig', [
+      'videos' => $videos,
+      'statHeader' => $statistics['header'],
     ]);    
   }
 }
