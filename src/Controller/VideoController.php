@@ -199,7 +199,7 @@ class VideoController extends AbstractController
   }
 
   /**
-   * video statistics 
+   * video statistics (for a video)
    * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
    */
   public function videoStats(VideoHelper $videoHelper): Response

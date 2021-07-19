@@ -67,5 +67,20 @@ class HomeController extends AbstractController
 - integrate the video controller via path "svc_video_run"
 - integrate the video admin controller via path "svc_video_admin_index"
 - integrate the video group controller via path "svc_video_group_index"
-- video overview (some statistics) via path "svc_video_stats"
+- video overview (with some statistics) via path "svc_video_stats"
+- all video statistics via path "svc_video_all_stats"
+- all video group statistics via path "svc_video_all_stats_group"
+
+## Statistics
+
+for the video statistics you have to run (about once per hour) the aggregation job
+
+```console
+$ bin/console svc_log:stat-aggregate
+```
+
+Example for crontab:
+```console
+17 * * * * (cd <your_path>; bin/console svc_log:stat-aggregate) >/dev/null
+```
 

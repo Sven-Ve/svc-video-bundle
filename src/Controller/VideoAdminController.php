@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Svc\LogBundle\Service\EventLog;
 use Svc\LogBundle\Service\LogStatistics;
 use Svc\VideoBundle\Form\VideoType;
+use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Svc\VideoBundle\Service\VideoGroupHelper;
 use Svc\VideoBundle\Service\VideoHelper;
 
@@ -127,27 +128,42 @@ class VideoAdminController extends AbstractController
     return $this->render('@SvcVideo/video_admin/stats.html.twig', [
       'video' => $video,
       'logData' => $logStatistics->reportOneId($video->getId(), VideoController::OBJ_TYPE_VIDEO)
-    ]);    
+    ]);
   }
 
-  public function allStats(VideoRepository $videoRepo, LogStatistics $logStatistics) {
-    $videos = $videoRepo->findAll();
-    $statistics = $logStatistics->pivotMonthly(VideoController::OBJ_TYPE_VIDEO, EventLog::LEVEL_DATA);
-//    dd($statistics);
+  /**
+   * display statistics for all videos or video groups
+   *
+   * @param bool $isVideo true: statistics for video, false: statistics for video groups
+   * @param LogStatistics $logStatistics
+   * @return void
+   */
+  public function allStats(bool $isVideo, VideoRepository $videoRepo, VideoGroupRepository $videoGroupRepo, LogStatistics $logStatistics): Response
+  {
+
+    if ($isVideo) {
+      $videos = $videoRepo->findAll();
+      $videoType = VideoController::OBJ_TYPE_VIDEO;
+    } else {
+      $videoType = VideoController::OBJ_TYPE_VGROUP;
+      $videos = $videoGroupRepo->findAll();
+    }
+
+    $statistics = $logStatistics->pivotMonthly($videoType, EventLog::LEVEL_DATA);
 
     foreach ($videos as $video) {
       foreach ($statistics['data'] as $statistic) {
-        if ($statistic['sourceID'] == $video->getId() /*and $video->getId()!=4 */) {
+        if ($statistic['sourceID'] == $video->getId()) {
           $video->statistics = $statistic;
           continue;
         }
       }
     }
 
- //   dd($videos);
     return $this->render('@SvcVideo/video_admin/all_stats.html.twig', [
       'videos' => $videos,
       'statHeader' => $statistics['header'],
-    ]);    
+      'isVideo' => $isVideo,
+    ]);
   }
 }

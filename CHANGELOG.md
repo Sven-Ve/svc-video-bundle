@@ -104,4 +104,4 @@
 
 ## Version 1.6.1
 *Sun, 18 Jul 2021 20:48:05 +0000*
-- integrate video statistic overview(for all videos)
+- integrate video statistic overview (for all videos)

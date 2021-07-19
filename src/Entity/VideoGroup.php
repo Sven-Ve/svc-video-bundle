@@ -140,4 +140,14 @@ class VideoGroup extends _VideoSuperclass
     return $this;
   }
 
+  /**
+   * needed for statistics, we can use the same name as for videos
+   *
+   * @return string|null
+   */
+  public function getTitle(): ?string
+  {
+    return $this->name;
+  }
+
 }

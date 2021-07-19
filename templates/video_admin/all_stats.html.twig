@@ -2,13 +2,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{% trans %}Video statistics{% endtrans %}
+  {{ isVideo ? "Video statistics" | trans : "Video group statistics" | trans }}
 {% endblock %}
 
 {% block body %}
 	<h1>
 		<i class="fas fa-video"></i>
-		{% trans %}Video statistics{% endtrans %}
+    {{ isVideo ? "Video statistics" | trans : "Video group statistics" | trans }}
 	</h1>
 
 	<div class='table-responsive'>
@@ -21,7 +21,9 @@
 					<th>{{ statHeader.2 }}</th>
 					<th>{{ statHeader.3 }}</th>
 					<th>{{ statHeader.4 }}</th>
-					<th><i class="fas fa-heart like-liked"></i></th>
+          {% if isVideo %}
+  					<th><i class="fas fa-heart like-liked"></i></th>
+          {% endif %}
 				</tr>
 			</thead>
 			<tbody>
@@ -39,7 +41,9 @@
                 <td>0</td>
               {% endfor %}
             {% endif %}
-            <td>{{ video.likes }}</td>
+            {% if isVideo %}
+              <td>{{ video.likes }}</td>
+            {% endif %}
 					</tr>
 				{% else %}
 					<tr>
