@@ -23,7 +23,8 @@
     "svc/util-bundle": "^1|dev-main",
     "svc/log-bundle": "^0|dev-main",
     "liip/imagine-bundle": "^2",
-    "symfony/form": "^5"
+    "symfony/form": "^5",
+    "symfony/ux-chartjs": "^1"
   },
   "autoload": {
     "psr-4": {

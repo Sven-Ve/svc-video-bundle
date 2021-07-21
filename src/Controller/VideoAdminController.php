@@ -15,6 +15,8 @@ use Svc\VideoBundle\Form\VideoType;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Svc\VideoBundle\Service\VideoGroupHelper;
 use Svc\VideoBundle\Service\VideoHelper;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 /**
  * @IsGranted("ROLE_ADMIN")
@@ -123,10 +125,22 @@ class VideoAdminController extends AbstractController
   /**
    * show statistics for a video
    */
-  public function stats(Video $video, LogStatistics $logStatistics): Response
+  public function stats(Video $video, LogStatistics $logStatistics, ChartBuilderInterface $chartBuilder): Response
   {
+    $countries = $logStatistics->getCountriesForChartJS($video->getId(), VideoController::OBJ_TYPE_VIDEO, EventLog::LEVEL_DATA);
+    $countries["datasets"][0]["backgroundColor"] = ['#A3C408', '#86914E', '#F7D723', '#708AFA', '#085CC4'];
+    $countries["datasets"][0]["borderColor"] = 'rgb(255, 255, 255)';
+
+    $chart = $chartBuilder->createChart(Chart::TYPE_PIE);
+    $chart->setData($countries);
+    $chart->setOptions([
+      "responsive" => true,
+      "plugins" => ["legend" => ["position" => "bottom"]]
+    ]);
+
     return $this->render('@SvcVideo/video_admin/stats.html.twig', [
       'video' => $video,
+      'chart' => $chart,
       'logData' => $logStatistics->reportOneId($video->getId(), VideoController::OBJ_TYPE_VIDEO)
     ]);
   }

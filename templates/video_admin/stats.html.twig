@@ -11,8 +11,18 @@
 		{% trans %}Video statistics{% endtrans %}
 	</h1>
 
-    {{ include('@SvcLog/stats/_stats.html.twig') }}
+  <div class="row">
+    <div class="col-sm">
+      Hallo
+      <br />
+    </div>
+    <div class="col-sm-4 col-md-3">
+      {{ render_chart(chart) }}
+    </div>
+  </div>
 
-		<a href="{{ path('svc_video_admin_index') }}" class='btn btn-secondary'>{% trans %}Back to list{% endtrans %}</a>
+  {{ include('@SvcLog/stats/_stats.html.twig') }}
+
+	<a href="{{ path('svc_video_admin_index') }}" class='btn btn-secondary'>{% trans %}Back to list{% endtrans %}</a>
 
 {% endblock %}
