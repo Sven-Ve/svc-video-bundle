@@ -80,7 +80,6 @@ $ bin/console svc_log:stat-aggregate
 ```
 
 Example for crontab:
-```console
+```
 17 * * * * (cd <your_path>; bin/console svc_log:stat-aggregate) >/dev/null
 ```
-

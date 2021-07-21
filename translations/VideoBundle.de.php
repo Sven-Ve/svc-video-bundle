@@ -66,7 +66,7 @@ return array (
   'Date' => 'Datum',
   'Date desc' => 'Datum absteigend',
   'Video group statistics' => 'Videogruppen-Statistiken',
-  '' => '',
+  'Statistics' => 'Statistiken',
   '' => '',
   '' => '',
   '' => '',

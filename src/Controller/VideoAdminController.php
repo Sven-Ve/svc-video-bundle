@@ -123,7 +123,7 @@ class VideoAdminController extends AbstractController
   /**
    * show statistics for a video
    */
-  public function stats1(Video $video, LogStatistics $logStatistics): Response
+  public function stats(Video $video, LogStatistics $logStatistics): Response
   {
     return $this->render('@SvcVideo/video_admin/stats.html.twig', [
       'video' => $video,
