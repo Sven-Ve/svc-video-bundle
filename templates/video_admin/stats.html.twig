@@ -6,23 +6,23 @@
 {% endblock %}
 
 {% block body %}
-	<h1>
-		<i class="fas fa-chart-bar"></i>
-		{% trans %}Video statistics{% endtrans %}
-	</h1>
+
 
   <div class="row">
     <div class="col-sm">
-      Hallo
+      <h1>
+        <i class="fas fa-chart-bar"></i>
+        {% trans %}Video statistics{% endtrans %}
+      </h1>
       <br />
+    	<a href="{{ path('svc_video_admin_index') }}" class='btn btn-secondary btn-sm'>{% trans %}Back to list{% endtrans %}</a>
     </div>
-    <div class="col-sm-4 col-md-3">
+    <div class="col-sm-6 col-md-5 col-lg-4">
       {{ render_chart(chart) }}
     </div>
   </div>
 
   {{ include('@SvcLog/stats/_stats.html.twig') }}
 
-	<a href="{{ path('svc_video_admin_index') }}" class='btn btn-secondary'>{% trans %}Back to list{% endtrans %}</a>
 
 {% endblock %}

@@ -131,11 +131,12 @@ class VideoAdminController extends AbstractController
     $countries["datasets"][0]["backgroundColor"] = ['#A3C408', '#86914E', '#F7D723', '#708AFA', '#085CC4'];
     $countries["datasets"][0]["borderColor"] = 'rgb(255, 255, 255)';
 
-    $chart = $chartBuilder->createChart(Chart::TYPE_PIE);
+    $chart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
     $chart->setData($countries);
     $chart->setOptions([
       "responsive" => true,
-      "plugins" => ["legend" => ["position" => "bottom"]]
+      "legend" => ["position" => "bottom"],
+      "title" => ["display" => true, "text"=>"Countries"]
     ]);
 
     return $this->render('@SvcVideo/video_admin/stats.html.twig', [
