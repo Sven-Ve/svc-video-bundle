@@ -41,19 +41,19 @@
 							<a href="{{ path('svc_video_admin_edit', {'id': video.id}) }}" class='btn btn-sm btn-secondary'>{% trans %}Edit{% endtrans %}</a>
 							<a href="{{ path('svc_video_run', {'id': video.id}) }}" class='btn btn-sm btn-primary'>{% trans %}Run{% endtrans %}</a>
 							<a href="{{ path('svc_video_admin_stats', {'id': video.id}) }}" class='btn btn-sm btn-info'>{% trans %}Statistics{% endtrans %}</a>
-              <span data-controller="clipboard-multi" class="d-none"
-                {{ stimulus_controller('clipboard-multi', { 
+              <span data-controller="svcv-clipboard-multi" class="d-none"
+                {{ stimulus_controller('svcv-clipboard-multi', { 
                   'link': url('svc_video_run', {id: video.id} ),
                   'link1': url('svc_video_run_hn', {id: video.id} ) 
                 } ) }}
               >
                 <div class="btn-group">
-                  <button type="button" class="btn btn-warning btn-sm" data-action="clipboard-multi#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
+                  <button type="button" class="btn btn-warning btn-sm" data-action="svcv-clipboard-multi#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
                   <button class="btn btn-warning dropdown-toggle dropdown-toggle-split btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                      <span class="visually-hidden">Toggle Dropdown</span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class='dropdown-item' data-action="clipboard-multi#copy1">{% trans %}without nav{% endtrans %}</a></li>
+                    <li><a class='dropdown-item' data-action="svcv-clipboard-multi#copy1">{% trans %}without nav{% endtrans %}</a></li>
                   </ul>
                 </div>
               </span>

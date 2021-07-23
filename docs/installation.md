@@ -12,6 +12,10 @@ Open a command console, enter your project directory and execute:
 
 ```console
 $ composer require svc/video-bundle
+
+# Don't forget to install the JavaScript dependencies as well and compile
+yarn install --force
+yarn encore dev
 ```
 
 Applications that don't use Symfony Flex

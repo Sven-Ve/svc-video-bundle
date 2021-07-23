@@ -10,10 +10,12 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class SvcVideoExtension extends Extension
 {
+  private $rootPath;
+
   public function load(array $configs, ContainerBuilder $container)
   {
-    $rootPath = $container->getParameter("kernel.project_dir");
-    $this->createConfigIfNotExists($rootPath);
+    $this->rootPath = $container->getParameter("kernel.project_dir");
+    $this->createConfigIfNotExists();
 
     $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
     $loader->load('services.xml');
@@ -44,12 +46,11 @@ class SvcVideoExtension extends Extension
 
     $definition = $container->getDefinition('svc_video.service.video-group-helper');
     $definition->setArgument(0, $config['enableShortNames']);
-
   }
 
-  private function createConfigIfNotExists($rootPath)
+  private function createConfigIfNotExists()
   {
-    $fileName = $rootPath . "/config/routes/svc_video.yaml";
+    $fileName = $this->rootPath . "/config/routes/svc_video.yaml";
     if (!file_exists($fileName)) {
       $text = "_svc_video:\n";
       $text .= "    resource: '@SvcVideoBundle/src/Resources/config/routes.xml'\n";
@@ -63,7 +64,7 @@ class SvcVideoExtension extends Extension
       }
     }
 
-    $fileName = $rootPath . "/config/packages/svc_video.yaml";
+    $fileName = $this->rootPath . "/config/packages/svc_video.yaml";
     if (!file_exists($fileName)) {
       $text = "svc_video:\n";
       $text .= "    # Enable likes for videos\n";
@@ -80,6 +81,27 @@ class SvcVideoExtension extends Extension
       } catch (Exception $e) {
         // ignore...
       }
+    }
+    $this->createAssetFiles("assets/controllers/svcv-sort_controller.js");
+    $this->createAssetFiles("assets/controllers/svcv-clipboard_controller.js");
+    $this->createAssetFiles("assets/controllers/svcv-clipboard-multi_controller.js");
+  }
+
+  private function createAssetFiles(string $file)
+  {
+    $destFile = $this->rootPath . "/" . $file;
+    if (file_exists($destFile)) {
+      return true;
+    }
+    $soureFile =  $this->rootPath . "/vendor/svc/video-bundle/install/" . $file;
+    if (!file_exists($soureFile)) {
+      return false;
+    }
+
+    try {
+      copy($soureFile, $destFile);
+    } catch (Exception $e) {
+      return false;
     }
   }
 }

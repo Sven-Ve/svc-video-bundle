@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.6.1";
-$message = "integrate video statistic overview(for all videos)";
+$version = "1.7.0";
+$message = "added chartjs for country stats, copy js-controller during install";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

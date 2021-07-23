@@ -43,12 +43,12 @@
       | 
       {% endif %}
       <span title='{% trans %}Video watched{% endtrans %}'><i class="fas fa-eye"></i> {{ video.calls }}</span> | 
-      <span data-controller="clipboard" class="d-none"
-        {{ stimulus_controller('clipboard', { 
+      <span data-controller="svcv-clipboard" class="d-none"
+        {{ stimulus_controller('svcv-clipboard', { 
           'link': copyUrl
         } ) }}
       >
-        <a class='justify-content-end' title='{% trans %}Copy link to clipboard{% endtrans %}' data-action="clipboard#copy">
+        <a class='justify-content-end' title='{% trans %}Copy link to clipboard{% endtrans %}' data-action="svcv-clipboard#copy">
           {% trans %}Copy link{% endtrans %}
         </a>
       </span>

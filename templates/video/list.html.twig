@@ -22,12 +22,12 @@
             <p class="fw-light">{{ currentGroup.description }}</p>
           </div>
           <div class='col text-sm-end'>
-            <span data-controller="clipboard-multi" class="d-none d-grid"
-              {{ stimulus_controller('clipboard-multi', { 
+            <span data-controller="svcv-clipboard-multi" class="d-none d-grid"
+              {{ stimulus_controller('svcv-clipboard-multi', { 
                 'link': copyUrl
               } ) }}
             >
-              <button type="button" class="btn btn-warning btn-sm" data-action="clipboard-multi#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
+              <button type="button" class="btn btn-warning btn-sm" data-action="svcv-clipboard-multi#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
             </span>
 
             {% if enableVideoSort %}

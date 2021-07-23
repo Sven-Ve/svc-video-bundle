@@ -1,6 +1,6 @@
 {
   "name": "svc/video-bundle",
-  "description": "Private package to manage and stream videos",
+  "description": "Package to manage and stream videos",
   "type": "symfony-bundle",
   "license": "MIT",
   "authors": [

@@ -105,3 +105,8 @@
 ## Version 1.6.1
 *Sun, 18 Jul 2021 20:48:05 +0000*
 - integrate video statistic overview (for all videos)
+
+
+## Version 1.7.0
+*Fri, 23 Jul 2021 20:45:57 +0000*
+- added chartjs for country stats, copy js-controller during install

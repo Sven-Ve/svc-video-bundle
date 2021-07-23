@@ -14,19 +14,19 @@ use Svc\VideoBundle\Entity\Video;
  */
 class VideoRepository extends ServiceEntityRepository
 {
-  public const SORT_BY_TITLE=0;
-  public const SORT_BY_LIKES=1;
-  public const SORT_BY_VIEWS=2;
-  public const SORT_BY_DATE=3;
-  public const SORT_BY_DATE_DESC=4;
+  public const SORT_BY_DATE_DESC=0;
+  public const SORT_BY_TITLE=1;
+  public const SORT_BY_LIKES=2;
+  public const SORT_BY_VIEWS=3;
+  public const SORT_BY_DATE=4;
 
   // t = text, f = field, d = direction
   public const SORT_FIELDS = [
+    self::SORT_BY_DATE_DESC=>['t' => 'Date desc', 'f' => 'uploadDate', 'd' => 'desc'],
     self::SORT_BY_TITLE=>['t' => 'Title', 'f' => 'title', 'd' => 'asc'],
     self::SORT_BY_LIKES=>['t' => 'Likes', 'f' => 'likes', 'd' => 'desc'],
     self::SORT_BY_VIEWS=>['t' => 'Views', 'f' => 'calls', 'd' => 'desc'],
     self::SORT_BY_DATE=>['t' => 'Date', 'f' => 'uploadDate', 'd' => 'asc'],
-    self::SORT_BY_DATE_DESC=>['t' => 'Date desc', 'f' => 'uploadDate', 'd' => 'desc'],
   ];
 
 
