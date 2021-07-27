@@ -87,7 +87,13 @@ class SvcVideoExtension extends Extension
     $this->createAssetFiles("assets/controllers/svcv-clipboard-multi_controller.js");
   }
 
-  private function createAssetFiles(string $file)
+  /**
+   * create config and asset files
+   *
+   * @param string $file
+   * @return boolean
+   */
+  private function createAssetFiles(string $file): bool
   {
     $destFile = $this->rootPath . "/" . $file;
     if (file_exists($destFile)) {
@@ -95,13 +101,16 @@ class SvcVideoExtension extends Extension
     }
     $soureFile =  $this->rootPath . "/vendor/svc/video-bundle/install/" . $file;
     if (!file_exists($soureFile)) {
+      dump("Cannot create file " . $file . " (source not exists)");
       return false;
     }
 
     try {
       copy($soureFile, $destFile);
     } catch (Exception $e) {
+      dump("Cannot create file " . $file . " (" . $e->getMessage() . ")");
       return false;
     }
+    return true;
   }
 }
