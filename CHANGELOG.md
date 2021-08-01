@@ -110,3 +110,8 @@
 ## Version 1.7.0
 *Fri, 23 Jul 2021 20:45:57 +0000*
 - added chartjs for country stats, copy js-controller during install
+
+
+## Version 1.7.1
+*Sun, 01 Aug 2021 14:55:47 +0000*
+- preparation for LogViewer
