@@ -29,9 +29,10 @@
         <tag name="controller.service_arguments"/>
       </service>
 
-      <service id="svc_video.service.log-data-provider" class="Svc\VideoBundle\Service\LogDataProvider" public="true" autowire="true">
+      <service id="Svc\VideoBundle\Service\LogDataProvider" class="Svc\VideoBundle\Service\LogDataProvider" public="true" autowire="true">
         <tag name="controller.service_arguments"/>
       </service>
+      <service id="svc_video.service.log-data-provider" alias="Svc\VideoBundle\Service\LogDataProvider" />
 
       <service id="svc_video.service.video-helper" class="Svc\VideoBundle\Service\VideoHelper" public="false" autowire="true">
         <tag name="controller.service_arguments"/>
