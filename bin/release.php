@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.7.3";
-$message = "added svc_video.service.log-data-provider as an alias";
+$version = "1.8.0";
+$message = "implement LogDataProvider for svc/log Log Viewer";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

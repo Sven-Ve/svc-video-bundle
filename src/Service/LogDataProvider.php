@@ -3,58 +3,93 @@
 namespace Svc\VideoBundle\Service;
 
 
-use Svc\LogBundle\DataProvider\DataProviderInterface;
+use Svc\LogBundle\DataProvider\GeneralDataProvider;
 use Svc\VideoBundle\Controller\VideoController;
+use Svc\VideoBundle\Repository\VideoGroupRepository;
+use Svc\VideoBundle\Repository\VideoRepository;
 
-class LogDataProvider implements DataProviderInterface
+class LogDataProvider extends GeneralDataProvider
 {
 
-  /**
-   * get the text/description for a source type
-   *
-   * @param integer $sourceType
-   * @return string
-   */
-  public function getSourceTypeText(int $sourceID): string
+  private $videoSourceIDs = [];
+  private $isVideoSourceIDsInitialized = false;
+  private $vGroupSourceIDs = [];
+  private $isVGroupSourceIDsInitialized = false;
+  private $videoRep;
+  private $videoGroupRep;
+
+  public function __construct(VideoRepository $videoRep, VideoGroupRepository $videoGroupRep)
   {
-    if ($sourceID === VideoController::OBJ_TYPE_VIDEO) {
-      return "video";
-    } elseif ($sourceID === VideoController::OBJ_TYPE_VGROUP) {
-      return "video group";
-    } else {
-      return $sourceID;
+    $this->videoRep = $videoRep;
+    $this->videoGroupRep = $videoGroupRep;
+  }
+
+  /**
+   * init the sourceType array
+   *
+   * @return boolean
+   */
+  protected function initSourceTypes(): bool
+  {
+    if ($this->isSourceTypesInitialized) {
+      return true;
     }
+    $this->sourceTypes[VideoController::OBJ_TYPE_VIDEO] = "video";
+    $this->sourceTypes[VideoController::OBJ_TYPE_VGROUP] = "video group";
+    $this->isSourceTypesInitialized = true;
+    return true;
   }
 
 
   /**
-   * get the text/description for a source ID
+   * get the text/description for a source ID / sourceType combination
    *
    * @param integer $sourceID
+   * @param integer|null $sourceType
    * @return string
    */
-  public function getSourceIDText(int $sourceID): string
+  public function getSourceIDText(int $sourceID, ?int $sourceType = null): string
   {
-    return "ID: " . $sourceID;
+    if ($sourceType === VideoController::OBJ_TYPE_VIDEO) {
+      if (!$this->isVideoSourceIDsInitialized) {
+        $this->initVideoSourceIDs();
+      }
+      return array_key_exists($sourceID, $this->videoSourceIDs) ? $this->videoSourceIDs[$sourceID] : $sourceID;
+    } elseif ($sourceType === VideoController::OBJ_TYPE_VGROUP) {
+      if (!$this->isVGroupSourceIDsInitialized) {
+        $this->initVGroupSourceIDs();
+      }
+      return array_key_exists($sourceID, $this->vGroupSourceIDs) ? $this->vGroupSourceIDs[$sourceID] : $sourceID;
+    }
+    return $sourceID;
   }
 
   /**
-   * get all sourceIDs as array
+   * read all video titles, store it in an array
    *
-   * @return array
+   * @return void
    */
-  public function getSourceIDTextsArray(): array
+  private function initVideoSourceIDs()
   {
-    return [];
+    foreach ($this->videoRep->findAll() as $video) {
+      $this->videoSourceIDs[$video->getId()] = $video->getTitle();
+    }
+
+    $this->isVideoSourceIDsInitialized = true;
   }
 
   /**
-   * get all sourceTypes as array
+   * read all video group titles, store it in an array
    *
-   * @return array
+   * @return void
    */
-  public function getSourceTypeTextsArray(): array
+  private function initVGroupSourceIDs()
   {
-    return [];
+    foreach ($this->videoGroupRep->findAll() as $vGroup) {
+      $this->vGroupSourceIDs[$vGroup->getId()] = $vGroup->getTitle();
+    }
+    $this->vGroupSourceIDs["0"] = "All videos";
+
+    $this->isVGroupSourceIDsInitialized = true;
   }
 }

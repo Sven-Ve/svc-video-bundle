@@ -125,3 +125,8 @@
 ## Version 1.7.3
 *Sun, 01 Aug 2021 15:15:16 +0000*
 - added svc_video.service.log-data-provider as an alias
+
+
+## Version 1.8.0
+*Sun, 01 Aug 2021 20:19:50 +0000*
+- implement LogDataProvider for svc/log Log Viewer
