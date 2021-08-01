@@ -28,7 +28,7 @@ class LogDataProvider implements DataProviderInterface
 
 
   /**
-   * get the text/description for a source id
+   * get the text/description for a source ID
    *
    * @param integer $sourceID
    * @return string
@@ -49,7 +49,7 @@ class LogDataProvider implements DataProviderInterface
   }
 
   /**
-   * get all sourceTypess as array
+   * get all sourceTypes as array
    *
    * @return array
    */

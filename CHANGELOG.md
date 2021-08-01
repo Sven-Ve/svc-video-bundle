@@ -115,3 +115,8 @@
 ## Version 1.7.1
 *Sun, 01 Aug 2021 14:55:47 +0000*
 - preparation for LogViewer
+
+
+## Version 1.7.2
+*Sun, 01 Aug 2021 15:06:48 +0000*
+- added LogDataProvider as a service

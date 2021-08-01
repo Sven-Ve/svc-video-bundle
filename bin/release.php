@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.7.1";
-$message = "preparation for LogViewer";
+$version = "1.7.2";
+$message = "added LogDataProvider as a service";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);
