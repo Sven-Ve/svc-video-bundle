@@ -135,3 +135,8 @@
 ## Version 1.8.1
 *Tue, 03 Aug 2021 14:16:50 +0000*
 - using phpstan, code improvement
+
+
+## Version 1.8.2
+*Tue, 03 Aug 2021 15:59:23 +0000*
+- update svc/log-bundle to version>1
