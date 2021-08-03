@@ -145,3 +145,8 @@
 ## Version 1.8.2
 *Tue, 03 Aug 2021 15:59:56 +0000*
 - update svc/log-bundle to version>1
+
+
+## Version 1.8.3
+*Tue, 03 Aug 2021 16:00:25 +0000*
+- update svc/log-bundle to version>1
