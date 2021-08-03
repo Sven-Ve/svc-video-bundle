@@ -151,7 +151,7 @@ class VideoAdminController extends AbstractController
    *
    * @param bool $isVideo true: statistics for video, false: statistics for video groups
    * @param LogStatistics $logStatistics
-   * @return void
+   * @return Response
    */
   public function allStats(bool $isVideo, VideoRepository $videoRepo, VideoGroupRepository $videoGroupRepo, LogStatistics $logStatistics): Response
   {
@@ -170,7 +170,7 @@ class VideoAdminController extends AbstractController
       foreach ($statistics['data'] as $statistic) {
         if ($statistic['sourceID'] == $video->getId()) {
           $video->statistics = $statistic;
-          continue;
+          break;
         }
       }
     }

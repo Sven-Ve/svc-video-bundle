@@ -49,7 +49,7 @@ class VideoGroupHelper
   /**
    * get the default video group or raise an exception
    *
-   * @return Target
+   * @return VideoGroup
    */
   public function getDefaultVideoGroup(): VideoGroup
   {
@@ -108,17 +108,18 @@ class VideoGroupHelper
     return null;
   }
 
+
   /**
    * generate the url for a video group, try to use the short form
    *
    * @param VideoGroup|null $group
    * @param integer|null $sort
-   * @return string
+   * @return string|null
    */
-  public function generateVideoGroupUrl(?VideoGroup $group, ?int $sort = 0): string
+  public function generateVideoGroupUrl(?VideoGroup $group, ?int $sort = 0): ?string
   {
     if (!$group) {
-      return false;
+      return null;
     }
     $shortName = $group->getIDorShortname();
 
@@ -127,7 +128,5 @@ class VideoGroupHelper
     } catch (Exception $e) {
       return $this->router->generate('svc_video_list', ['group' => $shortName, 'sort' => $sort ?? 0], UrlGeneratorInterface::ABSOLUTE_URL);
     }
-
-    return $this->router->generate('svc_video_list');
   }
 }

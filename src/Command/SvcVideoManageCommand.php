@@ -18,10 +18,9 @@ class SvcVideoManageCommand extends Command
 
   private $videoHelper;
 
-  public function __construct(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper)
+  public function __construct(VideoHelper $videoHelper)
   {
     parent::__construct();
-    $this->videoGroupHelper = $videoGroupHelper;
     $this->videoHelper = $videoHelper;
   }
 

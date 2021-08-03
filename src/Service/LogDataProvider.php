@@ -61,7 +61,7 @@ class LogDataProvider extends GeneralDataProvider
       }
       return array_key_exists($sourceID, $this->vGroupSourceIDs) ? $this->vGroupSourceIDs[$sourceID] : $sourceID;
     }
-    return $sourceID;
+    return strval($sourceID);
   }
 
   /**

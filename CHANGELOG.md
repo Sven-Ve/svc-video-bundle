@@ -130,3 +130,8 @@
 ## Version 1.8.0
 *Sun, 01 Aug 2021 20:19:50 +0000*
 - implement LogDataProvider for svc/log Log Viewer
+
+
+## Version 1.8.1
+*Tue, 03 Aug 2021 14:16:50 +0000*
+- using phpstan, code improvement

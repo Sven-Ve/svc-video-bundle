@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.8.0";
-$message = "implement LogDataProvider for svc/log Log Viewer";
+$version = "1.8.1";
+$message = "using phpstan, code improvement";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

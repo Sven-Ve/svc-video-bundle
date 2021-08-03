@@ -7,7 +7,7 @@
 
 {% block body %}
   <div class='form-lg'>
-    {% if enableGroups %}
+    {% if enableGroups and not hideNav %}
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ path('svc_video_list') }}">Home</a></li>

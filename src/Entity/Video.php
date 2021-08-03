@@ -3,8 +3,6 @@
 namespace Svc\VideoBundle\Entity;
 
 use Svc\VideoBundle\Repository\VideoRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Svc\UtilBundle\Service\EnvInfoHelper;
 use Symfony\Component\Validator\Constraints as Assert;

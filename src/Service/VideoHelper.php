@@ -200,7 +200,7 @@ class VideoHelper
   /**
    * create the thumbnail directory
    *
-   * @param string|null $errMsg by reference: give the error message back
+   * @param string|null $msg by reference: give the error message back
    * @return boolean true = successfull
    */
   public function createThumbnailDir(?string &$msg): bool

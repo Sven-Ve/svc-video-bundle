@@ -60,8 +60,8 @@ class VideoController extends AbstractController
         if (!$currentGroup) {
           return $this->redirectToRoute('svc_video_list');
         }
-        $hideGroups = $hideGroups ? true : $currentGroup->getHideGroups();
-        $hideNav = $hideNav ? true : $currentGroup->getHideNav();
+        $hideGroups = $currentGroup->getHideGroups();
+        $hideNav = $currentGroup->getHideNav();
 
         if ($currentGroup->getIsPrivate()) {
           if (!$videoHelper->checkPassword('', $currentGroup->getPassword())) {
@@ -94,7 +94,7 @@ class VideoController extends AbstractController
    * @param string $id numeric id or shortName
    * @return Response
    */
-  public function run(string $id, ?bool $hideNav = false, LikeHelper $likeHelper, VideoRepository $videoRep, Request $request, VideoHelper $videoHelper, EventLog $eventLog): Response
+  public function run(string $id, LikeHelper $likeHelper, VideoRepository $videoRep, Request $request, VideoHelper $videoHelper, EventLog $eventLog, ?bool $hideNav = false): Response
   {
     $video = null;
     if (ctype_digit($id)) {
@@ -145,7 +145,7 @@ class VideoController extends AbstractController
     if ($likeHelper->addLike(LikeHelper::SOURCE_VIDEO, $video->getId(), null, $cookieName)) {
 
       if ($cookieName) {
-        $response->headers->setCookie(new Cookie($cookieName, 1, new DateTime('+1 week')));
+        $response->headers->setCookie(new Cookie($cookieName, "1", new DateTime('+1 week')));
       }
 
       $newValue = $video->incLikes();
@@ -163,7 +163,7 @@ class VideoController extends AbstractController
    * enter the password for a private video
    *
    */
-  public function enterPwd(int $id, ?int $ot = 1, Request $request, VideoHelper $videoHelper, VideoGroupRepository $videoGroupRep, VideoRepository $videoRep, EventLog $eventLog)
+  public function enterPwd(int $id, Request $request, VideoHelper $videoHelper, VideoGroupRepository $videoGroupRep, VideoRepository $videoRep, EventLog $eventLog, ?int $ot = 1)
   {
     $ot = $ot ?? self::OBJ_TYPE_VIDEO;
     $form = $this->createForm(EnterPasswordType::class);
