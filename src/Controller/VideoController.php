@@ -119,6 +119,10 @@ class VideoController extends AbstractController
     $video->incCalls();
     $this->getDoctrine()->getManager()->flush();
 
+    if ($this->enableGroups and !$hideNav) {
+      $hideNav = $video->getVideoGroup()->getHideNav();
+    }
+
     $eventLog->log($video->getId(), self::OBJ_TYPE_VIDEO);
     return $this->render('@SvcVideo/video/run.html.twig', [
       'video' => $video,
