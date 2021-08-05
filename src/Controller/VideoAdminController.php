@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Svc\LogBundle\Service\EventLog;
 use Svc\LogBundle\Service\LogStatistics;
+use Svc\VideoBundle\Entity\VideoGroup;
 use Svc\VideoBundle\Form\VideoType;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Svc\VideoBundle\Service\VideoGroupHelper;
@@ -162,13 +163,16 @@ class VideoAdminController extends AbstractController
     } else {
       $videoType = VideoController::OBJ_TYPE_VGROUP;
       $videos = $videoGroupRepo->findAll();
+      $allVideoGroup  = new VideoGroup;
+      $allVideoGroup->setName("All videos");
+      array_unshift($videos, $allVideoGroup);
     }
 
     $statistics = $logStatistics->pivotMonthly($videoType, EventLog::LEVEL_DATA);
 
     foreach ($videos as $video) {
       foreach ($statistics['data'] as $statistic) {
-        if ($statistic['sourceID'] == $video->getId()) {
+        if ($statistic['sourceID'] === $video->getId() or ($video->getId() === null and $statistic['sourceID']===0)) {
           $video->statistics = $statistic;
           break;
         }

@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.8.4";
-$message = "fixed hide-nav error for direct video links";
+$version = "1.8.5";
+$message = "add all statistics to video and group overviews, display statistics for all groups";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

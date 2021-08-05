@@ -155,3 +155,8 @@
 ## Version 1.8.4
 *Wed, 04 Aug 2021 11:55:25 +0000*
 - fixed hide-nav error for direct video links
+
+
+## Version 1.8.5
+*Thu, 05 Aug 2021 07:33:41 +0000*
+- add all statistics to video and group overviews, display statistics for all groups
