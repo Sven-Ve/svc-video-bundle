@@ -22,7 +22,7 @@
     </div>
   </div>
 
- 	{{ include("@SvcLog/log_viewer/_table.html.twig", {showFilter: false, sourceID: sourceID, sourceType: sourceType, logLevel: logLevel}) }}
+ 	{{ include("@SvcLog/log_viewer/_table.html.twig", {'showFilter': false, 'sourceID': sourceID, 'sourceType': sourceType, 'logLevel': logLevel, 'hideSourceCols': true}) }}
 
 
 {% endblock %}

@@ -160,3 +160,8 @@
 ## Version 1.8.5
 *Thu, 05 Aug 2021 07:33:41 +0000*
 - add all statistics to video and group overviews, display statistics for all groups
+
+
+## Version 1.8.6
+*Fri, 06 Aug 2021 20:46:12 +0000*
+- integrate ajax log viewer in video and video group statistics

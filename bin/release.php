@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.8.5";
-$message = "add all statistics to video and group overviews, display statistics for all groups";
+$version = "1.8.6";
+$message = "integrate ajax log viewer in video and video group statistics";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);
