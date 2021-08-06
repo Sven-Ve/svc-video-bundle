@@ -143,7 +143,9 @@ class VideoAdminController extends AbstractController
     return $this->render('@SvcVideo/video_admin/stats.html.twig', [
       'video' => $video,
       'chart' => $chart,
-      'logData' => $logStatistics->reportOneId($video->getId(), VideoController::OBJ_TYPE_VIDEO)
+      'sourceID' => $video->getId(),
+      'sourceType' => VideoController::OBJ_TYPE_VIDEO,
+      'logLevel' => EventLog::LEVEL_DATA
     ]);
   }
 

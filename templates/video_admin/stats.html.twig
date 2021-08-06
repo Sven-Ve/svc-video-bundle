@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  {{ include('@SvcLog/stats/_stats.html.twig') }}
+ 	{{ include("@SvcLog/log_viewer/_table.html.twig", {showFilter: false, sourceID: sourceID, sourceType: sourceType, logLevel: logLevel}) }}
 
 
 {% endblock %}
