@@ -34,9 +34,9 @@
         {% if liked is defined and liked %}
           <i class="fas fa-heart like-liked"></i> {{ video.likes }}
         {% else %}
-          <span data-controller='like' data-like-url-value='{{ path("svc_video_inc_likes", {id: video.id}) }}'>
-            <i class="fas fa-heart like-not-liked" data-action="click->like#inc"></i>
-            <span data-like-target="counter">{{ video.likes }}</span>
+          <span data-controller='svc--like-bundle--like' data-svc--like-bundle--like-url-value='{{ path("svc_video_inc_likes", {id: video.id}) }}'>
+            <i class="fas fa-heart like-not-liked" data-action="click->svc--like-bundle--like#inc"></i>
+            <span data-svc--like-bundle--like-target="counter">{{ video.likes }}</span>
           </span> 
         {% endif %}
       | 

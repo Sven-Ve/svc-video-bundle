@@ -165,3 +165,8 @@
 ## Version 1.8.6
 *Fri, 06 Aug 2021 20:46:12 +0000*
 - integrate ajax log viewer in video and video group statistics
+
+
+## Version 1.8.7
+*Sun, 08 Aug 2021 17:18:14 +0000*
+- update to new version of like-bundle with new stimulus controller call

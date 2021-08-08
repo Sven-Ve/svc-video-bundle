@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.8.6";
-$message = "integrate ajax log viewer in video and video group statistics";
+$version = "1.8.7";
+$message = "update to new version of like-bundle with new stimulus controller call";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);
