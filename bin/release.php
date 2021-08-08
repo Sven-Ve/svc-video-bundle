@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.8.7";
-$message = "update to new version of like-bundle with new stimulus controller call";
+$version = "1.9.0";
+$message = "install stimulus controller via ux-webpack-logic";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

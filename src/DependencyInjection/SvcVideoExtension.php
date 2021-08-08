@@ -17,7 +17,7 @@ class SvcVideoExtension extends Extension
     $this->rootPath = $container->getParameter("kernel.project_dir");
     $this->createConfigIfNotExists();
 
-    $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+    $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config'));
     $loader->load('services.xml');
 
     $configuration = $this->getConfiguration($configs, $container);
@@ -53,7 +53,7 @@ class SvcVideoExtension extends Extension
     $fileName = $this->rootPath . "/config/routes/svc_video.yaml";
     if (!file_exists($fileName)) {
       $text = "_svc_video:\n";
-      $text .= "    resource: '@SvcVideoBundle/src/Resources/config/routes.xml'\n";
+      $text .= "    resource: '@SvcVideoBundle/Resources/config/routes.xml'\n";
       $text .= "    prefix: /svc-video/{_locale}\n";
       $text .= '    requirements: {"_locale": "%app.supported_locales%"}}\n';
       try {
@@ -82,7 +82,6 @@ class SvcVideoExtension extends Extension
         // ignore...
       }
     }
-    $this->createAssetFiles("assets/controllers/svcv-sort_controller.js");
     $this->createAssetFiles("assets/controllers/svcv-clipboard_controller.js");
     $this->createAssetFiles("assets/controllers/svcv-clipboard-multi_controller.js");
   }

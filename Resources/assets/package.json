@@ -1,0 +1,15 @@
+{
+  "name": "@svc/video-bundle",
+  "description": "Bundle to manage and stream videos",
+  "license": "MIT",
+  "version": "0.1.0",
+  "symfony": {
+      "controllers": {
+          "sort": {
+              "main": "src/sort.js",
+              "fetch": "lazy",
+              "enabled": true
+          }
+      }
+  }
+}

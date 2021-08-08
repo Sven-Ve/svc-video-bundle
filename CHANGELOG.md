@@ -170,3 +170,8 @@
 ## Version 1.8.7
 *Sun, 08 Aug 2021 17:18:14 +0000*
 - update to new version of like-bundle with new stimulus controller call
+
+
+## Version 1.9.0
+*Sun, 08 Aug 2021 20:25:17 +0000*
+- install stimulus controller via ux-webpack-logic

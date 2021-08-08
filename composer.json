@@ -1,6 +1,6 @@
 {
   "name": "svc/video-bundle",
-  "description": "Package to manage and stream videos",
+  "description": "Bundle to manage and stream videos",
   "type": "symfony-bundle",
   "license": "MIT",
   "authors": [
@@ -8,6 +8,9 @@
       "name": "Sven Vetter",
       "email": "git.09o@svenvetter.com"
     }
+  ],
+  "keywords": [
+    "symfony-ux"
   ],
   "require": {
     "php": "^7.3.0 | ^8.0.0",

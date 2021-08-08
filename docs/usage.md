@@ -4,12 +4,12 @@
 Create tables (run `bin/console doctrine:schema:update --force`) or create a migration
 
 ## CSS
-- include the css file (assets/styles/layout/_svc_video.scss) in your global css
+- include the scss file in your global css
 
 ```scss
 // /assets/styles/app.sccs
 ...
-@import './layout/_svc_video';
+@import '~@svc/video-bundle/styles/_svc_video.scss';
 ...
 ```
 
@@ -19,7 +19,7 @@ Create tables (run `bin/console doctrine:schema:update --force`) or create a mig
 ```yaml
 # /config/routes/_svc_video.yaml
 _svc_video:
-    resource: '@SvcPVideoBundle/src/Resources/config/routes.xml'
+    resource: '@SvcVideoBundle/Resources/config/routes.xml'
     prefix: /_svc_video/{_locale}
     requirements: {"_locale": "%app.supported_locales%"}
 ```
