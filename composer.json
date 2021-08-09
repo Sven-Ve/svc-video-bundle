@@ -23,7 +23,7 @@
     "symfony/translation": "^5",
     "symfony/twig-bundle": "^5",
     "svc/like-bundle": "^1|dev-main",
-    "svc/util-bundle": "^1|dev-main",
+    "svc/util-bundle": "^1.6|dev-main",
     "svc/log-bundle": "^1|dev-main",
     "liip/imagine-bundle": "^2",
     "symfony/form": "^5",

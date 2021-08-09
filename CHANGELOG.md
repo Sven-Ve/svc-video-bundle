@@ -175,3 +175,8 @@
 ## Version 1.9.0
 *Sun, 08 Aug 2021 20:25:17 +0000*
 - install stimulus controller via ux-webpack-logic
+
+
+## Version 1.9.1
+*Mon, 09 Aug 2021 20:42:24 +0000*
+- use stimulus controller from svc/util-bundle (clipboard)
