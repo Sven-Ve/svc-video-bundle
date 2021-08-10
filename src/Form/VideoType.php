@@ -6,6 +6,7 @@ use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -53,7 +54,7 @@ class VideoType extends AbstractType
           'label' => 'Private',
           'label_attr' => ['class' => 'checkbox-switch']
         ])
-        ->add('plainPassword', TextType::class, [
+        ->add('plainPassword', PasswordType::class, [
           'label' => 'Password (only used for private videos)',
           'help' => 'It should have between 6 and 12 characters',
           'required' => false,
@@ -63,11 +64,11 @@ class VideoType extends AbstractType
               'max' => 12,
             ]),
           ],
-          'attr' => ['data-show-password-target' => "passwordFld"],
+          'attr' => ['data-svc--util-bundle--show-password-target' => "passwordFld"],
           'row_attr' => [
-            'data-controller' => "show-password",
-            'data-show-password-show-text-value' => "Show password",
-            'data-show-password-hide-text-value' => "Hide password"
+            'data-controller' => "svc--util-bundle--show-password",
+            'data-svc--util-bundle--show-password-show-text-value' => "Show password",
+            'data-svc--util-bundle--show-password-hide-text-value' => "Hide password"
           ]
         ])
       ;
@@ -76,7 +77,7 @@ class VideoType extends AbstractType
     $builder
       ->add('description', TextareaType::class, [
         'attr' => [
-          'data-controller' => 'wysiwyg'
+          'data-controller' => 'svc--util-bundle--wysiwyg'
         ],
         'required' => false
       ])

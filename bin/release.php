@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.9.1";
-$message = "use stimulus controller from svc/util-bundle (clipboard)";
+$version = "1.9.3";
+$message = "use stimulus controller from svc/util-bundle (show-password and wysiwyg)";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

@@ -22,7 +22,7 @@
             <p class="fw-light">{{ currentGroup.description }}</p>
           </div>
           <div class='col text-sm-end'>
-            <span data-controller="svc--util-bundle--clipboard" class="d-none d-grid"
+            <span class="d-none d-grid"
               {{ stimulus_controller('svc--util-bundle--clipboard', { 
                 'link': copyUrl
               } ) }}
@@ -31,7 +31,7 @@
             </span>
 
             {% if enableVideoSort %}
-              <span data-controller="svc--video-bundle--sort" 
+              <span 
                 {{ stimulus_controller('svc--video-bundle--sort', { 
                   'url': path('svc_video_list', {id: currentGroup.id})
                 } ) }}

@@ -180,3 +180,8 @@
 ## Version 1.9.1
 *Mon, 09 Aug 2021 20:42:24 +0000*
 - use stimulus controller from svc/util-bundle (clipboard)
+
+
+## Version 1.9.3
+*Tue, 10 Aug 2021 20:42:31 +0000*
+- use stimulus controller from svc/util-bundle (show-password and wysiwyg)

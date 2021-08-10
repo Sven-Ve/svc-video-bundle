@@ -42,7 +42,7 @@
       | 
       {% endif %}
       <span title='{% trans %}Video watched{% endtrans %}'><i class="fas fa-eye"></i> {{ video.calls }}</span> | 
-      <span data-controller="svc--util-bundle--clipboard" class="d-none"
+      <span class="d-none"
         {{ stimulus_controller('svc--util-bundle--clipboard', { 
           'link': copyUrl
         } ) }}

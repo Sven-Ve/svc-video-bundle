@@ -41,7 +41,7 @@
 							<a href="{{ path('svc_video_admin_edit', {'id': video.id}) }}" class='btn btn-sm btn-secondary'>{% trans %}Edit{% endtrans %}</a>
 							<a href="{{ path('svc_video_run', {'id': video.id}) }}" class='btn btn-sm btn-primary'>{% trans %}Run{% endtrans %}</a>
 							<a href="{{ path('svc_video_admin_stats', {'id': video.id}) }}" class='btn btn-sm btn-info'>{% trans %}Statistics{% endtrans %}</a>
-              <span data-controller="svc--util-bundle--mclipboard" class="d-none"
+              <span class="d-none"
                 {{ stimulus_controller('svc--util-bundle--mclipboard', { 
                   'link': url('svc_video_run', {id: video.id} ),
                   'link1': url('svc_video_run_hn', {id: video.id} ) 

@@ -1,12 +1,12 @@
 {% trans_default_domain 'VideoBundle' %}
 <form method="post" action="{{ path('svc_video_admin_delete', {'id': video.id}) }}"
-  {{ stimulus_controller('submit-confirm', {
+  {{ stimulus_controller('svc--util-bundle--submit-confirm', {
     title: 'Remove this video?' | trans,
     icon: 'warning',
     confirmButtonText: 'Yes, remove it' | trans,
     cancelButtonText: 'Cancel' | trans
   }) }}
-  data-action="submit-confirm#onSubmit"
+  data-action="svc--util-bundle--submit-confirm#onSubmit"
 >
     <input type="hidden" name="_method" value="post">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">

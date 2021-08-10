@@ -4,6 +4,7 @@ namespace Svc\VideoBundle\Form;
 
 use Svc\VideoBundle\Entity\VideoGroup;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -62,7 +63,7 @@ class VideoGroupType extends AbstractType
           'label' => 'Private',
           'label_attr' => ['class' => 'checkbox-switch']
         ])
-        ->add('plainPassword', TextType::class, [
+        ->add('plainPassword', PasswordType::class, [
           'label' => 'Password (only used for private video groups)',
           'help' => 'It should have between 6 and 12 characters',
           'required' => false,
@@ -72,11 +73,11 @@ class VideoGroupType extends AbstractType
               'max' => 12,
             ]),
           ],
-          'attr' => ['data-show-password-target' => "passwordFld"],
+          'attr' => ['data-svc--util-bundle--show-password-target' => "passwordFld"],
           'row_attr' => [
-            'data-controller' => "show-password",
-            'data-show-password-show-text-value' => "Show password",
-            'data-show-password-hide-text-value' => "Hide password"
+            'data-controller' => "svc--util-bundle--show-password",
+            'data-svc--util-bundle--show-password-show-text-value' => "Show password",
+            'data-svc--util-bundle--show-password-hide-text-value' => "Hide password"
           ]
         ]);
     }
