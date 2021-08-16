@@ -185,3 +185,8 @@
 ## Version 1.9.3
 *Tue, 10 Aug 2021 20:42:31 +0000*
 - use stimulus controller from svc/util-bundle (show-password and wysiwyg)
+
+
+## Version 1.9.4
+*Mon, 16 Aug 2021 22:09:17 +0000*
+- fixed wrong initial video sorting

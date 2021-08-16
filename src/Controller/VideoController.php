@@ -43,9 +43,9 @@ class VideoController extends AbstractController
   /**
    * list videos 
    */
-  public function list(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request, EventLog $eventLog, ?int $id = null, ?int $sort = 0): Response
+  public function list(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request, EventLog $eventLog, ?int $id = null): Response
   {
-    $sort = $request->query->get('sort');
+    $sort = $request->query->get('sort') ?? '0';
 
     $hideNav = false;
     $hideGroups = false;
