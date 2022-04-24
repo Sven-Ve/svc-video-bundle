@@ -195,3 +195,8 @@
 ## Version 1.10.0
 *Sun, 24 Apr 2022 13:22:31 +0000*
 - ready for symfony 5.4 and 6
+
+
+## Version 1.10.1
+*Sun, 24 Apr 2022 13:25:35 +0000*
+- ready for symfony 5.4 and 6 and newer Svc bundles
