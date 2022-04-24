@@ -2,6 +2,7 @@
 
 namespace Svc\VideoBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Svc\VideoBundle\Entity\VideoGroup;
 use Svc\VideoBundle\Form\VideoGroupType;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
@@ -11,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Svc\LogBundle\Service\EventLog;
-use Svc\LogBundle\Service\LogStatistics;
 use Svc\VideoBundle\Service\VideoHelper;
 
 /**
@@ -37,7 +37,7 @@ class VideoGroupController extends AbstractController
     ]);
   }
 
-  public function new(Request $request, VideoHelper $videoHelper): Response
+  public function new(Request $request, VideoHelper $videoHelper, EntityManagerInterface $entityManager): Response
   {
     $videoGroup = new VideoGroup();
     $form = $this->createForm(VideoGroupType::class, $videoGroup, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
@@ -47,7 +47,6 @@ class VideoGroupController extends AbstractController
 
       $videoGroup->setPassword($videoHelper->getEncPassword($videoGroup));
 
-      $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($videoGroup);
       $entityManager->flush();
 
@@ -63,7 +62,7 @@ class VideoGroupController extends AbstractController
   /**
    * edit the video group
    */
-  public function edit(Request $request, VideoGroup $videoGroup, VideoHelper $videoHelper): Response
+  public function edit(Request $request, VideoGroup $videoGroup, VideoHelper $videoHelper, EntityManagerInterface $entityManager): Response
   {
     $videoGroup->setPlainPassword($videoHelper->getDecrypedPassword($videoGroup));
 
@@ -74,7 +73,7 @@ class VideoGroupController extends AbstractController
 
       $videoGroup->setPassword($videoHelper->getEncPassword($videoGroup));
 
-      $this->getDoctrine()->getManager()->flush();
+      $entityManager->flush();
 
       return $this->redirectToRoute('svc_video_group_index');
     }
@@ -85,10 +84,9 @@ class VideoGroupController extends AbstractController
     ]);
   }
 
-  public function delete(Request $request, VideoGroup $videoGroup): Response
+  public function delete(Request $request, VideoGroup $videoGroup, EntityManagerInterface $entityManager): Response
   {
     if ($this->isCsrfTokenValid('delete' . $videoGroup->getId(), $request->request->get('_token'))) {
-      $entityManager = $this->getDoctrine()->getManager();
       $entityManager->remove($videoGroup);
       $entityManager->flush();
     }
@@ -99,7 +97,7 @@ class VideoGroupController extends AbstractController
   /**
    * show group statistics
    */
-  public function stats(VideoGroup $videoGroup, LogStatistics $logStatistics): Response
+  public function stats(VideoGroup $videoGroup): Response
   {
     return $this->render('@SvcVideo/video_group/stats.html.twig', [
       'video' => $videoGroup,

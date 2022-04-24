@@ -3,6 +3,7 @@
 namespace Svc\VideoBundle\Controller;
 
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,7 +48,7 @@ class VideoAdminController extends AbstractController
   /**
    * create a new video
    */
-  public function new(Request $request, VideoGroupHelper $videoGroupHelper, VideoHelper $videoHelper): Response
+  public function new(Request $request, VideoGroupHelper $videoGroupHelper, VideoHelper $videoHelper, EntityManagerInterface $entityManager): Response
   {
     $video = new Video();
     $video->setVideoGroup($videoGroupHelper->getDefaultVideoGroup());
@@ -58,7 +59,6 @@ class VideoAdminController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
       $video->setPassword($videoHelper->getEncPassword($video));
 
-      $entityManager = $this->getDoctrine()->getManager();
       $entityManager->persist($video);
       $entityManager->flush(); // save first because we need the id
 
@@ -81,7 +81,7 @@ class VideoAdminController extends AbstractController
   /**
    * edit the video definition
    */
-  public function edit(Request $request, Video $video, VideoHelper $videoHelper): Response
+  public function edit(Request $request, Video $video, VideoHelper $videoHelper, EntityManagerInterface $entityManager): Response
   {
     $video->setPlainPassword($videoHelper->getDecrypedPassword($video));
 
@@ -101,7 +101,7 @@ class VideoAdminController extends AbstractController
           $video->setThumbnailPath($videoHelper->copyThumbnail($video));
         }
       }
-      $this->getDoctrine()->getManager()->flush();
+      $entityManager->flush();
 
       return $this->redirectToRoute('svc_video_admin_index');
     }
@@ -112,10 +112,9 @@ class VideoAdminController extends AbstractController
     ]);
   }
 
-  public function delete(Request $request, Video $video): Response
+  public function delete(Request $request, Video $video, EntityManagerInterface $entityManager): Response
   {
     if ($this->isCsrfTokenValid('delete' . $video->getId(), $request->request->get('_token'))) {
-      $entityManager = $this->getDoctrine()->getManager();
       $entityManager->remove($video);
       $entityManager->flush();
     }

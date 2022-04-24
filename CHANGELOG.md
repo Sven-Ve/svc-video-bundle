@@ -190,3 +190,8 @@
 ## Version 1.9.4
 *Mon, 16 Aug 2021 22:09:17 +0000*
 - fixed wrong initial video sorting
+
+
+## Version 1.10.0
+*Sun, 24 Apr 2022 13:22:31 +0000*
+- ready for symfony 5.4 and 6

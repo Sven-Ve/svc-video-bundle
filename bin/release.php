@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.9.4";
-$message = "fixed wrong initial video sorting";
+$version = "1.10.0";
+$message = "ready for symfony 5.4 and 6";
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

@@ -3,6 +3,7 @@
 namespace Svc\VideoBundle\Controller;
 
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Form\EnterPasswordType;
@@ -24,20 +25,22 @@ class VideoController extends AbstractController
 
   public const OBJ_TYPE_VIDEO = 1;
   public const OBJ_TYPE_VGROUP = 2;
-  
+
   private $enableLikes;
   private $enableGroups;
   private $enableShortNames;
   private $homeRoute;
   private $enableVideoSort;
+  private $entityManager;
 
-  public function __construct(bool $enableLikes, bool $enableGroups, bool $enableShortNames, bool $enableVideoSort, string $homeRoute)
+  public function __construct(bool $enableLikes, bool $enableGroups, bool $enableShortNames, bool $enableVideoSort, string $homeRoute, EntityManagerInterface $entityManager)
   {
     $this->enableLikes = $enableLikes;
     $this->enableGroups = $enableGroups;
     $this->enableShortNames = $enableShortNames;
     $this->enableVideoSort = $enableVideoSort;
     $this->homeRoute = $homeRoute;
+    $this->entityManager = $entityManager;
   }
 
   /**
@@ -117,7 +120,7 @@ class VideoController extends AbstractController
     }
 
     $video->incCalls();
-    $this->getDoctrine()->getManager()->flush();
+    $this->entityManager->flush();
 
     if ($this->enableGroups and !$hideNav) {
       $hideNav = $video->getVideoGroup()->getHideNav();
@@ -149,11 +152,11 @@ class VideoController extends AbstractController
     if ($likeHelper->addLike(LikeHelper::SOURCE_VIDEO, $video->getId(), null, $cookieName)) {
 
       if ($cookieName) {
-        $response->headers->setCookie(new Cookie($cookieName, "1", new DateTime('+1 week')));
+        $response->headers->setCookie(Cookie::create($cookieName, "1", new DateTime('+1 week')));
       }
 
       $newValue = $video->incLikes();
-      $this->getDoctrine()->getManager()->flush();
+      $this->entityManager->flush();
 
       $response->setData(['likes' => $newValue]);
     } else {
