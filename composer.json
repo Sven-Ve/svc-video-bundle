@@ -27,7 +27,7 @@
     "svc/log-bundle": "^2|dev-main",
     "liip/imagine-bundle": "^2",
     "symfony/form": "^5|^6",
-    "symfony/ux-chartjs": "^1"
+    "symfony/ux-chartjs": "^2"
   },
   "autoload": {
     "psr-4": {
@@ -45,7 +45,6 @@
     "phpstan/phpstan": "^1"
   },
   "scripts": {
-    "test": "vendor/bin/simple-phpunit",
     "phpstan": "php -d memory_limit=-1 vendor/bin/phpstan analyse src/ --level 5"
   }
 }

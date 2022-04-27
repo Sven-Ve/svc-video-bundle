@@ -1,8 +1,15 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.10.1";
-$message = "ready for symfony 5.4 and 6 and newer Svc bundles";
+$version = "1.10.2";
+$message = "update symfony/ux-chartjs to 2.x";
+
+echo("Running phpstan:\n");
+system("composer run-script phpstan", $res);
+if ($res>0) {
+  echo("\nError during execution phpstan. Releasing cannceled.\n");
+  return 1;
+}
 
 file_put_contents("CHANGELOG.md", "\n\n## Version " . $version, FILE_APPEND);
 file_put_contents("CHANGELOG.md", "\n*" . date("r") . "*", FILE_APPEND);

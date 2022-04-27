@@ -200,3 +200,8 @@
 ## Version 1.10.1
 *Sun, 24 Apr 2022 13:25:35 +0000*
 - ready for symfony 5.4 and 6 and newer Svc bundles
+
+
+## Version 1.10.2
+*Wed, 27 Apr 2022 19:53:32 +0000*
+- update symfony/ux-chartjs to 2.x
