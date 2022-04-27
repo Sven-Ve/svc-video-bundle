@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "1.10.2";
-$message = "update symfony/ux-chartjs to 2.x";
+$version = "1.10.3";
+$message = "changed to @hotwired/stimulus in js";
 
 echo("Running phpstan:\n");
 system("composer run-script phpstan", $res);

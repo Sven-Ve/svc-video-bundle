@@ -205,3 +205,8 @@
 ## Version 1.10.2
 *Wed, 27 Apr 2022 19:53:32 +0000*
 - update symfony/ux-chartjs to 2.x
+
+
+## Version 1.10.3
+*Wed, 27 Apr 2022 20:10:12 +0000*
+- changed to @hotwired/stimulus in js
