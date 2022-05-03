@@ -9,9 +9,9 @@ class Configuration implements ConfigurationInterface
 {
   public function getConfigTreeBuilder(): TreeBuilder
   {
-    $treeBuilder = new TreeBuilder('svc_video'); # ohne Bundle, so muss es dann im yaml-file heissen
+    $treeBuilder = new TreeBuilder('svc_video'); // ohne Bundle, so muss es dann im yaml-file heissen
     $rootNode = $treeBuilder->getRootNode();
- 
+
     $rootNode
       ->children()
         ->booleanNode('enableLikes')->defaultFalse()->info('Enable likes for videos?')->end()
@@ -20,10 +20,9 @@ class Configuration implements ConfigurationInterface
         ->booleanNode('enablePrivate')->defaultTrue()->info('Enable private videos?')->end()
         ->booleanNode('enableVideoSort')->defaultTrue()->info('Enable video sort combox in video overview?')->end()
         ->scalarNode('thumbnailDir')->defaultValue('%kernel.project_dir%/public/uploads')->cannotBeEmpty()->end()
-        ->scalarNode('homeRoute')->defaultValue("svc_video_list")->info('Default route, for redirect after errors')->cannotBeEmpty()->end()
+        ->scalarNode('homeRoute')->defaultValue('svc_video_list')->info('Default route, for redirect after errors')->cannotBeEmpty()->end()
       ->end();
+
     return $treeBuilder;
-
   }
-
 }

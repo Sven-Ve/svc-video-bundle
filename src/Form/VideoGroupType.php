@@ -33,35 +33,35 @@ class VideoGroupType extends AbstractType
             'max' => 200,
           ]),
         ],
-    ]);
+      ]);
 
     if ($options['enableShortNames']) {
       $builder
         ->add('shortName', TextType::class, [
-          "help" => "The short name used in the link, please use lowercase letters, numbers, minus and underscore only",
-          "attr" => ['pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars']
+          'help' => 'The short name used in the link, please use lowercase letters, numbers, minus and underscore only',
+          'attr' => ['pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars'],
         ]);
     }
 
     $builder
       ->add('hideNav', null, [
         'label' => 'Hide navigation',
-        'label_attr' => ['class' => 'checkbox-switch']
+        'label_attr' => ['class' => 'checkbox-switch'],
       ])
       ->add('hideGroups', null, [
-        'label_attr' => ['class' => 'checkbox-switch']
+        'label_attr' => ['class' => 'checkbox-switch'],
       ])
       ->add('hideOnHomePage', null, [
         'label_attr' => ['class' => 'checkbox-switch'],
-        'help' => 'You should set "Hide groups" too.'
+        'help' => 'You should set "Hide groups" too.',
       ]);
-      
+
     if ($options['enablePrivate']) {
       $builder
         ->add('isPrivate', null, [
           'help' => 'Is the video group private?',
           'label' => 'Private',
-          'label_attr' => ['class' => 'checkbox-switch']
+          'label_attr' => ['class' => 'checkbox-switch'],
         ])
         ->add('plainPassword', PasswordType::class, [
           'label' => 'Password (only used for private video groups)',
@@ -73,12 +73,12 @@ class VideoGroupType extends AbstractType
               'max' => 12,
             ]),
           ],
-          'attr' => ['data-svc--util-bundle--show-password-target' => "passwordFld"],
+          'attr' => ['data-svc--util-bundle--show-password-target' => 'passwordFld'],
           'row_attr' => [
-            'data-controller' => "svc--util-bundle--show-password",
-            'data-svc--util-bundle--show-password-show-text-value' => "Show password",
-            'data-svc--util-bundle--show-password-hide-text-value' => "Hide password"
-          ]
+            'data-controller' => 'svc--util-bundle--show-password',
+            'data-svc--util-bundle--show-password-show-text-value' => 'Show password',
+            'data-svc--util-bundle--show-password-hide-text-value' => 'Hide password',
+          ],
         ]);
     }
   }
@@ -89,7 +89,7 @@ class VideoGroupType extends AbstractType
       'data_class' => VideoGroup::class,
       'translation_domain' => 'VideoBundle',
       'enableShortNames' => false,
-      'enablePrivate' => true
+      'enablePrivate' => true,
     ]);
   }
 }

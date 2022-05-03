@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait VideoShortCallTrait
 {
-
   /**
    * @Route("/hn/{id}", name="svc_video_short_runHideNav")
    */
@@ -40,6 +39,7 @@ trait VideoShortCallTrait
   {
     $sort = $request->query->get('sort') ?? 0;
     $id = $videoGroupHelper->getVideoGroupIDbyShortName($group);
+
     return $this->redirectToRoute('svc_video_list', ['id' => $id, 'sort' => $sort], 303);
   }
 }

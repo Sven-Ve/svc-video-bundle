@@ -2,9 +2,9 @@
 
 namespace Svc\VideoBundle\Repository;
 
-use Svc\VideoBundle\Entity\VideoGroup;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Svc\VideoBundle\Entity\VideoGroup;
 
 /**
  * @method VideoGroup|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,21 +14,18 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class VideoGroupRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, VideoGroup::class);
-    }
+  public function __construct(ManagerRegistry $registry)
+  {
+    parent::__construct($registry, VideoGroup::class);
+  }
 
-    public function findAllExceptHidenOnHomePage()
-    {
-        return $this->createQueryBuilder('v')
+  public function findAllExceptHidenOnHomePage()
+  {
+    return $this->createQueryBuilder('v')
             ->andWhere('v.hideOnHomePage = false')
             ->orderBy('v.name', 'ASC')
             ->getQuery()
             ->getResult()
         ;
-    }
-
-
-
+  }
 }

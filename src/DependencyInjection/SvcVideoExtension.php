@@ -14,7 +14,7 @@ class SvcVideoExtension extends Extension
 
   public function load(array $configs, ContainerBuilder $container)
   {
-    $this->rootPath = $container->getParameter("kernel.project_dir");
+    $this->rootPath = $container->getParameter('kernel.project_dir');
     $this->createConfigIfNotExists();
 
     $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config'));
@@ -50,7 +50,7 @@ class SvcVideoExtension extends Extension
 
   private function createConfigIfNotExists()
   {
-    $fileName = $this->rootPath . "/config/routes/svc_video.yaml";
+    $fileName = $this->rootPath . '/config/routes/svc_video.yaml';
     if (!file_exists($fileName)) {
       $text = "_svc_video:\n";
       $text .= "    resource: '@SvcVideoBundle/Resources/config/routes.xml'\n";
@@ -64,7 +64,7 @@ class SvcVideoExtension extends Extension
       }
     }
 
-    $fileName = $this->rootPath . "/config/packages/svc_video.yaml";
+    $fileName = $this->rootPath . '/config/packages/svc_video.yaml';
     if (!file_exists($fileName)) {
       $text = "svc_video:\n";
       $text .= "    # Enable likes for videos\n";
@@ -83,5 +83,4 @@ class SvcVideoExtension extends Extension
       }
     }
   }
-
 }

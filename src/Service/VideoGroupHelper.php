@@ -9,17 +9,16 @@ use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * helper function for video groups
+ * helper function for video groups.
  */
 class VideoGroupHelper
 {
-
   public function __construct(private bool $enableShortNames, private VideoGroupRepository $videoGroupRep, private EntityManagerInterface $entityManager, private UrlGeneratorInterface $router)
   {
   }
 
   /**
-   * create a row for the default video group if not exists
+   * create a row for the default video group if not exists.
    */
   public function initDefaultVideoGroup(): void
   {
@@ -36,7 +35,7 @@ class VideoGroupHelper
   }
 
   /**
-   * get the default video group or raise an exception
+   * get the default video group or raise an exception.
    */
   public function getDefaultVideoGroup(): VideoGroup
   {
@@ -48,9 +47,9 @@ class VideoGroupHelper
   }
 
   /**
-   * get all video groups
+   * get all video groups.
    *
-   * @param boolean|null $onlyVisiblesOnHomePage if true, only videos with hideOnHomePage=false are returned
+   * @param bool|null $onlyVisiblesOnHomePage if true, only videos with hideOnHomePage=false are returned
    */
   public function getVideoGroups(?bool $onlyVisiblesOnHomePage = false): ?array
   {
@@ -62,16 +61,15 @@ class VideoGroupHelper
   }
 
   /**
-   * get a group for a specific id
+   * get a group for a specific id.
    */
   public function getVideoGroup(int $id): ?VideoGroup
   {
     return $this->videoGroupRep->find($id);
   }
 
-
   /**
-   * get a video group by a shortname or (fallback) try by id
+   * get a video group by a shortname or (fallback) try by id.
    */
   public function getVideoGroupIDbyShortName(string $shortName): ?int
   {
@@ -85,12 +83,12 @@ class VideoGroupHelper
     if (ctype_digit($shortName)) {
       return $this->videoGroupRep->find($shortName)->getId();
     }
+
     return null;
   }
 
-
   /**
-   * generate the url for a video group, try to use the short form
+   * generate the url for a video group, try to use the short form.
    */
   public function generateVideoGroupUrl(?VideoGroup $group, ?int $sort = 0): ?string
   {

@@ -18,7 +18,7 @@ class VideoType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-      ->add('title', null,  ["attr" => ["autofocus" => true]])
+      ->add('title', null, ['attr' => ['autofocus' => true]])
       ->add('subTitle', null, [
         'required' => false,
       ]);
@@ -26,7 +26,7 @@ class VideoType extends AbstractType
     if ($options['enableGroups']) {
       $builder
         ->add('videoGroup', null, [
-          'label' => 'Group'
+          'label' => 'Group',
         ])
       ;
     }
@@ -34,8 +34,8 @@ class VideoType extends AbstractType
     if ($options['enableShortNames']) {
       $builder
         ->add('shortName', TextType::class, [
-          "help" => "The short name used in the link, please use lowercase letters, numbers, minus and underscore only",
-          "attr" => ['pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars']
+          'help' => 'The short name used in the link, please use lowercase letters, numbers, minus and underscore only',
+          'attr' => ['pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars'],
         ])
       ;
     }
@@ -43,16 +43,15 @@ class VideoType extends AbstractType
     $builder
       ->add('hideOnHomePage', null, [
         'label_attr' => ['class' => 'checkbox-switch'],
-        'help' => "Should video be displayed at 'All Videos'?"
+        'help' => "Should video be displayed at 'All Videos'?",
       ]);
-
 
     if ($options['enablePrivate']) {
       $builder
         ->add('isPrivate', null, [
           'help' => 'Is the video private?',
           'label' => 'Private',
-          'label_attr' => ['class' => 'checkbox-switch']
+          'label_attr' => ['class' => 'checkbox-switch'],
         ])
         ->add('plainPassword', PasswordType::class, [
           'label' => 'Password (only used for private videos)',
@@ -64,12 +63,12 @@ class VideoType extends AbstractType
               'max' => 12,
             ]),
           ],
-          'attr' => ['data-svc--util-bundle--show-password-target' => "passwordFld"],
+          'attr' => ['data-svc--util-bundle--show-password-target' => 'passwordFld'],
           'row_attr' => [
-            'data-controller' => "svc--util-bundle--show-password",
-            'data-svc--util-bundle--show-password-show-text-value' => "Show password",
-            'data-svc--util-bundle--show-password-hide-text-value' => "Hide password"
-          ]
+            'data-controller' => 'svc--util-bundle--show-password',
+            'data-svc--util-bundle--show-password-show-text-value' => 'Show password',
+            'data-svc--util-bundle--show-password-hide-text-value' => 'Hide password',
+          ],
         ])
       ;
     }
@@ -77,21 +76,21 @@ class VideoType extends AbstractType
     $builder
       ->add('description', TextareaType::class, [
         'attr' => [
-          'data-controller' => 'svc--util-bundle--wysiwyg'
+          'data-controller' => 'svc--util-bundle--wysiwyg',
         ],
-        'required' => false
+        'required' => false,
       ])
       ->add('sourceID', null, [
-        'label' => 'Source ID'
+        'label' => 'Source ID',
       ])
       ->add('sourceType', ChoiceType::class, [
         'choices' => Video::SOURCES_LIST,
-        'label' => 'Source'
+        'label' => 'Source',
       ])
       ->add('ratio', ChoiceType::class, [
         'choices' => VideoHelper::getRatioList(),
         'placeholder' => 'Choose an ratio',
-        'choice_label' => fn($choice, $key, $value) => $value
+        'choice_label' => fn ($choice, $key, $value) => $value,
       ])
       ->add('likes')
       ->add('calls');
@@ -104,7 +103,7 @@ class VideoType extends AbstractType
       'translation_domain' => 'VideoBundle',
       'enableShortNames' => false,
       'enablePrivate' => true,
-      'enableGroups' => true
+      'enableGroups' => true,
     ]);
   }
 }

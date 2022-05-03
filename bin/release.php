@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "3.0.0";
-$message = "runs only with symfony 5.4/6 and php 8";
+$version = "3.0.1";
+$message = "format code with php-cs-fixer";
 
 echo("Running phpstan:\n");
 system("composer run-script phpstan", $res);

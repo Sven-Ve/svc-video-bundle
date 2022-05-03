@@ -2,7 +2,6 @@
 
 namespace Svc\VideoBundle\Service;
 
-
 use Svc\LogBundle\DataProvider\GeneralDataProvider;
 use Svc\VideoBundle\Controller\VideoController;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
@@ -10,7 +9,6 @@ use Svc\VideoBundle\Repository\VideoRepository;
 
 class LogDataProvider extends GeneralDataProvider
 {
-
   private array $videoSourceIDs = [];
   private bool $isVideoSourceIDsInitialized = false;
   private array $vGroupSourceIDs = [];
@@ -21,22 +19,22 @@ class LogDataProvider extends GeneralDataProvider
   }
 
   /**
-   * init the sourceType array
+   * init the sourceType array.
    */
   protected function initSourceTypes(): bool
   {
     if ($this->isSourceTypesInitialized) {
       return true;
     }
-    $this->sourceTypes[VideoController::OBJ_TYPE_VIDEO] = "video";
-    $this->sourceTypes[VideoController::OBJ_TYPE_VGROUP] = "video group";
+    $this->sourceTypes[VideoController::OBJ_TYPE_VIDEO] = 'video';
+    $this->sourceTypes[VideoController::OBJ_TYPE_VGROUP] = 'video group';
     $this->isSourceTypesInitialized = true;
+
     return true;
   }
 
-
   /**
-   * get the text/description for a source ID / sourceType combination
+   * get the text/description for a source ID / sourceType combination.
    */
   public function getSourceIDText(int $sourceID, ?int $sourceType = null): string
   {
@@ -44,18 +42,21 @@ class LogDataProvider extends GeneralDataProvider
       if (!$this->isVideoSourceIDsInitialized) {
         $this->initVideoSourceIDs();
       }
+
       return array_key_exists($sourceID, $this->videoSourceIDs) ? $this->videoSourceIDs[$sourceID] : $sourceID;
     } elseif ($sourceType === VideoController::OBJ_TYPE_VGROUP) {
       if (!$this->isVGroupSourceIDsInitialized) {
         $this->initVGroupSourceIDs();
       }
+
       return array_key_exists($sourceID, $this->vGroupSourceIDs) ? $this->vGroupSourceIDs[$sourceID] : $sourceID;
     }
+
     return strval($sourceID);
   }
 
   /**
-   * read all video titles, store it in an array
+   * read all video titles, store it in an array.
    */
   private function initVideoSourceIDs(): void
   {
@@ -67,14 +68,14 @@ class LogDataProvider extends GeneralDataProvider
   }
 
   /**
-   * read all video group titles, store it in an array
+   * read all video group titles, store it in an array.
    */
   private function initVGroupSourceIDs(): void
   {
     foreach ($this->videoGroupRep->findAll() as $vGroup) {
       $this->vGroupSourceIDs[$vGroup->getId()] = $vGroup->getTitle();
     }
-    $this->vGroupSourceIDs["0"] = "All videos";
+    $this->vGroupSourceIDs['0'] = 'All videos';
 
     $this->isVGroupSourceIDsInitialized = true;
   }

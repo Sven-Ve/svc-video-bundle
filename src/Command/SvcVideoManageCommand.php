@@ -2,7 +2,6 @@
 
 namespace Svc\VideoBundle\Command;
 
-use Svc\VideoBundle\Service\VideoGroupHelper;
 use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,45 +33,49 @@ class SvcVideoManageCommand extends Command
     $stepRun = 0;
 
     if ($input->getOption('createThumbnailDir') or $input->getOption('init')) {
-      $msg = "";
-      $stepRun++;
+      $msg = '';
+      ++$stepRun;
       if ($this->videoHelper->createThumbnailDir($msg)) {
         $io->info($msg);
       } else {
         $io->error($msg);
+
         return Command::FAILURE;
       }
     }
 
     if ($input->getOption('loadMetadata') or $input->getOption('copyThumbnails') or $input->getOption('init')) {
-      $stepRun++;
-      $msg = "";
+      ++$stepRun;
+      $msg = '';
       if ($this->videoHelper->getMissingMetadata($force, $msg)) {
         $io->info($msg);
       } else {
         $io->error($msg);
+
         return Command::FAILURE;
       }
     }
 
-
     if ($input->getOption('copyThumbnails') or $input->getOption('init')) {
-      $stepRun++;
-      $msg = "";
+      ++$stepRun;
+      $msg = '';
       if ($this->videoHelper->getMissingThumbnails($force, $msg)) {
         $io->info($msg);
       } else {
         $io->error($msg);
+
         return Command::FAILURE;
       }
     }
 
-    if ($stepRun===0) {
-      $io->error("No steps runs. Please check your parameter, you have to set at least one parameter.");
+    if ($stepRun === 0) {
+      $io->error('No steps runs. Please check your parameter, you have to set at least one parameter.');
+
       return Command::FAILURE;
     }
 
     $io->success("Manage svc_video bundle done. $stepRun steps executed.");
+
     return Command::SUCCESS;
   }
 }

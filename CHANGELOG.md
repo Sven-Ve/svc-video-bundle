@@ -215,3 +215,8 @@
 ## Version 3.0.0
 *Tue, 03 May 2022 09:26:34 +0000*
 - runs only with symfony 5.4/6 and php 8
+
+
+## Version 3.0.1
+*Tue, 03 May 2022 20:43:28 +0000*
+- format code with php-cs-fixer

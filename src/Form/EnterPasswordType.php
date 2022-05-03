@@ -16,7 +16,7 @@ class EnterPasswordType extends AbstractType
         'label' => 'Password',
         'mapped' => false,
         'attr' => ['autofocus' => true, 'placeholder' => 'Password'],
-        'row_attr' => ['class' => 'form-floating']
+        'row_attr' => ['class' => 'form-floating'],
       ]);
   }
 
@@ -24,7 +24,7 @@ class EnterPasswordType extends AbstractType
   {
     $resolver->setDefaults([
       'data_class' => null,
-      'translation_domain' => 'VideoBundle'
+      'translation_domain' => 'VideoBundle',
     ]);
   }
 }

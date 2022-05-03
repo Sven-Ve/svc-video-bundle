@@ -5,6 +5,7 @@ namespace Svc\VideoBundle\Controller;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Svc\LikeBundle\Service\LikeHelper;
+use Svc\LogBundle\Service\EventLog;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Form\EnterPasswordType;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
@@ -17,12 +18,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Svc\LogBundle\Service\EventLog;
 
 class VideoController extends AbstractController
 {
-
   public const OBJ_TYPE_VIDEO = 1;
   public const OBJ_TYPE_VGROUP = 2;
 
@@ -31,7 +29,7 @@ class VideoController extends AbstractController
   }
 
   /**
-   * list videos 
+   * list videos.
    */
   public function list(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request, EventLog $eventLog, ?int $id = null): Response
   {
@@ -64,6 +62,7 @@ class VideoController extends AbstractController
     }
 
     $eventLog->log($currentGroup ? $currentGroup->getId() : 0, self::OBJ_TYPE_VGROUP);
+
     return $this->render('@SvcVideo/video/list.html.twig', [
       'videos' => $videoHelper->getVideoByGroup($id, $sort),
       'enableLikes' => $this->enableLikes,
@@ -74,15 +73,14 @@ class VideoController extends AbstractController
       'enableVideoSort' => $this->enableVideoSort,
       'sortOpts' => VideoRepository::SORT_FIELDS,
       'currentSort' => $sort,
-      'copyUrl' => $videoGroupHelper->generateVideoGroupUrl($currentGroup, $sort)
+      'copyUrl' => $videoGroupHelper->generateVideoGroupUrl($currentGroup, $sort),
     ]);
   }
 
   /**
-   * run a video
+   * run a video.
    *
    * @param string $id numeric id or shortName
-   * @return Response
    */
   public function run(string $id, LikeHelper $likeHelper, VideoRepository $videoRep, Request $request, VideoHelper $videoHelper, EventLog $eventLog, ?bool $hideNav = false): Response
   {
@@ -95,7 +93,8 @@ class VideoController extends AbstractController
     }
 
     if ($video === null) {
-      $this->addFlash("danger", "Video not found.");
+      $this->addFlash('danger', 'Video not found.');
+
       return $this->redirectToRoute($this->homeRoute);
     }
 
@@ -114,21 +113,19 @@ class VideoController extends AbstractController
     }
 
     $eventLog->log($video->getId(), self::OBJ_TYPE_VIDEO);
+
     return $this->render('@SvcVideo/video/run.html.twig', [
       'video' => $video,
       'enableLikes' => $this->enableLikes,
       'liked' => $likeHelper->isLiked(LikeHelper::SOURCE_VIDEO, $video->getId()),
       'hideNav' => $hideNav,
       'enableGroups' => $this->enableGroups,
-      'copyUrl' => $videoHelper->generateVideoUrl($video, $currentRoute)
+      'copyUrl' => $videoHelper->generateVideoUrl($video, $currentRoute),
     ]);
   }
 
   /**
-   * increase the like count
-   *
-   * @param LikeHelper $likeHelper
-   * @return Response
+   * increase the like count.
    */
   public function incLikes(Video $video, LikeHelper $likeHelper): Response
   {
@@ -136,9 +133,8 @@ class VideoController extends AbstractController
     $cookieName = null;
 
     if ($likeHelper->addLike(LikeHelper::SOURCE_VIDEO, $video->getId(), null, $cookieName)) {
-
       if ($cookieName) {
-        $response->headers->setCookie(Cookie::create($cookieName, "1", new DateTime('+1 week')));
+        $response->headers->setCookie(Cookie::create($cookieName, '1', new DateTime('+1 week')));
       }
 
       $newValue = $video->incLikes();
@@ -153,8 +149,7 @@ class VideoController extends AbstractController
   }
 
   /**
-   * enter the password for a private video
-   *
+   * enter the password for a private video.
    */
   public function enterPwd(int $id, Request $request, VideoHelper $videoHelper, VideoGroupRepository $videoGroupRep, VideoRepository $videoRep, EventLog $eventLog, ?int $ot = 1)
   {
@@ -163,7 +158,6 @@ class VideoController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-
       if ($ot == self::OBJ_TYPE_VGROUP) {
         $videoObj = $videoGroupRep->find($id);
       } else {
@@ -175,9 +169,11 @@ class VideoController extends AbstractController
         try {
           $url = $this->generateUrl($path, ['id' => $videoObj->getId()]);
           $eventLog->log($id, $ot, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'correct password']);
+
           return $this->redirect($url);
         } catch (RouteNotFoundException) {
           $this->addFlash('danger', 'Wrong parameter...');
+
           return $this->redirectToRoute('svc_video_list');
         }
       }
@@ -186,19 +182,20 @@ class VideoController extends AbstractController
     }
 
     $eventLog->log($id, $ot, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'enter password']);
+
     return $this->renderForm('@SvcVideo/video/password.html.twig', [
-      'form' => $form
+      'form' => $form,
     ]);
   }
 
   /**
-   * video statistics (for a video)
+   * video statistics (for a video).
    */
-  public function videoStats(VideoHelper $videoHelper) : Response
+  public function videoStats(VideoHelper $videoHelper): Response
   {
-      return $this->render('@SvcVideo/video/stats.html.twig', [
-        'hideGroups' => !$this->enableGroups,
-        'stats' => $videoHelper->getVideoStats()
-      ]);
+    return $this->render('@SvcVideo/video/stats.html.twig', [
+      'hideGroups' => !$this->enableGroups,
+      'stats' => $videoHelper->getVideoStats(),
+    ]);
   }
 }
