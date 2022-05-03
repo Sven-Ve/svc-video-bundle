@@ -13,20 +13,19 @@
     "symfony-ux"
   ],
   "require": {
-    "php": "^7.3.0 | ^8",
-    "symfony/framework-bundle": "^5|^6",
-    "doctrine/annotations": "^1.11",
-    "doctrine/doctrine-bundle": "^2.2",
-    "doctrine/orm": "^2.8",
-    "symfony/validator": "^5|^6",
-    "symfony/expression-language": "^5|^6",
-    "symfony/translation": "^5|^6",
-    "symfony/twig-bundle": "^5|^6",
-    "svc/like-bundle": "^2|dev-main",
-    "svc/util-bundle": "^2|dev-main",
-    "svc/log-bundle": "^2|dev-main",
+    "php": "^8.0.2",
+    "symfony/framework-bundle": "5.4.*|^6",
+    "doctrine/doctrine-bundle": "^2.6",
+    "doctrine/orm": "^2.11",
+    "symfony/validator": "5.4.*|^6",
+    "symfony/expression-language": "5.4.*|^6",
+    "symfony/translation": "5.4.*|^6",
+    "symfony/twig-bundle": "5.4.*|^6",
+    "svc/like-bundle": "^3|dev-main",
+    "svc/util-bundle": "^3|dev-main",
+    "svc/log-bundle": "^3|dev-main",
     "liip/imagine-bundle": "^2",
-    "symfony/form": "^5|^6",
+    "symfony/form": "5.4.*|^6",
     "symfony/ux-chartjs": "^2"
   },
   "autoload": {
@@ -40,8 +39,8 @@
     }
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "^5|^6",
-    "symfony/browser-kit": "^5|^6",
+    "symfony/phpunit-bridge": "5.4.*|^6",
+    "symfony/browser-kit": "5.4.*|^6",
     "phpstan/phpstan": "^1"
   },
   "scripts": {

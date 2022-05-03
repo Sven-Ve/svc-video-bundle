@@ -26,21 +26,8 @@ class VideoController extends AbstractController
   public const OBJ_TYPE_VIDEO = 1;
   public const OBJ_TYPE_VGROUP = 2;
 
-  private $enableLikes;
-  private $enableGroups;
-  private $enableShortNames;
-  private $homeRoute;
-  private $enableVideoSort;
-  private $entityManager;
-
-  public function __construct(bool $enableLikes, bool $enableGroups, bool $enableShortNames, bool $enableVideoSort, string $homeRoute, EntityManagerInterface $entityManager)
+  public function __construct(private bool $enableLikes, private bool $enableGroups, private bool $enableShortNames, private bool $enableVideoSort, private string $homeRoute, private EntityManagerInterface $entityManager)
   {
-    $this->enableLikes = $enableLikes;
-    $this->enableGroups = $enableGroups;
-    $this->enableShortNames = $enableShortNames;
-    $this->enableVideoSort = $enableVideoSort;
-    $this->homeRoute = $homeRoute;
-    $this->entityManager = $entityManager;
   }
 
   /**
@@ -140,7 +127,6 @@ class VideoController extends AbstractController
   /**
    * increase the like count
    *
-   * @param Video $video
    * @param LikeHelper $likeHelper
    * @return Response
    */
@@ -172,7 +158,7 @@ class VideoController extends AbstractController
    */
   public function enterPwd(int $id, Request $request, VideoHelper $videoHelper, VideoGroupRepository $videoGroupRep, VideoRepository $videoRep, EventLog $eventLog, ?int $ot = 1)
   {
-    $ot = $ot ?? self::OBJ_TYPE_VIDEO;
+    $ot ??= self::OBJ_TYPE_VIDEO;
     $form = $this->createForm(EnterPasswordType::class);
     $form->handleRequest($request);
 
@@ -190,7 +176,7 @@ class VideoController extends AbstractController
           $url = $this->generateUrl($path, ['id' => $videoObj->getId()]);
           $eventLog->log($id, $ot, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'correct password']);
           return $this->redirect($url);
-        } catch (RouteNotFoundException $e) {
+        } catch (RouteNotFoundException) {
           $this->addFlash('danger', 'Wrong parameter...');
           return $this->redirectToRoute('svc_video_list');
         }
@@ -207,13 +193,12 @@ class VideoController extends AbstractController
 
   /**
    * video statistics (for a video)
-   * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
    */
-  public function videoStats(VideoHelper $videoHelper): Response
+  public function videoStats(VideoHelper $videoHelper) : Response
   {
-    return $this->render('@SvcVideo/video/stats.html.twig', [
-      'hideGroups' => !$this->enableGroups,
-      'stats' => $videoHelper->getVideoStats()
-    ]);
+      return $this->render('@SvcVideo/video/stats.html.twig', [
+        'hideGroups' => !$this->enableGroups,
+        'stats' => $videoHelper->getVideoStats()
+      ]);
   }
 }

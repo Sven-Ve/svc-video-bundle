@@ -210,3 +210,8 @@
 ## Version 1.10.3
 *Wed, 27 Apr 2022 20:10:12 +0000*
 - changed to @hotwired/stimulus in js
+
+
+## Version 3.0.0
+*Tue, 03 May 2022 09:26:34 +0000*
+- runs only with symfony 5.4/6 and php 8

@@ -91,9 +91,7 @@ class VideoType extends AbstractType
       ->add('ratio', ChoiceType::class, [
         'choices' => VideoHelper::getRatioList(),
         'placeholder' => 'Choose an ratio',
-        'choice_label' => function ($choice, $key, $value) {
-          return $value;
-        }
+        'choice_label' => fn($choice, $key, $value) => $value
       ])
       ->add('likes')
       ->add('calls');

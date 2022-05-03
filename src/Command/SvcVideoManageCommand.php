@@ -12,16 +12,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SvcVideoManageCommand extends Command
 {
-  // managed in services.yaml for lazy loading
-  //  protected static $defaultName = 'svc_video:manage';
-  //  protected static $defaultDescription = 'Manage the svc_video bundle';
-
-  private $videoHelper;
-
-  public function __construct(VideoHelper $videoHelper)
+  public function __construct(private VideoHelper $videoHelper)
   {
     parent::__construct();
-    $this->videoHelper = $videoHelper;
   }
 
   protected function configure(): void

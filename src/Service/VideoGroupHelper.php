@@ -14,25 +14,14 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class VideoGroupHelper
 {
 
-  private $videoGroupRep;
-  private $entityManager;
-  private $enableShortNames;
-  private $router;
-
-  public function __construct(bool $enableShortNames, VideoGroupRepository $videoGroupRep, EntityManagerInterface $entityManager, UrlGeneratorInterface $router)
+  public function __construct(private bool $enableShortNames, private VideoGroupRepository $videoGroupRep, private EntityManagerInterface $entityManager, private UrlGeneratorInterface $router)
   {
-    $this->enableShortNames = $enableShortNames;
-    $this->videoGroupRep = $videoGroupRep;
-    $this->entityManager = $entityManager;
-    $this->router = $router;
   }
 
   /**
    * create a row for the default video group if not exists
-   *
-   * @return void
    */
-  public function initDefaultVideoGroup()
+  public function initDefaultVideoGroup(): void
   {
     if ($this->videoGroupRep->findOneBy(['defaultGroup' => true])) {
       return;
@@ -48,8 +37,6 @@ class VideoGroupHelper
 
   /**
    * get the default video group or raise an exception
-   *
-   * @return VideoGroup
    */
   public function getDefaultVideoGroup(): VideoGroup
   {
@@ -64,7 +51,6 @@ class VideoGroupHelper
    * get all video groups
    *
    * @param boolean|null $onlyVisiblesOnHomePage if true, only videos with hideOnHomePage=false are returned
-   * @return array|null
    */
   public function getVideoGroups(?bool $onlyVisiblesOnHomePage = false): ?array
   {
@@ -77,9 +63,6 @@ class VideoGroupHelper
 
   /**
    * get a group for a specific id
-   *
-   * @param integer $id
-   * @return VideoGroup|null
    */
   public function getVideoGroup(int $id): ?VideoGroup
   {
@@ -89,9 +72,6 @@ class VideoGroupHelper
 
   /**
    * get a video group by a shortname or (fallback) try by id
-   *
-   * @param string $shortName
-   * @return integer|null
    */
   public function getVideoGroupIDbyShortName(string $shortName): ?int
   {
@@ -111,10 +91,6 @@ class VideoGroupHelper
 
   /**
    * generate the url for a video group, try to use the short form
-   *
-   * @param VideoGroup|null $group
-   * @param integer|null $sort
-   * @return string|null
    */
   public function generateVideoGroupUrl(?VideoGroup $group, ?int $sort = 0): ?string
   {
@@ -125,7 +101,7 @@ class VideoGroupHelper
 
     try { // not sure, if trait is enabled...
       return $this->router->generate('svc_video_shortGroup', ['group' => $shortName, 'sort' => $sort ?? 0], UrlGeneratorInterface::ABSOLUTE_URL);
-    } catch (Exception $e) {
+    } catch (Exception) {
       return $this->router->generate('svc_video_list', ['group' => $shortName, 'sort' => $sort ?? 0], UrlGeneratorInterface::ABSOLUTE_URL);
     }
   }

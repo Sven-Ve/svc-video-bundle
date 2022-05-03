@@ -16,39 +16,15 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class VideoHelper
 {
-  private $videoRep;
-  private $thumbnailDir;
-  private $entityManager;
-  private $requestStack;
-  private $enablePrivate;
-  private $enableShortNames;
-  private $router;
-
-  public function __construct(
-    string $thumbnailDir,
-    bool $enablePrivate,
-    bool $enableShortNames,
-    VideoRepository $videoRep,
-    EntityManagerInterface $entityManager,
-    RequestStack $requestStack,
-    UrlGeneratorInterface $router
-  ) {
-    $this->videoRep = $videoRep;
-    $this->enablePrivate = $enablePrivate;
-    $this->enableShortNames = $enableShortNames;
-    $this->thumbnailDir = $thumbnailDir;
-    $this->entityManager = $entityManager;
-    $this->requestStack = $requestStack;
-    $this->router = $router;
+  public function __construct(private string $thumbnailDir, private bool $enablePrivate, private bool $enableShortNames, private VideoRepository $videoRep, private EntityManagerInterface $entityManager, private RequestStack $requestStack, private UrlGeneratorInterface $router)
+  {
   }
 
   /**
    * get a list of all possible ratios for FormTypes
-   * 
+   *
    * default: 1x1|4x3|16x9|21x9
    * could by overwritten via .env parameter VIDEO_RATIOS
-   *
-   * @return array|null
    */
   public static function getRatioList(): ?array
   {
@@ -75,7 +51,7 @@ class VideoHelper
           $video->setThumbnailUrl($apiData[0]['thumbnail_large']);
           return true;
         }
-      } catch (Exception $e) {
+      } catch (Exception) {
         return false;
       }
     } elseif ($video->getSourceType() == Video::SOURCE_YOUTUBE) {
@@ -87,10 +63,6 @@ class VideoHelper
 
   /**
    * load missing metadata (thumbnail, date) or all metadata, if $force = true
-   *
-   * @param boolean|null $force
-   * @param string|null $msg
-   * @return boolean
    */
   public function getMissingMetadata(?bool $force = false, ?string &$msg = null): bool
   {
@@ -111,10 +83,6 @@ class VideoHelper
 
   /**
    * load missing thumbnails to local server or all thumbnails, if $force = true
-   *
-   * @param boolean|null $force
-   * @param string|null $msg
-   * @return boolean
    */
   public function getMissingThumbnails(?bool $force = false, ?string &$msg = null): bool
   {
@@ -137,17 +105,13 @@ class VideoHelper
 
   /**
    * copy thumbnail from streaming service to our local server
-   *
-   * @param Video $video
-   * @param boolean|null $force
-   * @return string|null
    */
   public function copyThumbnail(Video $video, ?bool $force = false): ?string
   {
     if ($force and $video->getThumbnailPath()) {
       try {
         unlink($this->thumbnailDir . '/' . $video->getThumbnailPath());
-      } catch (Exception $e) {
+      } catch (Exception) {
       }
     }
 
@@ -157,7 +121,7 @@ class VideoHelper
         $imgPath = $this->thumbnailDir . '/' . $imgName;
         file_put_contents($imgPath, file_get_contents($video->getThumbnailUrl()));
         return $imgName;
-      } catch (Exception $e) {
+      } catch (Exception) {
       }
     } elseif ($video->getSourceType() == Video::SOURCE_YOUTUBE) {
       try {
@@ -165,7 +129,7 @@ class VideoHelper
         $imgPath = $this->thumbnailDir . '/' . $imgName;
         file_put_contents($imgPath, file_get_contents($video->getThumbnailUrl()));
         return $imgName;
-      } catch (Exception $e) {
+      } catch (Exception) {
       }
     }
     return null;
@@ -173,10 +137,6 @@ class VideoHelper
 
   /**
    * get videos for a group or all videos, if group = null
-   *
-   * @param integer|null $group
-   * @param integer|null $sort
-   * @return array|null
    */
   public function getVideoByGroup(?int $group = null, ?int $sort = VideoRepository::SORT_BY_DATE_DESC): ?array
   {
@@ -225,16 +185,13 @@ class VideoHelper
   }
 
 
-  private $encKey = "a213123jsakdnjasdhquwhequez2eh328z4982zehqwkjdnaksjdniuhd";
+  private string $encKey = "a213123jsakdnjasdhquwhequez2eh328z4982zehqwkjdnaksjdniuhd";
   private const ENC_CIPHER = "AES-128-CBC";
   private const SESS_ATTR_NAME = "svcv_password";
 
 
   /**
    * encrypt a password
-   *
-   * @param string $plainPassword
-   * @return string
    */
   private function encryptVideoPassword(string $plainPassword): string
   {
@@ -248,9 +205,6 @@ class VideoHelper
 
   /**
    * decryped a password
-   *
-   * @param string $encPassword
-   * @return string|null
    */
   private function decryptPassword(string $encPassword): ?string
   {
@@ -304,7 +258,6 @@ class VideoHelper
    * get encrypted password or null, if video / videogroup not private
    *
    * @param _VideoSuperclass $obj (Video or VideoGroup)
-   * @return string|null
    */
   function getEncPassword(_VideoSuperclass $obj): ?string
   {
@@ -317,9 +270,6 @@ class VideoHelper
 
   /**
    * get decrypted password or null, if video / videogroup not private
-   *
-   * @param _VideoSuperclass $obj
-   * @return string|null
    */
   function getDecrypedPassword(_VideoSuperclass $obj): ?string
   {
@@ -332,10 +282,6 @@ class VideoHelper
 
   /**
    * generate a url for a video, using short forms if possible
-   *
-   * @param Video $video
-   * @param string $currentRoute
-   * @return string
    */
   function generateVideoUrl(Video $video, string $currentRoute): string
   {
@@ -350,7 +296,7 @@ class VideoHelper
       } elseif ($currentRoute == 'svc_video_run_hn') {
         $url = $this->router->generate('svc_video_short_runHideNav', ['id' => $video->getIDorShortname()], UrlGeneratorInterface::ABSOLUTE_URL);
       }
-    } catch (Exception $e) {
+    } catch (Exception) {
     }
     return $url;
   }

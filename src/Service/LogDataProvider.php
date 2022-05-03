@@ -11,23 +11,17 @@ use Svc\VideoBundle\Repository\VideoRepository;
 class LogDataProvider extends GeneralDataProvider
 {
 
-  private $videoSourceIDs = [];
-  private $isVideoSourceIDsInitialized = false;
-  private $vGroupSourceIDs = [];
-  private $isVGroupSourceIDsInitialized = false;
-  private $videoRep;
-  private $videoGroupRep;
+  private array $videoSourceIDs = [];
+  private bool $isVideoSourceIDsInitialized = false;
+  private array $vGroupSourceIDs = [];
+  private bool $isVGroupSourceIDsInitialized = false;
 
-  public function __construct(VideoRepository $videoRep, VideoGroupRepository $videoGroupRep)
+  public function __construct(private VideoRepository $videoRep, private VideoGroupRepository $videoGroupRep)
   {
-    $this->videoRep = $videoRep;
-    $this->videoGroupRep = $videoGroupRep;
   }
 
   /**
    * init the sourceType array
-   *
-   * @return boolean
    */
   protected function initSourceTypes(): bool
   {
@@ -43,10 +37,6 @@ class LogDataProvider extends GeneralDataProvider
 
   /**
    * get the text/description for a source ID / sourceType combination
-   *
-   * @param integer $sourceID
-   * @param integer|null $sourceType
-   * @return string
    */
   public function getSourceIDText(int $sourceID, ?int $sourceType = null): string
   {
@@ -66,10 +56,8 @@ class LogDataProvider extends GeneralDataProvider
 
   /**
    * read all video titles, store it in an array
-   *
-   * @return void
    */
-  private function initVideoSourceIDs()
+  private function initVideoSourceIDs(): void
   {
     foreach ($this->videoRep->findAll() as $video) {
       $this->videoSourceIDs[$video->getId()] = $video->getTitle();
@@ -80,10 +68,8 @@ class LogDataProvider extends GeneralDataProvider
 
   /**
    * read all video group titles, store it in an array
-   *
-   * @return void
    */
-  private function initVGroupSourceIDs()
+  private function initVGroupSourceIDs(): void
   {
     foreach ($this->videoGroupRep->findAll() as $vGroup) {
       $this->vGroupSourceIDs[$vGroup->getId()] = $vGroup->getTitle();
