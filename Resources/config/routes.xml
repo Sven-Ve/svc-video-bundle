@@ -51,19 +51,19 @@
         <!-- settings -->
     </route>
 
-    <route id="svc_video_group_index" controller="svc_video.controller.group::index" path="/group" >
+    <route id="svc_video_group_index" controller="svc_video.controller.group::index" path="/admin/group" >
       <!-- settings -->
     </route>
 
-    <route id="svc_video_group_new" controller="svc_video.controller.group::new" path="/group/new" >
+    <route id="svc_video_group_new" controller="svc_video.controller.group::new" path="/admin/group/new" >
       <!-- settings -->
     </route>
 
-    <route id="svc_video_group_edit" controller="svc_video.controller.group::edit" path="/group/edit/{id}" >
+    <route id="svc_video_group_edit" controller="svc_video.controller.group::edit" path="/admin/group/edit/{id}" >
       <!-- settings -->
     </route>
 
-    <route id="svc_video_group_delete" controller="svc_video.controller.group::delete" path="/group/delete/{id}" >
+    <route id="svc_video_group_delete" controller="svc_video.controller.group::delete" path="/admin/group/delete/{id}" >
       <!-- settings -->
     </route>
 
@@ -71,7 +71,7 @@
       <!-- settings -->
     </route>
 
-    <route id="svc_video_group_stats" controller="svc_video.controller.group::stats" path="/group/stats/{id}" >
+    <route id="svc_video_group_stats" controller="svc_video.controller.group::stats" path="/admin/group/stats/{id}" >
       <!-- settings -->
     </route>
 </routes>

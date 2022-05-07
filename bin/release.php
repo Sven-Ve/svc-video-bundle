@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "3.0.1";
-$message = "format code with php-cs-fixer";
+$version = "3.1.0";
+$message = "move group operations under /admin/...";
 
 echo("Running phpstan:\n");
 system("composer run-script phpstan", $res);

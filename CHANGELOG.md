@@ -220,3 +220,8 @@
 ## Version 3.0.1
 *Tue, 03 May 2022 20:43:28 +0000*
 - format code with php-cs-fixer
+
+
+## Version 3.1.0
+*Sat, 07 May 2022 19:25:18 +0000*
+- move group operations under /admin/...
