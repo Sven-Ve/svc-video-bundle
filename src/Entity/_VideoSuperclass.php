@@ -8,12 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\MappedSuperclass]
 class _VideoSuperclass
 {
-  #[ORM\Column(type: 'string', length: 8, unique: true, nullable: true)]
+  #[ORM\Column(length: 8, unique: true, nullable: true)]
   #[Assert\Regex(pattern: '/^[a-z0-9_\-]+$/', message: 'Please use lowercase letters, numbers, minus and underscore only')]
   #[Assert\Length(min: 4, max: 8, minMessage: 'Your shortname must be at least {{ limit }} characters long', maxMessage: 'Your shortname cannot be longer than {{ limit }} characters')]
-  protected $shortName;
+  protected ?string $shortName = null;
 
-  #[ORM\Column(type: 'boolean', options: ['default' => false])]
+  #[ORM\Column(options: ['default' => false])]
   private bool $isPrivate = false;
 
   /**
@@ -25,10 +25,10 @@ class _VideoSuperclass
   /**
    * @var string The hashed password
    */
-  #[ORM\Column(type: 'string', nullable: true)]
+  #[ORM\Column(nullable: true)]
   private ?string $password = null;
 
-  #[ORM\Column(type: 'boolean', options: ['default' => false])]
+  #[ORM\Column(options: ['default' => false])]
   private bool $hideOnHomePage = false;
 
   public function getShortName(): ?string

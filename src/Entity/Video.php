@@ -8,7 +8,6 @@ use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/** @phpstan-ignore-next-line */
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 #[UniqueEntity(fields: ['title'], message: 'There is already a video with this title')]
 class Video extends _VideoSuperclass
@@ -26,48 +25,48 @@ class Video extends _VideoSuperclass
 
   #[ORM\Id]
   #[ORM\GeneratedValue]
-  #[ORM\Column(type: 'integer')]
-  private $id;
+  #[ORM\Column()]
+  private ?int $id = null;
 
-  #[ORM\Column(type: 'string', length: 100, unique: true)]
+  #[ORM\Column(length: 100, unique: true)]
   #[Assert\NotBlank]
-  private $title;
+  private ?string $title = null;
 
   #[ORM\Column(type: 'text', nullable: true)]
-  private $description;
+  private ?string $description = null;
 
   #[ORM\Column(type: 'string', length: 30)]
   #[Assert\NotBlank]
-  private $sourceID;
+  private ?string $sourceID = null;
 
   #[ORM\Column(type: 'smallint')]
   private int $sourceType = Video::SOURCE_VIMEO;
 
-  #[ORM\Column(type: 'string', length: 20)]
+  #[ORM\Column(length: 20)]
   #[Assert\NotBlank]
   private string $ratio = '16x9';
 
-  #[ORM\Column(type: 'string', length: 255, nullable: true)]
-  private $subTitle;
+  #[ORM\Column(nullable: true)]
+  private ?string $subTitle = null;
 
-  #[ORM\Column(type: 'integer')]
+  #[ORM\Column()]
   private int $likes = 0;
 
-  #[ORM\Column(type: 'integer')]
+  #[ORM\Column()]
   private int $calls = 0;
 
-  #[ORM\Column(type: 'string', length: 255, nullable: true)]
-  private $thumbnailUrl;
+  #[ORM\Column(nullable: true)]
+  private ?string $thumbnailUrl = null;
 
-  #[ORM\Column(type: 'string', length: 255, nullable: true)]
-  private $thumbnailPath;
+  #[ORM\Column(nullable: true)]
+  private ?string $thumbnailPath = null;
 
-  #[ORM\ManyToOne(targetEntity: VideoGroup::class, inversedBy: 'videos')]
+  #[ORM\ManyToOne(inversedBy: 'videos')]
   #[ORM\JoinColumn(nullable: true)]
-  private $videoGroup;
+  private ?VideoGroup $videoGroup = null;
 
-  #[ORM\Column(type: 'datetime', nullable: true)]
-  private $uploadDate;
+  #[ORM\Column(nullable: true)]
+  private \DateTime $uploadDate;
 
   public function getId(): ?int
   {

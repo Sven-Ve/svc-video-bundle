@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "3.1.0";
-$message = "move group operations under /admin/...";
+$version = "3.1.1";
+$message = "add php attributes";
 
 echo("Running phpstan:\n");
 system("composer run-script phpstan", $res);

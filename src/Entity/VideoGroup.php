@@ -9,33 +9,32 @@ use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/** @phpstan-ignore-next-line */
 #[ORM\Entity(repositoryClass: VideoGroupRepository::class)]
 #[UniqueEntity(fields: ['name'], message: 'There is already a video group with this name')]
 class VideoGroup extends _VideoSuperclass implements \Stringable
 {
   #[ORM\Id]
   #[ORM\GeneratedValue]
-  #[ORM\Column(type: 'integer')]
-  private $id;
+  #[ORM\Column()]
+  private ?int $id = null;
 
-  #[ORM\Column(type: 'string', length: 40, unique: true)]
+  #[ORM\Column(length: 40, unique: true)]
   #[Assert\NotBlank]
-  private $name;
+  private ?string $name = null;
 
-  #[ORM\Column(type: 'string', length: 255, nullable: true)]
-  private $description;
+  #[ORM\Column(nullable: true)]
+  private ?string $description = null;
 
   #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'videoGroup')]
-  private $videos;
+  private Collection $videos;
 
-  #[ORM\Column(type: 'boolean', options: ['default' => false])]
+  #[ORM\Column(options: ['default' => false])]
   private bool $defaultGroup = false;
 
-  #[ORM\Column(type: 'boolean', options: ['default' => false])]
+  #[ORM\Column(options: ['default' => false])]
   private bool $hideNav = false;
 
-  #[ORM\Column(type: 'boolean', options: ['default' => false])]
+  #[ORM\Column(options: ['default' => false])]
   private bool $hideGroups = false;
 
   public function __construct()

@@ -225,3 +225,8 @@
 ## Version 3.1.0
 *Sat, 07 May 2022 19:25:18 +0000*
 - move group operations under /admin/...
+
+
+## Version 3.1.1
+*Fri, 13 May 2022 21:10:12 +0000*
+- add php attributes
