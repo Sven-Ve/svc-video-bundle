@@ -10,8 +10,11 @@ use Svc\VideoBundle\Repository\VideoRepository;
 class LogDataProvider extends GeneralDataProvider
 {
   private array $videoSourceIDs = [];
+
   private bool $isVideoSourceIDsInitialized = false;
+
   private array $vGroupSourceIDs = [];
+
   private bool $isVGroupSourceIDsInitialized = false;
 
   public function __construct(private VideoRepository $videoRep, private VideoGroupRepository $videoGroupRep)

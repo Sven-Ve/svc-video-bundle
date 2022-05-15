@@ -11,6 +11,7 @@ return $config
         'indentation_type' => true,
         'array_indentation' => true,
         'concat_space' => ["spacing" => "one"],
+        'class_attributes_separation' => ['elements' => ['property' => 'one', 'method' => 'one']],
     ])
     ->setIndent("  ")
     ->setFinder($finder)

@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "3.1.1";
-$message = "add php attributes";
+$version = "3.1.2";
+$message = "small format changes";
 
 echo("Running phpstan:\n");
 system("composer run-script phpstan", $res);

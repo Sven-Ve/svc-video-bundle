@@ -230,3 +230,8 @@
 ## Version 3.1.1
 *Fri, 13 May 2022 21:10:12 +0000*
 - add php attributes
+
+
+## Version 3.1.2
+*Sun, 15 May 2022 08:21:40 +0000*
+- small format changes
