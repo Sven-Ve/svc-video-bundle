@@ -16,7 +16,6 @@
     "php": "^8.0.2",
     "symfony/framework-bundle": "5.4.*|^6",
     "doctrine/doctrine-bundle": "^2.6",
-    "doctrine/orm": "^2.11",
     "symfony/validator": "5.4.*|^6",
     "symfony/expression-language": "5.4.*|^6",
     "symfony/translation": "5.4.*|^6",
