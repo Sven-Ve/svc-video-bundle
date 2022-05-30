@@ -235,3 +235,8 @@
 ## Version 3.1.2
 *Sun, 15 May 2022 08:21:40 +0000*
 - small format changes
+
+
+## Version 3.1.3
+*Mon, 30 May 2022 16:03:43 +0000*
+- improved console command

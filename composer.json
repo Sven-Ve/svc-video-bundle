@@ -18,6 +18,7 @@
     "doctrine/doctrine-bundle": "^2.6",
     "symfony/validator": "5.4.*|^6",
     "symfony/expression-language": "5.4.*|^6",
+    "symfony/lock": "5.4.*|^6",
     "symfony/translation": "5.4.*|^6",
     "symfony/twig-bundle": "5.4.*|^6",
     "svc/like-bundle": "^3|dev-main",

@@ -3,14 +3,23 @@
 namespace Svc\VideoBundle\Command;
 
 use Svc\VideoBundle\Service\VideoHelper;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+  name: 'svc_video:manage',
+  description: 'Manage the svc_video bundle.',
+  hidden: false
+)]
 class SvcVideoManageCommand extends Command
 {
+  use LockableTrait;
+
   public function __construct(private VideoHelper $videoHelper)
   {
     parent::__construct();
@@ -29,6 +38,13 @@ class SvcVideoManageCommand extends Command
   protected function execute(InputInterface $input, OutputInterface $output): int
   {
     $io = new SymfonyStyle($input, $output);
+
+    if (!$this->lock()) {
+      $io->caution('The command is already running in another process.');
+
+      return Command::FAILURE;
+    }
+
     $force = $input->getOption('force');
     $stepRun = 0;
 
@@ -39,6 +55,7 @@ class SvcVideoManageCommand extends Command
         $io->info($msg);
       } else {
         $io->error($msg);
+        $this->release();
 
         return Command::FAILURE;
       }
@@ -51,6 +68,7 @@ class SvcVideoManageCommand extends Command
         $io->info($msg);
       } else {
         $io->error($msg);
+        $this->release();
 
         return Command::FAILURE;
       }
@@ -63,6 +81,7 @@ class SvcVideoManageCommand extends Command
         $io->info($msg);
       } else {
         $io->error($msg);
+        $this->release();
 
         return Command::FAILURE;
       }
@@ -70,12 +89,14 @@ class SvcVideoManageCommand extends Command
 
     if ($stepRun === 0) {
       $io->error('No steps runs. Please check your parameter, you have to set at least one parameter.');
+      $this->release();
 
       return Command::FAILURE;
     }
 
     $io->success("Manage svc_video bundle done. $stepRun steps executed.");
 
+    $this->release();
     return Command::SUCCESS;
   }
 }
