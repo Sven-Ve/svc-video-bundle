@@ -240,3 +240,8 @@
 ## Version 3.1.3
 *Mon, 30 May 2022 16:03:43 +0000*
 - improved console command
+
+
+## Version 3.1.4
+*Fri, 24 Jun 2022 18:04:58 +0000*
+- fixed ux-chart options

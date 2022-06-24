@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = "3.1.3";
-$message = "improved console command";
+$version = "3.1.4";
+$message = "fixed ux-chart options";
 
 echo("Running phpstan:\n");
 system("composer run-script phpstan", $res);

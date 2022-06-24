@@ -122,8 +122,10 @@ class VideoAdminController extends AbstractController
     $chart->setData($countries);
     $chart->setOptions([
       'responsive' => true,
-      'legend' => ['position' => 'bottom'],
-      'title' => ['display' => true, 'text' => 'Countries'],
+      'plugins' => [
+        'legend' => ['position' => 'bottom'],
+        'title' => ['display' => true, 'text' => 'Countries'],
+      ],
     ]);
 
     return $this->render('@SvcVideo/video_admin/stats.html.twig', [

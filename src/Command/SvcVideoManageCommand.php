@@ -97,6 +97,7 @@ class SvcVideoManageCommand extends Command
     $io->success("Manage svc_video bundle done. $stepRun steps executed.");
 
     $this->release();
+
     return Command::SUCCESS;
   }
 }
