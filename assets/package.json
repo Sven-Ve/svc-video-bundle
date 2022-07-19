@@ -2,7 +2,7 @@
   "name": "@svc/video-bundle",
   "description": "Bundle to manage and stream videos",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "symfony": {
       "controllers": {
           "sort": {

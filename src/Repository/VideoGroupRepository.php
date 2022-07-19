@@ -26,6 +26,6 @@ class VideoGroupRepository extends ServiceEntityRepository
             ->orderBy('v.name', 'ASC')
             ->getQuery()
             ->getResult()
-        ;
+    ;
   }
 }

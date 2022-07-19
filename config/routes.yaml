@@ -1,0 +1,79 @@
+svc_video_admin_index:
+  path: /admin/
+  controller: Svc\VideoBundle\Controller\VideoAdminController::index
+
+svc_video_admin_new:
+  path: /admin/new/
+  controller: Svc\VideoBundle\Controller\VideoAdminController::new
+
+svc_video_admin_edit:
+  path: /admin/edit/{id}
+  controller: Svc\VideoBundle\Controller\VideoAdminController::edit
+
+svc_video_admin_delete:
+  path: /admin/delete/{id}
+  controller: Svc\VideoBundle\Controller\VideoAdminController::delete
+
+svc_video_admin_stats:
+  path: /admin/stats/{id}
+  controller: Svc\VideoBundle\Controller\VideoAdminController::stats
+
+svc_video_all_stats:
+  path: /admin/allstats/
+  controller: Svc\VideoBundle\Controller\VideoAdminController::allStats
+  defaults:
+    isVideo: 1
+
+svc_video_all_stats_group:
+  path: /admin/g/allstats
+  controller: Svc\VideoBundle\Controller\VideoAdminController::allStats
+  defaults:
+    isVideo: 0
+
+svc_video_run:
+  path: /run/{id}
+  controller: Svc\VideoBundle\Controller\VideoController::run
+
+svc_video_run_hn:
+  path: /run/hn/{id}
+  controller: Svc\VideoBundle\Controller\VideoController::run
+  defaults:
+    hideNav: true
+
+svc_video_list:
+  path: /{id?}
+  controller: Svc\VideoBundle\Controller\VideoController::list
+  requirements:
+    id: '\d+'
+
+svc_video_stats:
+  path: /stats/
+  controller: Svc\VideoBundle\Controller\VideoController::videoStats
+
+svc_video_inc_likes:
+  path: /inc/{id}
+  controller: Svc\VideoBundle\Controller\VideoController::incLikes
+
+svc_video_pwd:
+  path: /pwd/{id}/{ot?}
+  controller: Svc\VideoBundle\Controller\VideoController::enterPwd
+
+svc_video_group_index:
+  path: /admin/group/
+  controller: Svc\VideoBundle\Controller\VideoGroupController::index
+
+svc_video_group_new:
+  path: /admin/group/new/
+  controller: Svc\VideoBundle\Controller\VideoGroupController::new
+
+svc_video_group_edit:
+  path: /admin/group/edit/{id}
+  controller: Svc\VideoBundle\Controller\VideoGroupController::edit
+
+svc_video_group_delete:
+  path: /admin/group/delete/{id}
+  controller: Svc\VideoBundle\Controller\VideoGroupController::delete
+
+svc_video_group_stats:
+  path: /admin/group/stats/{id}
+  controller: Svc\VideoBundle\Controller\VideoGroupController::stats

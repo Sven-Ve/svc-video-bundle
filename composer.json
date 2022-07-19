@@ -14,19 +14,19 @@
   ],
   "require": {
     "php": "^8.0.2",
-    "symfony/framework-bundle": "5.4.*|^6",
+    "symfony/framework-bundle": "^6.1",
     "doctrine/doctrine-bundle": "^2.6",
-    "symfony/validator": "5.4.*|^6",
-    "symfony/expression-language": "5.4.*|^6",
-    "symfony/lock": "5.4.*|^6",
-    "symfony/translation": "5.4.*|^6",
-    "symfony/twig-bundle": "5.4.*|^6",
-    "svc/like-bundle": "^3|dev-main",
-    "svc/util-bundle": "^3|dev-main",
-    "svc/log-bundle": "^3|dev-main",
-    "liip/imagine-bundle": "^2",
-    "symfony/form": "5.4.*|^6",
-    "symfony/ux-chartjs": "^2"
+    "symfony/validator": "^6.1",
+    "symfony/expression-language": "^6.1",
+    "symfony/lock": "^6.1",
+    "symfony/translation": "^6.1",
+    "symfony/twig-bundle": "^6.1",
+    "svc/like-bundle": "^4|dev-main",
+    "svc/util-bundle": "^4|dev-main",
+    "svc/log-bundle": "^4|dev-main",
+    "liip/imagine-bundle": "^2.7",
+    "symfony/form": "^6.1",
+    "symfony/ux-chartjs": "^2.3"
   },
   "autoload": {
     "psr-4": {
@@ -39,9 +39,9 @@
     }
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "5.4.*|^6",
-    "symfony/browser-kit": "5.4.*|^6",
-    "phpstan/phpstan": "^1"
+    "symfony/phpunit-bridge": "^6.1",
+    "symfony/browser-kit": "^6.1",
+    "phpstan/phpstan": "^1.7"
   },
   "scripts": {
     "phpstan": "php -d memory_limit=-1 vendor/bin/phpstan analyse src/ --level 5"

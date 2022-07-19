@@ -245,3 +245,8 @@
 ## Version 3.1.4
 *Fri, 24 Jun 2022 18:04:58 +0000*
 - fixed ux-chart options
+
+
+## Version 4.0.0
+*Tue, 19 Jul 2022 20:02:27 +0000*
+- build with Symfony 6.1 bundle features, runs only with symfony 6.1

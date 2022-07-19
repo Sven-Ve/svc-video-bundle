@@ -40,6 +40,6 @@ in the `config/bundles.php` file of your project:
 
 return [
     // ...
-    Svc\ProfileBundle\SvcVideoBundle::class => ['all' => true],
+    Svc\VideoBundle\SvcVideoBundle::class => ['all' => true],
 ];
 ```

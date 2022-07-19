@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Svc\VideoBundle\Controller\VideoAdminController:
+  Svc\VideoBundle\Controller\VideoGroupController:
+  Svc\VideoBundle\Controller\VideoController:
+  Svc\VideoBundle\Service\LogDataProvider:
+  Svc\VideoBundle\Service\VideoHelper:
+  Svc\VideoBundle\Service\VideoGroupHelper:
+  Svc\VideoBundle\Repository\VideoRepository:
+  Svc\VideoBundle\Repository\VideoGroupRepository:
+  Svc\VideoBundle\Command\SvcVideoManageCommand:

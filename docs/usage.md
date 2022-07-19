@@ -19,7 +19,7 @@ Create tables (run `bin/console doctrine:schema:update --force`) or create a mig
 ```yaml
 # /config/routes/_svc_video.yaml
 _svc_video:
-    resource: '@SvcVideoBundle/Resources/config/routes.xml'
+    resource: '@SvcVideoBundle/config/routes.yaml'
     prefix: /_svc_video/{_locale}
     requirements: {"_locale": "%app.supported_locales%"}
 ```
