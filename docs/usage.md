@@ -26,7 +26,7 @@ _svc_video:
 
 ## Enable/disable feature
 ```yaml
-# /config/packages/_svc_video.yaml
+# /config/packages/svc_video.yaml
 svc_video:
     # Enable likes for videos?
     enableLikes:          false
@@ -37,14 +37,18 @@ svc_video:
     # Enable videos groups?
     enableGroups:         false
 
-    # Enable private viceos?
+    # Enable private videos?
     enablePrivate:        true
 
     # Enable video sort combox in video overview?
     enableVideoSort:      true
+  
+    # Enable pagination in video admin (needs babdev/pagerfanta-bundle)?
+    enablePagination:     false
 
     # Default route, for redirect after errors
     homeRoute:            svc_video_list
+
 ```
 
 ## Short URLs
@@ -83,3 +87,17 @@ Example for crontab:
 ```
 17 * * * * (cd <your_path>; bin/console svc_log:stat-aggregate) >/dev/null
 ```
+
+## Pagination
+
+If you enabled pagination in /config/packages/svc_video.yaml, please define the css framework you use.
+See pagerfanta documentation (https://www.babdev.com/open-source/packages/pagerfantabundle/docs/3.x/views) 
+
+Example:
+
+```yaml
+# /config/packages/babdev_pagerfanta.yaml
+babdev_pagerfanta:
+  default_view: twig
+  default_twig_template: '@BabDevPagerfanta/twitter_bootstrap5.html.twig'
+```yaml

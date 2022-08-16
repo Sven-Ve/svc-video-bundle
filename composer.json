@@ -26,7 +26,10 @@
     "svc/log-bundle": "^4|dev-main",
     "liip/imagine-bundle": "^2.7",
     "symfony/form": "^6.1",
-    "symfony/ux-chartjs": "^2.3"
+    "symfony/ux-chartjs": "^2.3",
+    "babdev/pagerfanta-bundle": "^3.7",
+    "pagerfanta/twig": "^3.6",
+    "pagerfanta/doctrine-orm-adapter": "^3.6"
   },
   "autoload": {
     "psr-4": {

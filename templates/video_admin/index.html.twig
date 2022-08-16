@@ -2,72 +2,86 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{% trans %}Video overview{% endtrans %}
+  {% trans %}Video overview{% endtrans %}
 {% endblock %}
 
 {% block body %}
-	<h1>
-		<i class="fas fa-video"></i>
-		{% trans %}Video overview{% endtrans %}
-	</h1>
+  <h1>
+    <i class="fas fa-video"></i>
+    {% trans %}Video overview{% endtrans %}
+  </h1>
 
-	<div class='table-responsive'>
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>{% trans %}Title{% endtrans %}</th>
-					<th>{% trans %}Sub title{% endtrans %}</th>
+  <div class='table-responsive'>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>{% trans %}Title{% endtrans %}</th>
+        <th>{% trans %}Sub title{% endtrans %}</th>
+        {% if enableShortNames | default(false) %}
+          <th>{% trans %}Short name{% endtrans %}</th>
+        {% endif %}
+        <th>{% trans %}Source{% endtrans %}</th>
+        <th><i class="fas fa-eye"></i></th>
+        <th><i class="fas fa-heart like-liked"></i></th>
+        <th>{% trans %}Actions{% endtrans %}</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for video in videos %}
+        <tr>
+          <td>{{ video.title }}</td>
+          <td>{{ video.subTitle }}</td>
           {% if enableShortNames | default(false) %}
-  					<th>{% trans %}Short name{% endtrans %}</th>
+            <td>{{ video.shortName }}</td>
           {% endif %}
-					<th>{% trans %}Source{% endtrans %}</th>
-					<th><i class="fas fa-eye"></i></th>
-					<th><i class="fas fa-heart like-liked"></i></th>
-					<th>{% trans %}Actions{% endtrans %}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for video in videos %}
-					<tr>
-						<td>{{ video.title }}</td>
-						<td>{{ video.subTitle }}</td>
-            {% if enableShortNames | default(false) %}
-  						<td>{{ video.shortName }}</td>
-            {% endif %}
-						<td>{{ video.sourceText }}</td>
-						<td>{{ video.calls }}</td>
-						<td>{{ video.likes }}</td>
-						<td>
-							<a href="{{ path('svc_video_admin_edit', {'id': video.id}) }}" class='btn btn-sm btn-secondary'>{% trans %}Edit{% endtrans %}</a>
-							<a href="{{ path('svc_video_run', {'id': video.id}) }}" class='btn btn-sm btn-primary'>{% trans %}Run{% endtrans %}</a>
-							<a href="{{ path('svc_video_admin_stats', {'id': video.id}) }}" class='btn btn-sm btn-info'>{% trans %}Statistics{% endtrans %}</a>
-              <span class="d-none"
-                {{ stimulus_controller('svc--util-bundle--mclipboard', { 
+          <td>{{ video.sourceText }}</td>
+          <td>{{ video.calls }}</td>
+          <td>{{ video.likes }}</td>
+          <td>
+            <a href="{{ path('svc_video_admin_edit', {'id': video.id}) }}"
+               class='btn btn-sm btn-secondary'>{% trans %}Edit{% endtrans %}</a>
+            <a href="{{ path('svc_video_run', {'id': video.id}) }}"
+               class='btn btn-sm btn-primary'>{% trans %}Run{% endtrans %}</a>
+            <a href="{{ path('svc_video_admin_stats', {'id': video.id}) }}"
+               class='btn btn-sm btn-info'>{% trans %}Statistics{% endtrans %}</a>
+            <span class="d-none"
+                {{ stimulus_controller('svc--util-bundle--mclipboard', {
                   'link': url('svc_video_run', {id: video.id} ),
-                  'link1': url('svc_video_run_hn', {id: video.id} ) 
+                  'link1': url('svc_video_run_hn', {id: video.id} )
                 } ) }}
               >
                 <div class="btn-group">
-                  <button type="button" class="btn btn-warning btn-sm" data-action="svc--util-bundle--mclipboard#copy" title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
-                  <button class="btn btn-warning dropdown-toggle dropdown-toggle-split btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button type="button" class="btn btn-warning btn-sm" data-action="svc--util-bundle--mclipboard#copy"
+                          title='{% trans %}Copy link to clipboard{% endtrans %}'>{% trans %}Copy link{% endtrans %}</button>
+                  <button class="btn btn-warning dropdown-toggle dropdown-toggle-split btn-sm" type="button"
+                          data-bs-toggle="dropdown" aria-expanded="false">
                      <span class="visually-hidden">Toggle Dropdown</span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class='dropdown-item' data-action="svc--util-bundle--mclipboard#copy1">{% trans %}without nav{% endtrans %}</a></li>
+                    <li><a class='dropdown-item'
+                           data-action="svc--util-bundle--mclipboard#copy1">{% trans %}without nav{% endtrans %}</a></li>
                   </ul>
                 </div>
               </span>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="4">{% trans %}no records found{% endtrans %}</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="4">{% trans %}no records found{% endtrans %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
-	<a href="{{ path('svc_video_admin_new') }}" class='btn btn-sm btn-success'>{% trans %}Create new video{% endtrans %}</a>
-	<a href="{{ path('svc_video_all_stats') }}" class='btn btn-sm btn-info'>{% trans %}Statistics{% endtrans %}</a>
+  <div class="d-flex justify-content-between">
+  	<span>
+			<a href="{{ path('svc_video_admin_new') }}" class='btn btn-sm btn-success'>{% trans %}Create new video{% endtrans %}</a>
+    	<a href="{{ path('svc_video_all_stats') }}" class='btn btn-sm btn-info'>{% trans %}Statistics{% endtrans %}</a>
+	  </span>
+    {% if haveToPaginate %}
+      {{ pagerfanta(videos) }}
+    {% endif %}
+  </div>
+
 {% endblock %}

@@ -23,6 +23,7 @@ class SvcVideoBundle extends AbstractBundle
         ->booleanNode('enableGroups')->defaultFalse()->info('Enable videos groups?')->end()
         ->booleanNode('enablePrivate')->defaultTrue()->info('Enable private videos?')->end()
         ->booleanNode('enableVideoSort')->defaultTrue()->info('Enable video sort combox in video overview?')->end()
+        ->booleanNode('enablePagination')->defaultFalse()->info('Enable pagination in video admin (needs babdev/pagerfanta-bundle)?')->end()
         ->scalarNode('thumbnailDir')->defaultValue('%kernel.project_dir%/public/uploads')->cannotBeEmpty()->end()
         ->scalarNode('homeRoute')->defaultValue('svc_video_list')->info('Default route, for redirect after errors')->cannotBeEmpty()->end()
       ->end();
@@ -44,7 +45,9 @@ class SvcVideoBundle extends AbstractBundle
       ->get('Svc\VideoBundle\Controller\VideoAdminController')
       ->arg(0, $config['enableShortNames'])
       ->arg(1, $config['enablePrivate'])
-      ->arg(2, $config['enableGroups']);
+      ->arg(2, $config['enableGroups'])
+      ->arg(3, $config['enablePagination'])
+    ;
 
     $container->services()
       ->get('Svc\VideoBundle\Service\VideoHelper')

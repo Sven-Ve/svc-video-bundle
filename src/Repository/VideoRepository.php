@@ -3,6 +3,7 @@
 namespace Svc\VideoBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Svc\VideoBundle\Entity\Video;
 
@@ -32,6 +33,12 @@ class VideoRepository extends ServiceEntityRepository
   public function __construct(ManagerRegistry $registry)
   {
     parent::__construct($registry, Video::class);
+  }
+
+  public function cbAllVideos(): QueryBuilder
+  {
+    return $this->createQueryBuilder('v')
+      ->orderBy('v.id', 'DESC');
   }
 
   public function videoStatsByGroup()

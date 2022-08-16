@@ -86,6 +86,10 @@
       <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/vendor/pagerfanta/core" />
+      <path value="$PROJECT_DIR$/vendor/pagerfanta/twig" />
+      <path value="$PROJECT_DIR$/vendor/pagerfanta/doctrine-orm-adapter" />
+      <path value="$PROJECT_DIR$/vendor/babdev/pagerfanta-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

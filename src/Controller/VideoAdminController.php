@@ -4,6 +4,8 @@ namespace Svc\VideoBundle\Controller;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Svc\LogBundle\Service\EventLog;
 use Svc\LogBundle\Service\LogStatistics;
 use Svc\VideoBundle\Entity\Video;
@@ -21,17 +23,33 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 class VideoAdminController extends AbstractController
 {
-  public function __construct(private bool $enableShortNames, private bool $enablePrivate, private bool $enableGroups)
-  {
+  public function __construct(
+    private bool $enableShortNames,
+    private bool $enablePrivate,
+    private bool $enableGroups,
+    private bool $enablePagination
+  ) {
   }
 
-  public function index(VideoRepository $videoRepository, VideoGroupHelper $videoGroupHelper): Response
+  public function index(VideoRepository $videoRepository, VideoGroupHelper $videoGroupHelper, Request $request): Response
   {
     $videoGroupHelper->initDefaultVideoGroup();
 
+    if ($this->enablePagination) {
+      $queryBuilder = $videoRepository->cbAllVideos();
+      $videos = new Pagerfanta(new QueryAdapter($queryBuilder));
+      $videos->setMaxPerPage(15);
+      $videos->setCurrentPage($request->query->get('page', 1));
+      $haveToPaginate = $videos->haveToPaginate();
+    } else {
+      $videos = $videoRepository->findAll();
+      $haveToPaginate = false;
+    }
+
     return $this->render('@SvcVideo/video_admin/index.html.twig', [
-      'videos' => $videoRepository->findAll(),
+      'videos' => $videos,
       'enableShortNames' => $this->enableShortNames,
+      'haveToPaginate' => $haveToPaginate,
     ]);
   }
 
