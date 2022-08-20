@@ -2,6 +2,8 @@
 
 namespace Svc\VideoBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Svc\UtilBundle\Service\EnvInfoHelper;
 use Svc\VideoBundle\Repository\VideoRepository;
@@ -67,6 +69,19 @@ class Video extends _VideoSuperclass
 
   #[ORM\Column(nullable: true)]
   private \DateTime $uploadDate;
+
+  /**
+   * @var Tag[]|Collection
+   */
+  #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'videos', cascade: ['persist'])]
+  #[ORM\OrderBy(['name' => 'ASC'])]
+  #[Assert\Count(max: 4, maxMessage: 'post.too_many_tags')]
+  private Collection $tags;
+
+  public function __construct()
+  {
+    $this->tags = new ArrayCollection();
+  }
 
   public function getId(): ?int
   {
@@ -245,7 +260,7 @@ class Video extends _VideoSuperclass
 
   public function setUploadDate(?\DateTimeInterface $uploadDate): self
   {
-    $this->uploadDate = $uploadDate;
+    $this->uploadDate = \DateTime::createFromInterface($uploadDate) ;
 
     return $this;
   }
@@ -253,5 +268,22 @@ class Video extends _VideoSuperclass
   public function getShortUrl(): string
   {
     return EnvInfoHelper::getRootURLandPrefix() . '?' . $this->getIDorShortname();
+  }
+
+  public function addTag(Tag $tag): self
+  {
+    $this->tags[] = $tag;
+
+    return $this;
+  }
+
+  public function removeTag(Tag $tag): void
+  {
+    $this->tags->removeElement($tag);
+  }
+
+  public function getTags(): Collection
+  {
+    return $this->tags;
   }
 }

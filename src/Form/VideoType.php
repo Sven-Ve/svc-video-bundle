@@ -3,6 +3,7 @@
 namespace Svc\VideoBundle\Form;
 
 use Svc\VideoBundle\Entity\Video;
+use Svc\VideoBundle\Form\Type\TagInputType;
 use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,6 +21,11 @@ class VideoType extends AbstractType
     $builder
       ->add('title', null, ['attr' => ['autofocus' => true]])
       ->add('subTitle', null, [
+        'required' => false,
+      ]);
+
+    $builder
+      ->add('tags', TagInputType::class, [
         'required' => false,
       ]);
 
