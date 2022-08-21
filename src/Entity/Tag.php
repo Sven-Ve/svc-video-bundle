@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Svc\VideoBundle\Repository\TagRepository;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
-class Tag implements \JsonSerializable
+class Tag implements \JsonSerializable, \Stringable
 {
   #[ORM\Id]
   #[ORM\GeneratedValue]
@@ -28,6 +28,11 @@ class Tag implements \JsonSerializable
 
   #[ORM\ManyToMany(targetEntity: Video::class, mappedBy: 'tags')]
   protected Collection $videos;
+
+  public function __construct(?string $name = null)
+  {
+    $this->name=$name;
+  }
 
   public function getId(): ?int
   {

@@ -27,6 +27,7 @@ class VideoType extends AbstractType
     $builder
       ->add('tags', TagInputType::class, [
         'required' => false,
+        'help' => 'Max. 4 tags allowed'
       ]);
 
     if ($options['enableGroups']) {

@@ -20,10 +20,6 @@ class TagInputType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options): void
   {
     $builder
-      // The Tag collection must be transformed into a comma separated string.
-      // We could create a custom transformer to do Collection <-> string in one step,
-      // but here we're doing the transformation in two steps (Collection <-> array <-> string)
-      // and reuse the existing CollectionToArrayTransformer.
       ->addModelTransformer(new CollectionToArrayTransformer(), true)
       ->addModelTransformer(new TagArrayToStringTransformer($this->tagRep), true);
   }
@@ -31,9 +27,9 @@ class TagInputType extends AbstractType
   public function buildView(FormView $view, FormInterface $form, array $options): void
   {
     $json = $this->tagRep->getTagNamesAsJson();
-    $view->vars['row_attr']['data-tag-auto-com-list-value'] = $json;
-    $view->vars['row_attr']['data-controller'] = 'tag';
-    $view->vars['attr']['data-tag-target'] = 'tags';
+    $view->vars['row_attr']['data-svc--video-bundle--tag-auto-com-list-value'] = $json;
+    $view->vars['row_attr']['data-controller'] = 'svc--video-bundle--tag';
+    $view->vars['attr']['data-svc--video-bundle--tag-target'] = 'tags';
   }
 
   public function getParent(): ?string

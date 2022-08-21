@@ -100,4 +100,4 @@ Example:
 babdev_pagerfanta:
   default_view: twig
   default_twig_template: '@BabDevPagerfanta/twitter_bootstrap5.html.twig'
-```yaml
+```

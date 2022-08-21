@@ -17,13 +17,13 @@
 
       {% if currentGroup %}
         <div class='row'>
-          <div class="col-xl-10 col-lg-9 col-md-8 col-sm-6"> 
+          <div class="col-xl-10 col-lg-9 col-md-8 col-sm-6">
             <h2>{{ currentGroup.name }}</h2>
             <p class="fw-light">{{ currentGroup.description }}</p>
           </div>
           <div class='col text-sm-end'>
             <span class="d-none d-grid"
-              {{ stimulus_controller('svc--util-bundle--clipboard', { 
+              {{ stimulus_controller('svc--util-bundle--clipboard', {
                 'link': copyUrl
               } ) }}
             >
@@ -31,8 +31,8 @@
             </span>
 
             {% if enableVideoSort %}
-              <span 
-                {{ stimulus_controller('svc--video-bundle--sort', { 
+              <span
+                {{ stimulus_controller('svc--video-bundle--sort', {
                   'url': path('svc_video_list', {id: currentGroup.id})
                 } ) }}
               >
@@ -44,7 +44,7 @@
                     {% endfor %}
                   </select>
                 </div>
-              <span>
+              </span>
             {% endif %}
 
           </div>
@@ -67,11 +67,15 @@
 							{% elseif video.thumbnailUrl %}
 								<img src="{{ video.thumbnailUrl }}" class='card-img-top'/>
 							{% else %}
-								<img src="{{ asset('bundles/svcvideo/img/video_200.jpg') }}" class='card-img-top'/>
+								<img src="{{ asset('bundles/svcvideo/img/video_200.jpg') }}" alt="Video not found" class='card-img-top'/>
 							{% endif %}
-							<div class="card-body">
-								<h5 class="card-title">{{ video.title }}</h5>
+							<div class="card-body p-1">
+								<h5 class="card-title m-0">{{ video.title }}</h5>
 								<small class="card-subtitle mb-2 text-muted">{{ video.subTitle }}</small>
+								<br />
+								{% for tag in video.tags %}
+									<small><span class="badge rounded-pill bg-secondary text-decoration-none">{{ tag }}</span></small>
+								{% endfor %}
 							</div>
 							<div class="card-footer">
 								{{ video.likes }}
