@@ -260,7 +260,7 @@ class Video extends _VideoSuperclass
 
   public function setUploadDate(?\DateTimeInterface $uploadDate): self
   {
-    $this->uploadDate = \DateTime::createFromInterface($uploadDate) ;
+    $this->uploadDate = \DateTime::createFromInterface($uploadDate);
 
     return $this;
   }

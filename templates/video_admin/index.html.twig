@@ -30,7 +30,10 @@
       {% for video in videos %}
         <tr>
           <td>{{ video.title }}</td>
-          <td>{{ video.subTitle }}</td>
+          <td>
+            {{ video.subTitle }}
+            {{ include('@SvcVideo/video/_tags.html.twig') }}
+          </td>
           {% if enableShortNames | default(false) %}
             <td>{{ video.shortName }}</td>
           {% endif %}
@@ -59,7 +62,9 @@
                   </button>
                   <ul class="dropdown-menu">
                     <li><a class='dropdown-item'
-                           data-action="svc--util-bundle--mclipboard#copy1">{% trans %}without nav{% endtrans %}</a></li>
+                       {{ stimulus_action('svc--util-bundle--mclipboard', 'copy1') }}>
+                       {% trans %}without nav{% endtrans %}</a>
+                    </li>
                   </ul>
                 </div>
               </span>
@@ -76,7 +81,8 @@
 
   <div class="d-flex justify-content-between">
   	<span>
-			<a href="{{ path('svc_video_admin_new') }}" class='btn btn-sm btn-success'>{% trans %}Create new video{% endtrans %}</a>
+			<a href="{{ path('svc_video_admin_new') }}"
+         class='btn btn-sm btn-success'>{% trans %}Create new video{% endtrans %}</a>
     	<a href="{{ path('svc_video_all_stats') }}" class='btn btn-sm btn-info'>{% trans %}Statistics{% endtrans %}</a>
 	  </span>
     {% if haveToPaginate %}

@@ -73,9 +73,7 @@
 								<h5 class="card-title m-0">{{ video.title }}</h5>
 								<small class="card-subtitle mb-2 text-muted">{{ video.subTitle }}</small>
 								<br />
-								{% for tag in video.tags %}
-									<small><span class="badge rounded-pill bg-secondary text-decoration-none">{{ tag }}</span></small>
-								{% endfor %}
+								{{ include('@SvcVideo/video/_tags.html.twig') }}
 							</div>
 							<div class="card-footer">
 								{{ video.likes }}
