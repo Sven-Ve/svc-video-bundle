@@ -24,7 +24,13 @@ class VideoController extends AbstractController
   public const OBJ_TYPE_VIDEO = 1;
   public const OBJ_TYPE_VGROUP = 2;
 
-  public function __construct(private bool $enableLikes, private bool $enableGroups, private bool $enableShortNames, private bool $enableVideoSort, private string $homeRoute, private EntityManagerInterface $entityManager)
+  public function __construct(
+    private readonly bool $enableLikes,
+    private readonly bool $enableGroups,
+    private readonly bool $enableShortNames,
+    private readonly bool $enableVideoSort,
+    private readonly string $homeRoute,
+    private readonly EntityManagerInterface $entityManager)
   {
   }
 

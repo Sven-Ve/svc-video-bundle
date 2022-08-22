@@ -1,7 +1,6 @@
 <?php
 
 return array (
-  'Video watched' => 'Video angesehen',
   'Videos' => 'Videos',
   'Video overview' => 'Videoübersicht',
   'Title' => 'Titel',
@@ -67,11 +66,15 @@ return array (
   'Date desc' => 'Datum absteigend',
   'Video group statistics' => 'Videogruppen-Statistiken',
   'Statistics' => 'Statistiken',
-  '' => '',
-  '' => '',
-  '' => '',
-  '' => '',
-  '' => '',
-  '' => '',
+  'Create new tag' => 'Neues Tag anlegen',
+  'Tags index' => 'Tags-Übersicht',
+  'Used' => 'Benutzt',
+  '{count} videos use this tag.' => '{count, plural,
+        =0    {Kein Video benutzt dieses Tag.}
+        one   {Ein Video benutzt dieses Tag.}
+        other {# Videos benutzen dieses Tag.}
+    }',
+  'Edit Tag' => 'Tag bearbeiten',
+  'Remove this tag?' => 'Dieses Tag löschen?',
   '' => '',
 );

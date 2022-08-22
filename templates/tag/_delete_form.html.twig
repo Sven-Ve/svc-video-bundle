@@ -1,0 +1,16 @@
+{% trans_default_domain 'VideoBundle' %}
+<form method="post" action="{{ path('svc_tag_admin_delete', {'id': tag.id}) }}"
+  {{ stimulus_controller('svc--util-bundle--submit-confirm', {
+    title: 'Remove this tag?' | trans,
+    icon: 'warning',
+    text: '{count} videos use this tag.' | trans({'{count}' : tag.videos | length}),
+    confirmButtonText: 'Yes, remove it' | trans,
+    cancelButtonText: 'Cancel' | trans
+  }) }}
+  data-action="svc--util-bundle--submit-confirm#onSubmit"
+>
+    <input type="hidden" name="_method" value="post">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tag.id) }}">
+    <span class="float-end">&nbsp;&nbsp;</span>
+    <button class="btn btn-danger float-end">{% trans %}Delete{% endtrans %}</button>
+</form>

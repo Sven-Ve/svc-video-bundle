@@ -5,36 +5,29 @@ namespace Svc\VideoBundle\Controller;
 use Svc\VideoBundle\Service\VideoGroupHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 trait VideoShortCallTrait
 {
-  /**
-   * @Route("/hn/{id}", name="svc_video_short_runHideNav")
-   */
+  #[Route(path: '/hn/{id}', name: 'svc_video_short_runHideNav')]
   public function shortRunHideNav($id): Response
   {
     return $this->redirectToRoute('svc_video_run_hn', ['id' => $id], 303);
   }
 
-  /**
-   * @Route("/{id}", name="svc_video_short_run", requirements={"id"="\d+"})
-   */
+  #[Route(path: '/{id}', name: 'svc_video_short_run', requirements: ['id' => "\d+"])]
   public function shortRun($id): Response
   {
     return $this->redirectToRoute('svc_video_run', ['id' => $id], 303);
   }
 
-  /**
-   * @Route("/v/{id}", name="svc_video_short_run1")
-   */
+  #[Route(path: '/v/{id}', name: 'svc_video_short_run1')]
   public function shortRun1($id): Response
   {
     return $this->redirectToRoute('svc_video_run', ['id' => $id], 303);
   }
 
-  /**
-   * @Route("/g/{group}", name="svc_video_shortGroup")
-   */
+  #[Route(path: '/g/{group}', name: 'svc_video_shortGroup')]
   public function shortGroup($group, VideoGroupHelper $videoGroupHelper, Request $request): Response
   {
     $sort = $request->query->get('sort') ?? 0;

@@ -24,10 +24,10 @@ use Symfony\UX\Chartjs\Model\Chart;
 class VideoAdminController extends AbstractController
 {
   public function __construct(
-    private bool $enableShortNames,
-    private bool $enablePrivate,
-    private bool $enableGroups,
-    private bool $enablePagination
+    private readonly bool $enableShortNames,
+    private readonly bool $enablePrivate,
+    private readonly bool $enableGroups,
+    private readonly bool $enablePagination
   ) {
   }
 

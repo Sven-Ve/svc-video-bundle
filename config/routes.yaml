@@ -77,3 +77,19 @@ svc_video_group_delete:
 svc_video_group_stats:
   path: /admin/group/stats/{id}
   controller: Svc\VideoBundle\Controller\VideoGroupController::stats
+
+svc_tag_admin_index:
+  path: /admin/tags/
+  controller: Svc\VideoBundle\Controller\TagAdminController::index
+
+svc_tag_admin_edit:
+  path: /admin/tags/edit/{id}
+  controller: Svc\VideoBundle\Controller\TagAdminController::edit
+
+svc_tag_admin_delete:
+  path: /admin/tags/delete/{id}
+  controller: Svc\VideoBundle\Controller\TagAdminController::delete
+
+svc_tag_admin_new:
+  path: /admin/tags/new/
+  controller: Svc\VideoBundle\Controller\TagAdminController::new

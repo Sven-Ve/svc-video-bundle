@@ -1,0 +1,37 @@
+{% trans_default_domain 'VideoBundle' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Tags index{% endtrans %}{% endblock %}
+
+{% block body %}
+	<h1>
+		<i class="fa-solid fa-tags"></i>
+		{% trans %}Tags index{% endtrans %}</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{% trans %}Name{% endtrans %}</th>
+				<th>{% trans %}Used{% endtrans %}</th>
+				<th>{% trans %}Actions{% endtrans %}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for tag in tags %}
+				<tr>
+					<td>{{ tag.name }}</td>
+					<td>{{ tag.videos | length }}x</td>
+					<td>
+						<a href="{{ path('svc_tag_admin_edit', {'id': tag.id}) }}" class='btn btn-sm btn-secondary'>{% trans %}Edit{% endtrans %}</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="3">{% trans %}no records found{% endtrans %}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('svc_tag_admin_new') }}" class='btn btn-sm btn-success'>{% trans %}Create new tag{% endtrans %}</a>
+{% endblock %}

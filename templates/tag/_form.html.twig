@@ -1,0 +1,5 @@
+{% trans_default_domain 'VideoBundle' %}
+{{ form_start(form) }}
+  {{ form_widget(form) }}
+  <button class="btn btn-success float-end">{{ button_label|default('Save') | trans }}</button>
+{{ form_end(form) }}

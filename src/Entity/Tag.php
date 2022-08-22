@@ -15,6 +15,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Svc\VideoBundle\Repository\TagRepository;
 
+use function Symfony\Component\String\u;
+
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 class Tag implements \JsonSerializable, \Stringable
 {
@@ -31,7 +33,7 @@ class Tag implements \JsonSerializable, \Stringable
 
   public function __construct(?string $name = null)
   {
-    $this->name = $name;
+    $this->setName($name);
   }
 
   public function getId(): ?int
@@ -41,7 +43,7 @@ class Tag implements \JsonSerializable, \Stringable
 
   public function setName(string $name): void
   {
-    $this->name = $name;
+    $this->name = u($name)->lower();
   }
 
   public function getName(): ?string
