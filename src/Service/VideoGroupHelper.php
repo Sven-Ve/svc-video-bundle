@@ -13,7 +13,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class VideoGroupHelper
 {
-  public function __construct(private bool $enableShortNames, private VideoGroupRepository $videoGroupRep, private EntityManagerInterface $entityManager, private UrlGeneratorInterface $router)
+  public function __construct(
+    private readonly bool                   $enableShortNames,
+    private readonly VideoGroupRepository   $videoGroupRep,
+    private readonly EntityManagerInterface $entityManager,
+    private readonly UrlGeneratorInterface  $router)
   {
   }
 

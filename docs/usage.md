@@ -40,7 +40,7 @@ svc_video:
     # Enable private videos?
     enablePrivate:        true
 
-    # Enable video sort combox in video overview?
+    # Enable video sort combobox in video overview?
     enableVideoSort:      true
   
     # Enable pagination in video admin (needs babdev/pagerfanta-bundle)?

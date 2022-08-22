@@ -17,7 +17,7 @@ class LogDataProvider extends GeneralDataProvider
 
   private bool $isVGroupSourceIDsInitialized = false;
 
-  public function __construct(private VideoRepository $videoRep, private VideoGroupRepository $videoGroupRep)
+  public function __construct(private readonly VideoRepository $videoRep, private readonly VideoGroupRepository $videoGroupRep)
   {
   }
 
