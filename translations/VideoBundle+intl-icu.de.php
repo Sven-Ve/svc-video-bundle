@@ -1,6 +1,6 @@
 <?php
 
-return array (
+return [
   'Videos' => 'Videos',
   'Video overview' => 'Videoübersicht',
   'Title' => 'Titel',
@@ -76,5 +76,7 @@ return array (
     }',
   'Edit Tag' => 'Tag bearbeiten',
   'Remove this tag?' => 'Dieses Tag löschen?',
+  'A maximum of 4 tags are allowed' => 'Es sind maximal 4 Tags erlaubt',
+  'Tags' => 'Tags',
   '' => '',
-);
+];

@@ -4,6 +4,7 @@ namespace Svc\VideoBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Svc\VideoBundle\Entity\Tag;
+use Svc\VideoBundle\Exception\TaggingNotEnabledException;
 use Svc\VideoBundle\Form\TagType;
 use Svc\VideoBundle\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +13,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TagAdminController extends AbstractController
 {
+
+  /**
+   * @throws TaggingNotEnabledException
+   */
+  public function __construct(private bool $enableTagging)
+  {
+    if (!$this->enableTagging) {
+      throw new TaggingNotEnabledException();
+    }
+  }
+
   public function index(TagRepository $tagRepository): Response
   {
     return $this->render('@SvcVideo/tag/index.html.twig', [

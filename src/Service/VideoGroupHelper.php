@@ -14,10 +14,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class VideoGroupHelper
 {
   public function __construct(
-    private readonly bool                   $enableShortNames,
-    private readonly VideoGroupRepository   $videoGroupRep,
+    private readonly bool $enableShortNames,
+    private readonly VideoGroupRepository $videoGroupRep,
     private readonly EntityManagerInterface $entityManager,
-    private readonly UrlGeneratorInterface  $router)
+    private readonly UrlGeneratorInterface $router)
   {
   }
 

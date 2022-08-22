@@ -10,6 +10,7 @@ Create tables (run `bin/console doctrine:schema:update --force`) or create a mig
 // /assets/styles/app.sccs
 ...
 @import '~@svc/video-bundle/styles/_svc_video.scss';
+@import '@jcubic/tagger/tagger.css'; // for tagging, if you enable it
 ...
 ```
 
@@ -42,8 +43,11 @@ svc_video:
 
     # Enable video sort combobox in video overview?
     enableVideoSort:      true
-  
-    # Enable pagination in video admin (needs babdev/pagerfanta-bundle)?
+
+    # Enable tagging for videos (needs js library @jcubic/tagger)
+    enableTagging:        false
+
+  # Enable pagination in video admin (needs babdev/pagerfanta-bundle)?
     enablePagination:     false
 
     # Default route, for redirect after errors
@@ -86,18 +90,4 @@ $ bin/console svc_log:stat-aggregate
 Example for crontab:
 ```
 17 * * * * (cd <your_path>; bin/console svc_log:stat-aggregate) >/dev/null
-```
-
-## Pagination
-
-If you enabled pagination in /config/packages/svc_video.yaml, please define the css framework you use.
-See pagerfanta documentation (https://www.babdev.com/open-source/packages/pagerfantabundle/docs/3.x/views) 
-
-Example:
-
-```yaml
-# /config/packages/babdev_pagerfanta.yaml
-babdev_pagerfanta:
-  default_view: twig
-  default_twig_template: '@BabDevPagerfanta/twitter_bootstrap5.html.twig'
 ```

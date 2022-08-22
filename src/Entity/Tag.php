@@ -33,7 +33,9 @@ class Tag implements \JsonSerializable, \Stringable
 
   public function __construct(?string $name = null)
   {
-    $this->setName($name);
+    if ($name !== null) {
+      $this->setName($name);
+    }
   }
 
   public function getId(): ?int
@@ -43,7 +45,7 @@ class Tag implements \JsonSerializable, \Stringable
 
   public function setName(string $name): void
   {
-    $this->name = u($name)->lower();
+    $this->name = u($name)->lower()->truncate(50);
   }
 
   public function getName(): ?string

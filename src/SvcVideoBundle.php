@@ -24,6 +24,7 @@ class SvcVideoBundle extends AbstractBundle
         ->booleanNode('enablePrivate')->defaultTrue()->info('Enable private videos?')->end()
         ->booleanNode('enableVideoSort')->defaultTrue()->info('Enable video sort combobox in video overview?')->end()
         ->booleanNode('enablePagination')->defaultFalse()->info('Enable pagination in video admin (needs babdev/pagerfanta-bundle)?')->end()
+        ->booleanNode('enableTagging')->defaultFalse()->info('Enable tagging for videos (needs js library @jcubic/tagger)')->end()
         ->scalarNode('thumbnailDir')->defaultValue('%kernel.project_dir%/public/uploads')->cannotBeEmpty()->end()
         ->scalarNode('homeRoute')->defaultValue('svc_video_list')->info('Default route, for redirect after errors')->cannotBeEmpty()->end()
       ->end();
@@ -39,7 +40,8 @@ class SvcVideoBundle extends AbstractBundle
       ->arg(1, $config['enableGroups'])
       ->arg(2, $config['enableShortNames'])
       ->arg(3, $config['enableVideoSort'])
-      ->arg(4, $config['homeRoute']);
+      ->arg(4, $config['homeRoute'])
+      ->arg(5, $config['enableTagging']);
 
     $container->services()
       ->get('Svc\VideoBundle\Controller\VideoAdminController')
@@ -47,7 +49,8 @@ class SvcVideoBundle extends AbstractBundle
       ->arg(1, $config['enablePrivate'])
       ->arg(2, $config['enableGroups'])
       ->arg(3, $config['enablePagination'])
-    ;
+      ->arg(4, $config['enableTagging']);
+
 
     $container->services()
       ->get('Svc\VideoBundle\Service\VideoHelper')
@@ -63,5 +66,9 @@ class SvcVideoBundle extends AbstractBundle
     $container->services()
       ->get('Svc\VideoBundle\Service\VideoGroupHelper')
       ->arg(0, $config['enableShortNames']);
+
+    $container->services()
+      ->get('Svc\VideoBundle\Controller\TagAdminController')
+      ->arg(0, $config['enableTagging']);
   }
 }

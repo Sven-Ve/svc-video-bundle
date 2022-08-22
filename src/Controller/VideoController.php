@@ -30,6 +30,7 @@ class VideoController extends AbstractController
     private readonly bool $enableShortNames,
     private readonly bool $enableVideoSort,
     private readonly string $homeRoute,
+    private readonly bool $enableTagging,
     private readonly EntityManagerInterface $entityManager)
   {
   }
@@ -80,6 +81,7 @@ class VideoController extends AbstractController
       'sortOpts' => VideoRepository::SORT_FIELDS,
       'currentSort' => $sort,
       'copyUrl' => $videoGroupHelper->generateVideoGroupUrl($currentGroup, $sort),
+      'enableTagging' => $this->enableTagging
     ]);
   }
 

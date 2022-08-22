@@ -24,12 +24,6 @@ class VideoType extends AbstractType
         'required' => false,
       ]);
 
-    $builder
-      ->add('tags', TagInputType::class, [
-        'required' => false,
-        'help' => 'Max. 4 tags allowed',
-      ]);
-
     if ($options['enableGroups']) {
       $builder
         ->add('videoGroup', null, [
@@ -45,6 +39,14 @@ class VideoType extends AbstractType
           'attr' => ['pattern' => '[a-z0-9_\-]{4,8}', 'title' => 'Please use lowercase letters, numbers, minus and underscore only and between 4 and 8 chars'],
         ])
       ;
+    }
+
+    if ($options['enableTagging']) {
+      $builder
+        ->add('tags', TagInputType::class, [
+          'required' => false,
+          'help' => 'A maximum of 4 tags are allowed',
+        ]);
     }
 
     $builder
@@ -111,6 +113,7 @@ class VideoType extends AbstractType
       'enableShortNames' => false,
       'enablePrivate' => true,
       'enableGroups' => true,
+      'enableTagging' => false,
     ]);
   }
 }

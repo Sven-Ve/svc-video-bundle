@@ -1,3 +1,5 @@
-{% for tag in video.tags %}
-  <small><span class="badge rounded-pill bg-secondary text-decoration-none">{{ tag }}</span></small>
-{% endfor %}
+{% if enableTagging | default(false) %}
+  {% for tag in video.tags %}
+    <small><span class="badge rounded-pill bg-secondary text-decoration-none">{{ tag }}</span></small>
+  {% endfor %}
+{% endif %}

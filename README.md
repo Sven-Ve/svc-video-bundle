@@ -15,3 +15,4 @@ Please use version 3.x for older Symfony installations.<br/>
 
 * [installation](docs/installation.md)
 * [Usage](docs/usage.md)
+* [Options](docs/options.md)

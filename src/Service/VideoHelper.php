@@ -17,15 +17,14 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class VideoHelper
 {
   public function __construct(
-    private readonly string                 $thumbnailDir,
-    private readonly bool                   $enablePrivate,
-    private readonly bool                   $enableShortNames,
-    private readonly VideoRepository        $videoRep,
+    private readonly string $thumbnailDir,
+    private readonly bool $enablePrivate,
+    private readonly bool $enableShortNames,
+    private readonly VideoRepository $videoRep,
     private readonly EntityManagerInterface $entityManager,
-    private readonly RequestStack           $requestStack,
+    private readonly RequestStack $requestStack,
     private readonly UrlGeneratorInterface $router
-  )
-  {
+  ) {
   }
 
   /**
@@ -249,7 +248,7 @@ class VideoHelper
   /**
    * check if password is correct.
    *
-   * @param string $plainPassword the plain text password or '' if session password should be used
+   * @param string $plainPassword     the plain text password or '' if session password should be used
    * @param string $encryptedPassword then encrypted password
    *
    * @return bool true if passwords match

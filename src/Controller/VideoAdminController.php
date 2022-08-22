@@ -27,7 +27,8 @@ class VideoAdminController extends AbstractController
     private readonly bool $enableShortNames,
     private readonly bool $enablePrivate,
     private readonly bool $enableGroups,
-    private readonly bool $enablePagination
+    private readonly bool $enablePagination,
+    private readonly bool $enableTagging,
   ) {
   }
 
@@ -50,6 +51,7 @@ class VideoAdminController extends AbstractController
       'videos' => $videos,
       'enableShortNames' => $this->enableShortNames,
       'haveToPaginate' => $haveToPaginate,
+      'enableTagging' => $this->enableTagging
     ]);
   }
 
@@ -92,7 +94,12 @@ class VideoAdminController extends AbstractController
   {
     $video->setPlainPassword($videoHelper->getDecrypedPassword($video));
 
-    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate, 'enableGroups' => $this->enableGroups]);
+    $form = $this->createForm(VideoType::class, $video, [
+      'enableShortNames' => $this->enableShortNames,
+      'enablePrivate' => $this->enablePrivate,
+      'enableGroups' => $this->enableGroups,
+      'enableTagging' => $this->enableTagging,
+    ]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
