@@ -17,7 +17,7 @@
         </ol>
       </nav>
     {% endif %}
-    
+
     <h2>{{ video.title }}</h2>
     <p class="fw-light">{{ video.subTitle }}</p>
 
@@ -29,34 +29,36 @@
       {% endif %}
     </div>
 
-    <small>
-      {% if enableLikes %}
-        {% if liked is defined and liked %}
-          <i class="fas fa-heart like-liked"></i> {{ video.likes }}
-        {% else %}
-          <span data-controller='svc--like-bundle--like' data-svc--like-bundle--like-url-value='{{ path("svc_video_inc_likes", {id: video.id}) }}'>
-            <i class="fas fa-heart like-not-liked" data-action="click->svc--like-bundle--like#inc"></i>
-            <span data-svc--like-bundle--like-target="counter">{{ video.likes }}</span>
-          </span> 
+    <div class="d-flex justify-content-between">
+      <small>
+        {% if enableLikes %}
+          {% if liked is defined and liked %}
+            <i class="fas fa-heart like-liked"></i> {{ video.likes }}
+          {% else %}
+            <span data-controller='svc--like-bundle--like' data-svc--like-bundle--like-url-value='{{ path("svc_video_inc_likes", {id: video.id}) }}'>
+              <i class="fas fa-heart like-not-liked" data-action="click->svc--like-bundle--like#inc"></i>
+              <span data-svc--like-bundle--like-target="counter">{{ video.likes }}</span>
+            </span>
+          {% endif %}
+        |
         {% endif %}
-      | 
-      {% endif %}
-      <span title='{% trans %}Video watched{% endtrans %}'><i class="fas fa-eye"></i> {{ video.calls }}</span> | 
-      <span class="d-none"
-        {{ stimulus_controller('svc--util-bundle--clipboard', { 
-          'link': copyUrl
-        } ) }}
-      >
-        <a class='justify-content-end' title='{% trans %}Copy link to clipboard{% endtrans %}' data-action="svc--util-bundle--clipboard#copy">
-          {% trans %}Copy link{% endtrans %}
-        </a>
-      </span>
-    </small>
+        <span title='{% trans %}Video watched{% endtrans %}'><i class="fas fa-eye"></i> {{ video.calls }}</span> |
+        <span class="d-none"
+          {{ stimulus_controller('svc--util-bundle--clipboard', {
+            'link': copyUrl
+          } ) }}
+        >
+          <a class='justify-content-end' title='{% trans %}Copy link to clipboard{% endtrans %}' data-action="svc--util-bundle--clipboard#copy">
+            {% trans %}Copy link{% endtrans %}
+          </a>
+        </span>
+      </small>
+      <div>
+        {{ include('@SvcVideo/video/_tags.html.twig') }}
+      </div>
+    </div>
 
-    <br/>
     {{ video.description | raw }}
-
-
 
   </div>
 {% endblock %}

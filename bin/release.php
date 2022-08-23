@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '4.1.0';
-$message = 'added pagination for video admin';
+$version = '4.2.0';
+$message = 'added tagging';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

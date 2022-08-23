@@ -129,6 +129,7 @@ class VideoController extends AbstractController
       'hideNav' => $hideNav,
       'enableGroups' => $this->enableGroups,
       'copyUrl' => $videoHelper->generateVideoUrl($video, $currentRoute),
+      'enableTagging' => $this->enableTagging,
     ]);
   }
 

@@ -260,3 +260,8 @@
 ## Version 4.1.0
 *Tue, 16 Aug 2022 20:01:47 +0000*
 - added pagination for video admin
+
+
+## Version 4.2.0
+*Tue, 23 Aug 2022 18:21:39 +0000*
+- added tagging

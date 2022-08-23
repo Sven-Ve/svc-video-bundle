@@ -1,5 +1,6 @@
 {% if enableTagging | default(false) %}
   {% for tag in video.tags %}
-    <small><span class="badge rounded-pill bg-secondary text-decoration-none">{{ tag }}</span></small>
+    <small><span class="badge rounded-pill bg-secondary text-decoration-none">
+        <i class="fa fa-tag"></i> {{ tag }}</span></small>
   {% endfor %}
 {% endif %}
