@@ -38,9 +38,16 @@ class VideoController extends AbstractController
   /**
    * list videos.
    */
-  public function list(VideoHelper $videoHelper, VideoGroupHelper $videoGroupHelper, Request $request, EventLog $eventLog, ?int $id = null): Response
+  public function list(
+    VideoHelper $videoHelper,
+    VideoGroupHelper $videoGroupHelper,
+    VideoRepository $videoRep,
+    Request $request,
+    EventLog $eventLog,
+    ?int $id = null): Response
   {
     $sort = $request->query->get('sort') ?? '0';
+    $query = $request->query->get('q');
 
     $hideNav = false;
     $hideGroups = false;
@@ -70,8 +77,15 @@ class VideoController extends AbstractController
 
     $eventLog->log($currentGroup ? $currentGroup->getId() : 0, self::OBJ_TYPE_VGROUP);
 
+    if ($id === null and $query!=null) {
+      $videos=$videoRep->findBySearchQuery($query);
+    } else {
+      $videos = $videoHelper->getVideoByGroup($id, $sort);
+    }
+
+
     return $this->render('@SvcVideo/video/list.html.twig', [
-      'videos' => $videoHelper->getVideoByGroup($id, $sort),
+      'videos' => $videos,
       'enableLikes' => $this->enableLikes,
       'groups' => $groups,
       'currentGroup' => $currentGroup,
@@ -81,7 +95,8 @@ class VideoController extends AbstractController
       'sortOpts' => VideoRepository::SORT_FIELDS,
       'currentSort' => $sort,
       'copyUrl' => $videoGroupHelper->generateVideoGroupUrl($currentGroup, $sort),
-      'enableTagging' => $this->enableTagging
+      'enableTagging' => $this->enableTagging,
+      'q' => $query
     ]);
   }
 

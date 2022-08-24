@@ -6,6 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Svc\VideoBundle\Entity\Video;
+use function Symfony\Component\String\u;
 
 /**
  * @method Video|null find($id, $lockMode = null, $lockVersion = null)
@@ -41,7 +42,7 @@ class VideoRepository extends ServiceEntityRepository
       ->orderBy('v.id', 'DESC');
   }
 
-  public function videoStatsByGroup()
+  public function videoStatsByGroup(): array
   {
     return $this->createQueryBuilder('v')
       ->select('vg.name, vg.description, sum(v.likes) as likes, sum(v.calls) as calls, count(v.id) as cnt')
@@ -50,5 +51,45 @@ class VideoRepository extends ServiceEntityRepository
       ->orderBy('vg.name', 'ASC')
       ->getQuery()
       ->getResult();
+  }
+
+  /**
+   * @return Video[]
+   */
+  public function findBySearchQuery(string $query, int $limit=10): array {
+    $searchTerms = $this->extractSearchTerms($query);
+
+    if (0 === \count($searchTerms)) {
+      return [];
+    }
+
+    $queryBuilder = $this->createQueryBuilder('v');
+
+    foreach ($searchTerms as $key => $term) {
+      $queryBuilder
+        ->orWhere('v.title LIKE :v_'.$key)
+        ->orWhere('v.description LIKE :v_'.$key)
+        ->orWhere('v.subTitle LIKE :v_'.$key)
+        ->setParameter('v_'.$key, '%'.$term.'%')
+      ;
+    }
+
+    return $queryBuilder
+      ->andWhere('v.hideOnHomePage=false')
+      ->orderBy('v.id', 'DESC')
+      ->setMaxResults($limit)
+      ->getQuery()
+      ->getResult();
+  }
+
+  private function extractSearchTerms(string $searchQuery): array
+  {
+    $searchQuery = u($searchQuery)->replaceMatches('/[[:space:]]+/', ' ')->trim();
+    $terms = array_unique($searchQuery->split(' '));
+
+    // ignore the search terms that are too short
+    return array_filter($terms, static function ($term) {
+      return 2 <= $term->length();
+    });
   }
 }

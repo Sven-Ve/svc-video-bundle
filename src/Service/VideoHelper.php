@@ -179,7 +179,7 @@ class VideoHelper
    *
    * @param string|null $msg by reference: give the error message back
    *
-   * @return bool true = successfull
+   * @return bool true = successfully
    */
   public function createThumbnailDir(?string &$msg): bool
   {
