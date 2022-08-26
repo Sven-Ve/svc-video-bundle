@@ -3,6 +3,8 @@
 namespace Svc\VideoBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Svc\VideoBundle\Entity\Video;
@@ -53,36 +55,56 @@ class VideoRepository extends ServiceEntityRepository
       ->getResult();
   }
 
+  private static function getCriteriaHideOnHomePage(): Criteria
+  {
+    return Criteria::create()
+      ->andWhere(Criteria::expr()->eq('hideOnHomePage', false));
+  }
+
+  private function qbSearch(string $query): ?QueryBuilder
+  {
+    $queryBuilder = $this->createQueryBuilder('v')
+      ->leftJoin('v.tags', 't');
+
+    $searchTerms = self::extractSearchTerms($query);
+    if ( \count($searchTerms)>0) {
+
+      foreach ($searchTerms as $key => $term) {
+        $queryBuilder
+          ->orWhere('v.title LIKE :v_' . $key)
+          ->orWhere('v.description LIKE :v_' . $key)
+          ->orWhere('v.subTitle LIKE :v_' . $key)
+//          ->orWhere(':v_' . $key .' MEMBER OF v.tags')
+          ->setParameter('v_' . $key, '%' . $term . '%');
+      }
+    }
+    return $queryBuilder;
+  }
+
   /**
    * @return Video[]
+   * @throws QueryException
    */
-  public function findBySearchQuery(string $query, int $limit=10): array {
-    $searchTerms = $this->extractSearchTerms($query);
-
-    if (0 === \count($searchTerms)) {
-      return [];
-    }
-
-    $queryBuilder = $this->createQueryBuilder('v');
-
-    foreach ($searchTerms as $key => $term) {
-      $queryBuilder
-        ->orWhere('v.title LIKE :v_'.$key)
-        ->orWhere('v.description LIKE :v_'.$key)
-        ->orWhere('v.subTitle LIKE :v_'.$key)
-        ->setParameter('v_'.$key, '%'.$term.'%')
-      ;
-    }
+  public function findBySearchQuery(string $query, int $limit = 10): array
+  {
+    $queryBuilder = $this->qbSearch($query);
 
     return $queryBuilder
-      ->andWhere('v.hideOnHomePage=false')
+      ->addCriteria(self::getCriteriaHideOnHomePage())
       ->orderBy('v.id', 'DESC')
       ->setMaxResults($limit)
       ->getQuery()
       ->getResult();
   }
 
-  private function extractSearchTerms(string $searchQuery): array
+  public function qbFindBySearchQueryAdmin(string $query): QueryBuilder {
+    $queryBuilder = $this->qbSearch($query);
+
+    return $queryBuilder
+      ->orderBy('v.id', 'DESC');
+  }
+
+  private static function extractSearchTerms(string $searchQuery): array
   {
     $searchQuery = u($searchQuery)->replaceMatches('/[[:space:]]+/', ' ')->trim();
     $terms = array_unique($searchQuery->split(' '));

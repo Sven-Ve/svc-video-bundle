@@ -52,13 +52,7 @@
       {% else %}
 				<div class="d-flex justify-content-between">
         	<h2>{% trans %}All Videos{% endtrans %}</h2>
-					<form action="{{ path('svc_video_list') }}">
-						<div class="input-group input-group-sm mb-3">
-							<span class="input-group-text" id="inputGroup-sizing-sm"><i class="fa-solid fa-magnifying-glass"></i></span>
-							<input type="text" class="form-control" aria-label="{% trans %}Search videos{% endtrans %}"
-										 name="q" value="{{ q }}" placeholder="{% trans %}Search videos{% endtrans %}">
-						</div>
-					</form>
+					{{ include('@SvcVideo/video/_search.html.twig') }}
 				</div>
       {% endif %}
 

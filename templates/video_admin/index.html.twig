@@ -6,10 +6,13 @@
 {% endblock %}
 
 {% block body %}
-  <h1>
-    <i class="fas fa-video"></i>
-    {% trans %}Video overview{% endtrans %}
-  </h1>
+  <div class="d-flex justify-content-between">
+    <h1>
+      <i class="fas fa-video"></i>
+      {% trans %}Video overview{% endtrans %}
+    </h1>
+    {{ include('@SvcVideo/video_admin/_search.html.twig') }}
+  </div>
 
   <div class='table-responsive'>
     <table class="table table-hover">

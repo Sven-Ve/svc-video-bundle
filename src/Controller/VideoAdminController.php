@@ -35,9 +35,14 @@ class VideoAdminController extends AbstractController
   public function index(VideoRepository $videoRepository, VideoGroupHelper $videoGroupHelper, Request $request): Response
   {
     $videoGroupHelper->initDefaultVideoGroup();
+    $query = $request->query->get('q');
 
     if ($this->enablePagination) {
-      $queryBuilder = $videoRepository->cbAllVideos();
+      if ($query) {
+        $queryBuilder=$videoRepository->qbFindBySearchQueryAdmin($query);
+      } else {
+        $queryBuilder = $videoRepository->cbAllVideos();
+      }
       $videos = new Pagerfanta(new QueryAdapter($queryBuilder));
       $videos->setMaxPerPage(15);
       $videos->setCurrentPage($request->query->get('page', 1));
@@ -51,7 +56,8 @@ class VideoAdminController extends AbstractController
       'videos' => $videos,
       'enableShortNames' => $this->enableShortNames,
       'haveToPaginate' => $haveToPaginate,
-      'enableTagging' => $this->enableTagging
+      'enableTagging' => $this->enableTagging,
+      'q' => $query
     ]);
   }
 
@@ -63,7 +69,12 @@ class VideoAdminController extends AbstractController
     $video = new Video();
     $video->setVideoGroup($videoGroupHelper->getDefaultVideoGroup());
     $video->setUploadDate(new DateTime());
-    $form = $this->createForm(VideoType::class, $video, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate, 'enableGroups' => $this->enableGroups]);
+    $form = $this->createForm(VideoType::class, $video, [
+      'enableShortNames' => $this->enableShortNames,
+      'enablePrivate' => $this->enablePrivate,
+      'enableGroups' => $this->enableGroups,
+      'enableTagging' => $this->enableTagging,
+    ]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
