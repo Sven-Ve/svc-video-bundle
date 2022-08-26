@@ -22,4 +22,19 @@ class TagRepository extends ServiceEntityRepository
 
     return json_encode($tags);
   }
+
+  /**
+   * @param array $searchTerms
+   * @return Tag[]
+   */
+  public function getTagsBySearchQuery(array $searchTerms): array {
+    $tags = [];
+    foreach ($searchTerms as $term) {
+      $tag = $this->findOneBy(['name' => $term]);
+      if ($tag) {
+        $tags[] = $tag;
+      }
+    }
+    return $tags;
+  }
 }

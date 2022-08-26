@@ -33,7 +33,7 @@ class VideoRepository extends ServiceEntityRepository
     self::SORT_BY_DATE => ['t' => 'Date', 'f' => 'uploadDate', 'd' => 'asc'],
   ];
 
-  public function __construct(ManagerRegistry $registry)
+  public function __construct(ManagerRegistry $registry, private readonly TagRepository $tagRep)
   {
     parent::__construct($registry, Video::class);
   }
@@ -67,7 +67,7 @@ class VideoRepository extends ServiceEntityRepository
       ->leftJoin('v.tags', 't');
 
     $searchTerms = self::extractSearchTerms($query);
-    if ( \count($searchTerms)>0) {
+    if (\count($searchTerms) > 0) {
 
       foreach ($searchTerms as $key => $term) {
         $queryBuilder
@@ -77,7 +77,14 @@ class VideoRepository extends ServiceEntityRepository
 //          ->orWhere(':v_' . $key .' MEMBER OF v.tags')
           ->setParameter('v_' . $key, '%' . $term . '%');
       }
+
+      foreach ($this->tagRep->getTagsBySearchQuery($searchTerms) as $key => $tag) {
+        $queryBuilder
+          ->orWhere(':t_' . $key . ' MEMBER OF v.tags')
+          ->setParameter('t_' . $key, $tag);
+      }
     }
+
     return $queryBuilder;
   }
 
@@ -97,7 +104,8 @@ class VideoRepository extends ServiceEntityRepository
       ->getResult();
   }
 
-  public function qbFindBySearchQueryAdmin(string $query): QueryBuilder {
+  public function qbFindBySearchQueryAdmin(string $query): QueryBuilder
+  {
     $queryBuilder = $this->qbSearch($query);
 
     return $queryBuilder
