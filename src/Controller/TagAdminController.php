@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TagAdminController extends AbstractController
 {
-
   /**
    * @throws TaggingNotEnabledException
    */

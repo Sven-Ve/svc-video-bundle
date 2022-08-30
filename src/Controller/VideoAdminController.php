@@ -39,7 +39,7 @@ class VideoAdminController extends AbstractController
 
     if ($this->enablePagination) {
       if ($query) {
-        $queryBuilder=$videoRepository->qbFindBySearchQueryAdmin($query);
+        $queryBuilder = $videoRepository->qbFindBySearchQueryAdmin($query);
       } else {
         $queryBuilder = $videoRepository->cbAllVideos();
       }
@@ -57,7 +57,7 @@ class VideoAdminController extends AbstractController
       'enableShortNames' => $this->enableShortNames,
       'haveToPaginate' => $haveToPaginate,
       'enableTagging' => $this->enableTagging,
-      'q' => $query
+      'q' => $query,
     ]);
   }
 

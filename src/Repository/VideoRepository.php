@@ -8,6 +8,7 @@ use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Svc\VideoBundle\Entity\Video;
+
 use function Symfony\Component\String\u;
 
 /**
@@ -61,20 +62,18 @@ class VideoRepository extends ServiceEntityRepository
       ->andWhere(Criteria::expr()->eq('hideOnHomePage', false));
   }
 
-  private function qbSearch(string $query): ?QueryBuilder
+  private function qbSearch(string $query): QueryBuilder
   {
     $queryBuilder = $this->createQueryBuilder('v')
       ->leftJoin('v.tags', 't');
 
     $searchTerms = self::extractSearchTerms($query);
     if (\count($searchTerms) > 0) {
-
       foreach ($searchTerms as $key => $term) {
         $queryBuilder
           ->orWhere('v.title LIKE :v_' . $key)
           ->orWhere('v.description LIKE :v_' . $key)
           ->orWhere('v.subTitle LIKE :v_' . $key)
-//          ->orWhere(':v_' . $key .' MEMBER OF v.tags')
           ->setParameter('v_' . $key, '%' . $term . '%');
       }
 
@@ -90,6 +89,7 @@ class VideoRepository extends ServiceEntityRepository
 
   /**
    * @return Video[]
+   *
    * @throws QueryException
    */
   public function findBySearchQuery(string $query, int $limit = 10): array

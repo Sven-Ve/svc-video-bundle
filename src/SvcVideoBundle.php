@@ -51,7 +51,6 @@ class SvcVideoBundle extends AbstractBundle
       ->arg(3, $config['enablePagination'])
       ->arg(4, $config['enableTagging']);
 
-
     $container->services()
       ->get('Svc\VideoBundle\Service\VideoHelper')
       ->arg(0, $config['thumbnailDir'])

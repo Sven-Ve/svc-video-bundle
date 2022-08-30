@@ -24,10 +24,10 @@ class TagRepository extends ServiceEntityRepository
   }
 
   /**
-   * @param array $searchTerms
    * @return Tag[]
    */
-  public function getTagsBySearchQuery(array $searchTerms): array {
+  public function getTagsBySearchQuery(array $searchTerms): array
+  {
     $tags = [];
     foreach ($searchTerms as $term) {
       $tag = $this->findOneBy(['name' => $term]);
@@ -35,6 +35,7 @@ class TagRepository extends ServiceEntityRepository
         $tags[] = $tag;
       }
     }
+
     return $tags;
   }
 }

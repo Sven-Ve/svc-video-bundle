@@ -77,12 +77,11 @@ class VideoController extends AbstractController
 
     $eventLog->log($currentGroup ? $currentGroup->getId() : 0, self::OBJ_TYPE_VGROUP);
 
-    if ($id === null and $query!=null) {
-      $videos=$videoRep->findBySearchQuery($query);
+    if ($id === null and $query != null) {
+      $videos = $videoRep->findBySearchQuery($query);
     } else {
       $videos = $videoHelper->getVideoByGroup($id, $sort);
     }
-
 
     return $this->render('@SvcVideo/video/list.html.twig', [
       'videos' => $videos,
@@ -96,7 +95,7 @@ class VideoController extends AbstractController
       'currentSort' => $sort,
       'copyUrl' => $videoGroupHelper->generateVideoGroupUrl($currentGroup, $sort),
       'enableTagging' => $this->enableTagging,
-      'q' => $query
+      'q' => $query,
     ]);
   }
 
