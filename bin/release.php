@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '4.2.0';
-$message = 'added tagging';
+$version = '4.2.1';
+$message = 'fixes video group error (wrong form type)';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

@@ -265,3 +265,8 @@
 ## Version 4.2.0
 *Tue, 23 Aug 2022 18:21:39 +0000*
 - added tagging
+
+
+## Version 4.2.1
+*Sat, 17 Sep 2022 19:45:10 +0000*
+- fixes video group error (wrong form type)

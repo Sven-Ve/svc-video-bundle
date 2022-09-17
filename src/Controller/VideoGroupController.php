@@ -5,7 +5,7 @@ namespace Svc\VideoBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Svc\LogBundle\Service\EventLog;
 use Svc\VideoBundle\Entity\VideoGroup;
-use Svc\VideoBundle\Form\TagType;
+use Svc\VideoBundle\Form\VideoGroupType;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Svc\VideoBundle\Service\VideoGroupHelper;
 use Svc\VideoBundle\Service\VideoHelper;
@@ -31,7 +31,7 @@ class VideoGroupController extends AbstractController
   public function new(Request $request, VideoHelper $videoHelper, EntityManagerInterface $entityManager): Response
   {
     $videoGroup = new VideoGroup();
-    $form = $this->createForm(TagType::class, $videoGroup, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
+    $form = $this->createForm(VideoGroupType::class, $videoGroup, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
@@ -56,7 +56,7 @@ class VideoGroupController extends AbstractController
   {
     $videoGroup->setPlainPassword($videoHelper->getDecrypedPassword($videoGroup));
 
-    $form = $this->createForm(TagType::class, $videoGroup, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
+    $form = $this->createForm(VideoGroupType::class, $videoGroup, ['enableShortNames' => $this->enableShortNames, 'enablePrivate' => $this->enablePrivate]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
