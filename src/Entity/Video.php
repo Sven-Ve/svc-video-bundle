@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Svc\UtilBundle\Service\EnvInfoHelper;
+use Svc\VideoBundle\Enum\SourceType;
 use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,17 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['title'], message: 'There is already a video with this title')]
 class Video extends _VideoSuperclass
 {
-  public const SOURCE_YOUTUBE = 0;
-  public const SOURCE_VIMEO = 1;
-  public const SOURCES_LIST = [
-    'Youtube' => Video::SOURCE_YOUTUBE,
-    'Vimeo' => Video::SOURCE_VIMEO,
-  ];
-  private const SOURCES_TEXT = [
-    Video::SOURCE_YOUTUBE => 'Youtube',
-    Video::SOURCE_VIMEO => 'Vimeo',
-  ];
-
   #[ORM\Id]
   #[ORM\GeneratedValue]
   #[ORM\Column()]
@@ -41,8 +31,8 @@ class Video extends _VideoSuperclass
   #[Assert\NotBlank]
   private ?string $sourceID = null;
 
-  #[ORM\Column(type: 'smallint')]
-  private int $sourceType = Video::SOURCE_VIMEO;
+  #[ORM\Column(type: 'smallint', enumType: SourceType::class)]
+  private SourceType $sourceType = SourceType::VIMEO;
 
   #[ORM\Column(length: 20)]
   #[Assert\NotBlank]
@@ -124,12 +114,12 @@ class Video extends _VideoSuperclass
     return $this;
   }
 
-  public function getSourceType(): ?int
+  public function getSourceType(): SourceType
   {
     return $this->sourceType;
   }
 
-  public function setSourceType(int $sourceType): self
+  public function setSourceType(SourceType $sourceType): self
   {
     $this->sourceType = $sourceType;
 
@@ -138,11 +128,7 @@ class Video extends _VideoSuperclass
 
   public function getSourceText(): string
   {
-    if ($this->sourceType !== null and array_key_exists($this->sourceType, Video::SOURCES_TEXT)) {
-      return Video::SOURCES_TEXT[$this->sourceType];
-    }
-
-    return 'n/a';
+    return $this->sourceType->label();
   }
 
   public function getRatio(): ?string

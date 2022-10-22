@@ -3,10 +3,12 @@
 namespace Svc\VideoBundle\Form;
 
 use Svc\VideoBundle\Entity\Video;
+use Svc\VideoBundle\Enum\SourceType;
 use Svc\VideoBundle\Form\Type\TagInputType;
 use Svc\VideoBundle\Service\VideoHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -92,8 +94,11 @@ class VideoType extends AbstractType
       ->add('sourceID', null, [
         'label' => 'Source ID',
       ])
-      ->add('sourceType', ChoiceType::class, [
-        'choices' => Video::SOURCES_LIST,
+      ->add('sourceType', EnumType::class, [
+        'class' => SourceType::class,
+        'choice_label' => static function (SourceType $choice): string {
+          return $choice->label();
+        },
         'label' => 'Source',
       ])
       ->add('ratio', ChoiceType::class, [

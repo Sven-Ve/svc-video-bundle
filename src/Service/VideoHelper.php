@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Svc\VideoBundle\Entity\_VideoSuperclass;
 use Svc\VideoBundle\Entity\Video;
+use Svc\VideoBundle\Enum\SourceType;
 use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -49,7 +50,7 @@ class VideoHelper
    */
   public function getVideoMetadata(Video &$video): bool
   {
-    if ($video->getSourceType() == Video::SOURCE_VIMEO) {
+    if ($video->getSourceType() == SourceType::VIMEO) {
       // see https://gist.github.com/anjan011/3b6d13a9f7a8642ecc4c
       try {
         $apiData = unserialize(file_get_contents('https://vimeo.com/api/v2/video/' . $video->getSourceID() . '.php'));
@@ -64,7 +65,7 @@ class VideoHelper
       } catch (Exception) {
         return false;
       }
-    } elseif ($video->getSourceType() == Video::SOURCE_YOUTUBE) {
+    } elseif ($video->getSourceType() == SourceType::YOUTUBE) {
       $video->setThumbnailUrl('https://img.youtube.com/vi/' . $video->getSourceID() . '/mqdefault.jpg');
 
       return true;
@@ -129,7 +130,7 @@ class VideoHelper
       }
     }
 
-    if ($video->getSourceType() == Video::SOURCE_VIMEO) {
+    if ($video->getSourceType() == SourceType::VIMEO) {
       try {
         $imgName = 'thumb_' . $video->getId() . '-' . uniqid() . '.webp';
         $imgPath = $this->thumbnailDir . '/' . $imgName;
@@ -138,7 +139,7 @@ class VideoHelper
         return $imgName;
       } catch (Exception) {
       }
-    } elseif ($video->getSourceType() == Video::SOURCE_YOUTUBE) {
+    } elseif ($video->getSourceType() == SourceType::YOUTUBE) {
       try {
         $imgName = 'thumb_' . $video->getId() . '-' . uniqid() . '.jpg';
         $imgPath = $this->thumbnailDir . '/' . $imgName;
