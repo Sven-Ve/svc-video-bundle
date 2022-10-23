@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\LogBundle\Service\EventLog;
 use Svc\VideoBundle\Entity\Video;
+use Svc\VideoBundle\Enum\ObjectType;
 use Svc\VideoBundle\Form\EnterPasswordType;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Svc\VideoBundle\Repository\VideoRepository;
@@ -21,9 +22,6 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 class VideoController extends AbstractController
 {
-  public const OBJ_TYPE_VIDEO = 1;
-  public const OBJ_TYPE_VGROUP = 2;
-
   public function __construct(
     private readonly bool $enableLikes,
     private readonly bool $enableGroups,
@@ -67,7 +65,7 @@ class VideoController extends AbstractController
 
         if ($currentGroup->getIsPrivate()) {
           if (!$videoHelper->checkPassword('', $currentGroup->getPassword())) {
-            return $this->redirectToRoute('svc_video_pwd', ['id' => $currentGroup->getId(), 'ot' => self::OBJ_TYPE_VGROUP, 'path' => $request->attributes->get('_route')]);
+            return $this->redirectToRoute('svc_video_pwd', ['id' => $currentGroup->getId(), 'ot' => ObjectType::VGROUP->value, 'path' => $request->attributes->get('_route')]);
           }
         }
       }
@@ -75,7 +73,7 @@ class VideoController extends AbstractController
       $hideGroups = true;
     }
 
-    $eventLog->log($currentGroup ? $currentGroup->getId() : 0, self::OBJ_TYPE_VGROUP);
+    $eventLog->log($currentGroup ? $currentGroup->getId() : 0, ObjectType::VGROUP->value);
 
     if ($id === null and $query != null) {
       $videos = $videoRep->findBySearchQuery($query);
@@ -123,7 +121,7 @@ class VideoController extends AbstractController
     $currentRoute = $request->attributes->get('_route');
     if ($video->getIsPrivate() and $video->getPassword()) {
       if (!$videoHelper->checkPassword('', $video->getPassword())) {
-        return $this->redirectToRoute('svc_video_pwd', ['id' => $video->getId(), 'ot' => self::OBJ_TYPE_VIDEO, 'path' => $currentRoute]);
+        return $this->redirectToRoute('svc_video_pwd', ['id' => $video->getId(), 'ot' => ObjectType::VIDEO->value, 'path' => $currentRoute]);
       }
     }
 
@@ -134,7 +132,7 @@ class VideoController extends AbstractController
       $hideNav = $video->getVideoGroup()->getHideNav();
     }
 
-    $eventLog->log($video->getId(), self::OBJ_TYPE_VIDEO);
+    $eventLog->log($video->getId(), ObjectType::VIDEO->value);
 
     return $this->render('@SvcVideo/video/run.html.twig', [
       'video' => $video,
@@ -174,14 +172,14 @@ class VideoController extends AbstractController
   /**
    * enter the password for a private video.
    */
-  public function enterPwd(int $id, Request $request, VideoHelper $videoHelper, VideoGroupRepository $videoGroupRep, VideoRepository $videoRep, EventLog $eventLog, ?int $ot = 1)
+  public function enterPwd(int $id, Request $request, VideoHelper $videoHelper, VideoGroupRepository $videoGroupRep, VideoRepository $videoRep, EventLog $eventLog, ?ObjectType $ot = ObjectType::VIDEO)
   {
-    $ot ??= self::OBJ_TYPE_VIDEO;
+    $ot ??= ObjectType::VIDEO;
     $form = $this->createForm(EnterPasswordType::class);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      if ($ot == self::OBJ_TYPE_VGROUP) {
+      if ($ot == ObjectType::VGROUP) {
         $videoObj = $videoGroupRep->find($id);
       } else {
         $videoObj = $videoRep->find($id);
@@ -191,7 +189,7 @@ class VideoController extends AbstractController
         $path = $request->query->get('path') ?? 'svc_video_run';
         try {
           $url = $this->generateUrl($path, ['id' => $videoObj->getId()]);
-          $eventLog->log($id, $ot, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'correct password']);
+          $eventLog->log($id, $ot->value, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'correct password']);
 
           return $this->redirect($url);
         } catch (RouteNotFoundException) {
@@ -200,11 +198,11 @@ class VideoController extends AbstractController
           return $this->redirectToRoute('svc_video_list');
         }
       }
-      $eventLog->log($id, $ot, ['level' => EventLog::LEVEL_WARN, 'message' => 'wrong password']);
+      $eventLog->log($id, $ot->value, ['level' => EventLog::LEVEL_WARN, 'message' => 'wrong password']);
       $this->addFlash('danger', 'Wrong password');
     }
 
-    $eventLog->log($id, $ot, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'enter password']);
+    $eventLog->log($id, $ot->value, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'enter password']);
 
     return $this->renderForm('@SvcVideo/video/password.html.twig', [
       'form' => $form,

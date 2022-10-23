@@ -10,6 +10,7 @@ use Svc\LogBundle\Service\EventLog;
 use Svc\LogBundle\Service\LogStatistics;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Entity\VideoGroup;
+use Svc\VideoBundle\Enum\ObjectType;
 use Svc\VideoBundle\Form\VideoType;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Svc\VideoBundle\Repository\VideoRepository;
@@ -150,7 +151,7 @@ class VideoAdminController extends AbstractController
    */
   public function stats(Video $video, LogStatistics $logStatistics, ChartBuilderInterface $chartBuilder): Response
   {
-    $countries = $logStatistics->getCountriesForChartJS($video->getId(), VideoController::OBJ_TYPE_VIDEO, EventLog::LEVEL_DATA);
+    $countries = $logStatistics->getCountriesForChartJS($video->getId(), ObjectType::VIDEO->value, EventLog::LEVEL_DATA);
     $countries['datasets'][0]['backgroundColor'] = ['#A3C408', '#86914E', '#F7D723', '#708AFA', '#085CC4'];
     $countries['datasets'][0]['borderColor'] = 'rgb(255, 255, 255)';
 
@@ -168,7 +169,7 @@ class VideoAdminController extends AbstractController
       'video' => $video,
       'chart' => $chart,
       'sourceID' => $video->getId(),
-      'sourceType' => VideoController::OBJ_TYPE_VIDEO,
+      'sourceType' => ObjectType::VIDEO,
       'logLevel' => EventLog::LEVEL_DATA,
     ]);
   }
@@ -182,9 +183,9 @@ class VideoAdminController extends AbstractController
   {
     if ($isVideo) {
       $videos = $videoRepo->findAll();
-      $videoType = VideoController::OBJ_TYPE_VIDEO;
+      $videoType = ObjectType::VIDEO->value;
     } else {
-      $videoType = VideoController::OBJ_TYPE_VGROUP;
+      $videoType = ObjectType::VGROUP->value;
       $videos = $videoGroupRepo->findAll();
       $allVideoGroup = new VideoGroup();
       $allVideoGroup->setName('All videos');

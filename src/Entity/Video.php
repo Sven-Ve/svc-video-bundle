@@ -5,7 +5,6 @@ namespace Svc\VideoBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Svc\UtilBundle\Service\EnvInfoHelper;
 use Svc\VideoBundle\Enum\SourceType;
 use Svc\VideoBundle\Repository\VideoRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -58,7 +57,7 @@ class Video extends _VideoSuperclass
   private ?VideoGroup $videoGroup = null;
 
   #[ORM\Column(nullable: true)]
-  private \DateTime $uploadDate;
+  private ?\DateTime $uploadDate = null;
 
   /**
    * @var Tag[]|Collection
@@ -131,7 +130,7 @@ class Video extends _VideoSuperclass
     return $this->sourceType->label();
   }
 
-  public function getRatio(): ?string
+  public function getRatio(): string
   {
     return $this->ratio;
   }
@@ -189,7 +188,7 @@ class Video extends _VideoSuperclass
     return $this;
   }
 
-  public function getLikes(): ?int
+  public function getLikes(): int
   {
     return $this->likes;
   }
@@ -215,7 +214,7 @@ class Video extends _VideoSuperclass
     return $this->calls;
   }
 
-  public function getCalls(): ?int
+  public function getCalls(): int
   {
     return $this->calls;
   }
@@ -249,11 +248,6 @@ class Video extends _VideoSuperclass
     $this->uploadDate = \DateTime::createFromInterface($uploadDate);
 
     return $this;
-  }
-
-  public function getShortUrl(): string
-  {
-    return EnvInfoHelper::getRootURLandPrefix() . '?' . $this->getIDorShortname();
   }
 
   public function addTag(Tag $tag): self

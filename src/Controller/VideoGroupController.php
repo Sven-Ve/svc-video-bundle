@@ -5,6 +5,7 @@ namespace Svc\VideoBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Svc\LogBundle\Service\EventLog;
 use Svc\VideoBundle\Entity\VideoGroup;
+use Svc\VideoBundle\Enum\ObjectType;
 use Svc\VideoBundle\Form\VideoGroupType;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Svc\VideoBundle\Service\VideoGroupHelper;
@@ -91,7 +92,7 @@ class VideoGroupController extends AbstractController
     return $this->render('@SvcVideo/video_group/stats.html.twig', [
       'video' => $videoGroup,
       'sourceID' => $videoGroup->getId(),
-      'sourceType' => VideoController::OBJ_TYPE_VGROUP,
+      'sourceType' => ObjectType::VGROUP,
       'logLevel' => EventLog::LEVEL_DATA,
     ]);
   }

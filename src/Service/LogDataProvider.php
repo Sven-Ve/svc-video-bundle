@@ -3,7 +3,7 @@
 namespace Svc\VideoBundle\Service;
 
 use Svc\LogBundle\DataProvider\GeneralDataProvider;
-use Svc\VideoBundle\Controller\VideoController;
+use Svc\VideoBundle\Enum\ObjectType;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Svc\VideoBundle\Repository\VideoRepository;
 
@@ -29,8 +29,8 @@ class LogDataProvider extends GeneralDataProvider
     if ($this->isSourceTypesInitialized) {
       return true;
     }
-    $this->sourceTypes[VideoController::OBJ_TYPE_VIDEO] = 'video';
-    $this->sourceTypes[VideoController::OBJ_TYPE_VGROUP] = 'video group';
+    $this->sourceTypes[ObjectType::VIDEO->value] = ObjectType::VIDEO->label();
+    $this->sourceTypes[ObjectType::VGROUP->value] = ObjectType::VGROUP->label();
     $this->isSourceTypesInitialized = true;
 
     return true;
@@ -41,13 +41,13 @@ class LogDataProvider extends GeneralDataProvider
    */
   public function getSourceIDText(int $sourceID, ?int $sourceType = null): string
   {
-    if ($sourceType === VideoController::OBJ_TYPE_VIDEO) {
+    if ($sourceType === ObjectType::VIDEO->value) {
       if (!$this->isVideoSourceIDsInitialized) {
         $this->initVideoSourceIDs();
       }
 
       return array_key_exists($sourceID, $this->videoSourceIDs) ? $this->videoSourceIDs[$sourceID] : $sourceID;
-    } elseif ($sourceType === VideoController::OBJ_TYPE_VGROUP) {
+    } elseif ($sourceType === ObjectType::VGROUP->value) {
       if (!$this->isVGroupSourceIDsInitialized) {
         $this->initVGroupSourceIDs();
       }
