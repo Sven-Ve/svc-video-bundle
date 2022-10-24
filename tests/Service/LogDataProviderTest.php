@@ -36,7 +36,7 @@ class LogDataProviderTest extends TestCase
 
     $ldProvider = new LogDataProvider($mockVideoRep, $mockVideoGroupRep);
 
-    $this->assertInstanceOf(LogDataProvider::class, $ldProvider);
+    $this->assertInstanceOf(LogDataProvider::class, $ldProvider, 'Create instance');
 
     // Video
     $this->assertSame('1', $ldProvider->getSourceIDText(1), 'Get SourceID for empty sourceType');

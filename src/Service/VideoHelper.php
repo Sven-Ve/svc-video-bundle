@@ -32,7 +32,7 @@ class VideoHelper
    * get a list of all possible ratios for FormTypes.
    *
    * default: 1x1|4x3|16x9|21x9
-   * could by overwritten via .env parameter VIDEO_RATIOS
+   * could be overwritten via .env parameter VIDEO_RATIOS
    */
   public static function getRatioList(): ?array
   {
@@ -220,9 +220,8 @@ class VideoHelper
     $iv = openssl_random_pseudo_bytes($ivlen);
     $ciphertext_raw = openssl_encrypt($plainPassword, self::ENC_CIPHER, $this->encKey, $options = OPENSSL_RAW_DATA, $iv);
     $hmac = hash_hmac('sha256', $ciphertext_raw, $this->encKey, $as_binary = true);
-    $ciphertext = base64_encode($iv . $hmac . $ciphertext_raw);
 
-    return $ciphertext;
+    return base64_encode($iv . $hmac . $ciphertext_raw);
   }
 
   /**
@@ -304,7 +303,7 @@ class VideoHelper
   }
 
   /**
-   * generate a url for a video, using short forms if possible.
+   * generate an url for a video, using short forms if possible.
    */
   public function generateVideoUrl(Video $video, string $currentRoute): string
   {
@@ -325,7 +324,7 @@ class VideoHelper
     return $url;
   }
 
-  public function getVideoStats()
+  public function getVideoStats(): array
   {
     return $this->videoRep->videoStatsByGroup();
   }
