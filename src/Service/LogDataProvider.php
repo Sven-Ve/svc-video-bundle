@@ -37,17 +37,17 @@ class LogDataProvider extends GeneralDataProvider
   }
 
   /**
-   * get the text/description for a source ID / sourceType combination.
+   * get the text/description for a source ID / objectType combination.
    */
-  public function getSourceIDText(int $sourceID, ?int $sourceType = null): string
+  public function getSourceIDText(int $sourceID, ?int $objectType = null): string
   {
-    if ($sourceType === ObjectType::VIDEO->value) {
+    if ($objectType === ObjectType::VIDEO->value) {
       if (!$this->isVideoSourceIDsInitialized) {
         $this->initVideoSourceIDs();
       }
 
       return array_key_exists($sourceID, $this->videoSourceIDs) ? $this->videoSourceIDs[$sourceID] : $sourceID;
-    } elseif ($sourceType === ObjectType::VGROUP->value) {
+    } elseif ($objectType === ObjectType::VGROUP->value) {
       if (!$this->isVGroupSourceIDsInitialized) {
         $this->initVGroupSourceIDs();
       }

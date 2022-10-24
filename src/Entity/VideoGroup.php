@@ -25,7 +25,7 @@ class VideoGroup extends _VideoSuperclass implements \Stringable
   #[ORM\Column(nullable: true)]
   private ?string $description = null;
 
-  #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'videoGroup')]
+  #[ORM\OneToMany(mappedBy: 'videoGroup', targetEntity: Video::class)]
   private Collection $videos;
 
   #[ORM\Column(options: ['default' => false])]
