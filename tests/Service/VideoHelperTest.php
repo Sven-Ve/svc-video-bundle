@@ -54,4 +54,16 @@ class VideoHelperTest extends TestCase
     $encPassword = $this->videoHelper->getEncPassword($video);
     $this->assertTrue($this->videoHelper->checkPassword('Test', $encPassword), 'Check password match');
   }
+
+  /*
+  public function testGetVideoMetadata() {
+
+
+    $video = new Video();
+    $video->setSourceType(SourceType::VIMEO);
+    $video->setSourceID(556790962);
+
+    $this->assertTrue($this->videoHelper->getVideoMetadata($video));
+  }
+  */
 }

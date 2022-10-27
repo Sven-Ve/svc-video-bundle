@@ -5,6 +5,7 @@ namespace Svc\VideoBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Svc\VideoBundle\Entity\VideoGroup;
+use Svc\VideoBundle\Exception\DefaultVideoGroupNotExistsException;
 use Svc\VideoBundle\Repository\VideoGroupRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -40,6 +41,8 @@ class VideoGroupHelper
 
   /**
    * get the default video group or raise an exception.
+   *
+   * @throws Exception
    */
   public function getDefaultVideoGroup(): VideoGroup
   {
@@ -47,7 +50,7 @@ class VideoGroupHelper
     if ($videoGroup) {
       return $videoGroup;
     }
-    throw new Exception('Default video group not found. Please inialize the app.');
+    throw new DefaultVideoGroupNotExistsException();
   }
 
   /**
