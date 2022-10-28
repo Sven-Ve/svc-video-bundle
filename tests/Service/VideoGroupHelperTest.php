@@ -101,4 +101,30 @@ class VideoGroupHelperTest extends TestCase
     $this->expectExceptionObject(new DefaultVideoGroupNotExistsException());
     $this->videoGroupHelper->getDefaultVideoGroup();
   }
+
+  public function testGetVideoGroupsAll()
+  {
+    $videoGroup = new VideoGroup();
+    $videoGroup->setName("Test");
+
+    $this->mockVideoGroupRep
+      ->expects(self::once())
+      ->method('findAll')
+      ->willReturn([$videoGroup]);
+
+    $this->assertSame([$videoGroup], $this->videoGroupHelper->getVideoGroups(false));
+  }
+
+  public function testGetVideoGroupsOnlyVisiblesOnHomePage()
+  {
+    $videoGroup = new VideoGroup();
+    $videoGroup->setName("Test");
+
+    $this->mockVideoGroupRep
+      ->expects(self::once())
+      ->method('findAllExceptHidenOnHomePage')
+      ->willReturn([$videoGroup]);
+
+    $this->assertSame([$videoGroup], $this->videoGroupHelper->getVideoGroups(true));
+  }
 }
