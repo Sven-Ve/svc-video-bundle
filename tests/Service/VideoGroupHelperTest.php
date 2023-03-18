@@ -105,7 +105,7 @@ class VideoGroupHelperTest extends TestCase
   public function testGetVideoGroupsAll()
   {
     $videoGroup = new VideoGroup();
-    $videoGroup->setName("Test");
+    $videoGroup->setName('Test');
 
     $this->mockVideoGroupRep
       ->expects(self::once())
@@ -118,7 +118,7 @@ class VideoGroupHelperTest extends TestCase
   public function testGetVideoGroupsOnlyVisiblesOnHomePage()
   {
     $videoGroup = new VideoGroup();
-    $videoGroup->setName("Test");
+    $videoGroup->setName('Test');
 
     $this->mockVideoGroupRep
       ->expects(self::once())

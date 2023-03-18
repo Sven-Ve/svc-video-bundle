@@ -2,7 +2,6 @@
 
 namespace Svc\VideoBundle\Controller;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
@@ -69,7 +68,7 @@ class VideoAdminController extends AbstractController
   {
     $video = new Video();
     $video->setVideoGroup($videoGroupHelper->getDefaultVideoGroup());
-    $video->setUploadDate(new DateTime());
+    $video->setUploadDate(new \DateTime());
     $form = $this->createForm(VideoType::class, $video, [
       'enableShortNames' => $this->enableShortNames,
       'enablePrivate' => $this->enablePrivate,

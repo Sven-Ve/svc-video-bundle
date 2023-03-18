@@ -42,7 +42,7 @@ class VideoGroupHelper
   /**
    * get the default video group or raise an exception.
    *
-   * @throws Exception
+   * @throws \Exception
    */
   public function getDefaultVideoGroup(): VideoGroup
   {

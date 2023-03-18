@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '4.2.1';
-$message = 'fixes video group error (wrong form type)';
+$version = '4.3.0';
+$message = 'ready to run with symfony 6.2 and phpunit 10';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

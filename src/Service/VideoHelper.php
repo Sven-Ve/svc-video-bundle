@@ -197,7 +197,7 @@ class VideoHelper
     }
     try {
       mkdir($this->thumbnailDir);
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       $msg = 'Cannot create ThumbnailDir: ' . $e->getMessage();
 
       return false;

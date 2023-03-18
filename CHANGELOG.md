@@ -270,3 +270,8 @@
 ## Version 4.2.1
 *Sat, 17 Sep 2022 19:45:10 +0000*
 - fixes video group error (wrong form type)
+
+
+## Version 4.3.0
+*Sat, 18 Mar 2023 15:57:28 +0000*
+- ready to run with symfony 6.2 and phpunit 10

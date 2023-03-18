@@ -2,7 +2,6 @@
 
 namespace Svc\VideoBundle\Controller;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\LogBundle\Service\EventLog;
@@ -155,7 +154,7 @@ class VideoController extends AbstractController
 
     if ($likeHelper->addLike(LikeHelper::SOURCE_VIDEO, $video->getId(), null, $cookieName)) {
       if ($cookieName) {
-        $response->headers->setCookie(Cookie::create($cookieName, '1', new DateTime('+1 week')));
+        $response->headers->setCookie(Cookie::create($cookieName, '1', new \DateTime('+1 week')));
       }
 
       $newValue = $video->incLikes();
