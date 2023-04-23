@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '4.3.0';
-$message = 'ready to run with symfony 6.2 and phpunit 10';
+$version = '4.3.1';
+$message = 'adopt new vimeo security model';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

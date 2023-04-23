@@ -275,3 +275,8 @@
 ## Version 4.3.0
 *Sat, 18 Mar 2023 15:57:28 +0000*
 - ready to run with symfony 6.2 and phpunit 10
+
+
+## Version 4.3.1
+*Sun, 23 Apr 2023 13:00:22 +0000*
+- adopt new vimeo security model

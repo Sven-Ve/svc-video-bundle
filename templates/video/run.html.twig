@@ -23,7 +23,7 @@
 
     <div class="ratio ratio-{{ video.ratio }}">
       {% if video.sourceText == 'Vimeo' %}
-        <iframe src="https://player.vimeo.com/video/{{ video.sourceId }}?autoplay=1" allow="autoplay; fullscreen;" allowfullscreen></iframe>
+        <iframe src="https://player.vimeo.com/video/{{ video.sourceId }}?autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
       {% elseif video.sourceText == 'Youtube' %}
         <iframe src="https://www.youtube.com/embed/{{ video.sourceId }}?controls=0&rel=0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       {% endif %}

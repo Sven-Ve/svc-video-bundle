@@ -53,7 +53,8 @@ class VideoHelper
     if ($video->getSourceType() == SourceType::VIMEO) {
       // see https://gist.github.com/anjan011/3b6d13a9f7a8642ecc4c
       try {
-        $apiData = unserialize(file_get_contents('https://vimeo.com/api/v2/video/' . $video->getSourceID() . '.php'));
+        $sourceId = explode('?', $video->getSourceID())[0];
+        $apiData = unserialize(file_get_contents('https://vimeo.com/api/v2/video/' . $sourceId . '.php'));
 
         if (is_array($apiData) and count($apiData) > 0) {
           $uploadDate = date_create_from_format('Y-m-d G:i:s', $apiData[0]['upload_date']);
