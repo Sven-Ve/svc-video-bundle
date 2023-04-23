@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '4.3.1';
-$message = 'adopt new vimeo security model';
+$version = '4.3.2';
+$message = 'fix wrong vimeo video call';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

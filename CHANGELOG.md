@@ -280,3 +280,8 @@
 ## Version 4.3.1
 *Sun, 23 Apr 2023 13:00:22 +0000*
 - adopt new vimeo security model
+
+
+## Version 4.3.2
+*Sun, 23 Apr 2023 13:30:55 +0000*
+- fix wrong vimeo video call
