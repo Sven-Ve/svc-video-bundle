@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class VideoType extends AbstractType
 {
-  public function buildForm(FormBuilderInterface $builder, array $options)
+  public function buildForm(FormBuilderInterface $builder, array $options): void
   {
     $builder
       ->add('title', null, ['attr' => ['autofocus' => true]])
@@ -110,7 +110,7 @@ class VideoType extends AbstractType
       ->add('calls');
   }
 
-  public function configureOptions(OptionsResolver $resolver)
+  public function configureOptions(OptionsResolver $resolver): void
   {
     $resolver->setDefaults([
       'data_class' => Video::class,

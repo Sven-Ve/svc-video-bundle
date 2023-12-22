@@ -290,3 +290,8 @@
 ## Version 5.0.0
 *Fri, 22 Dec 2023 21:09:29 +0000*
 - ready for symfony 6.4 and 7
+
+
+## Version 5.0.1
+*Fri, 22 Dec 2023 21:54:21 +0000*
+- ready for symfony 6.4 and 7 - fix deprecations
