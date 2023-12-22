@@ -13,19 +13,19 @@
     "symfony-ux"
   ],
   "require": {
-    "php": "^8.1",
-    "symfony/framework-bundle": "^6.1",
-    "doctrine/doctrine-bundle": "^2.6",
-    "symfony/validator": "^6.1",
-    "symfony/expression-language": "^6.1",
-    "symfony/lock": "^6.1",
-    "symfony/translation": "^6.1",
-    "symfony/twig-bundle": "^6.1",
-    "svc/like-bundle": "^4|dev-main",
-    "svc/util-bundle": "^4|dev-main",
-    "svc/log-bundle": "^4.2|dev-main",
+    "php": "^8.2",
+    "symfony/framework-bundle": "^6.3 || ^7",
+    "doctrine/doctrine-bundle": "^2.10",
+    "symfony/validator": "^6.3 || ^7",
+    "symfony/expression-language": "^6.3 || ^7",
+    "symfony/lock": "^6.3 || ^7",
+    "symfony/translation": "^6.3 || ^7",
+    "symfony/twig-bundle": "^6.3 || ^7",
+    "svc/like-bundle": "^5|dev-main",
+    "svc/util-bundle": "^5|dev-main",
+    "svc/log-bundle": "^5|dev-main",
     "liip/imagine-bundle": "^2.7",
-    "symfony/form": "^6.1",
+    "symfony/form": "^6.3 || ^7",
     "symfony/ux-chartjs": "^2.7",
     "babdev/pagerfanta-bundle": "^4",
     "pagerfanta/twig": "^4",
@@ -43,10 +43,9 @@
     }
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "^6.1",
-    "symfony/browser-kit": "^6.1",
-    "phpstan/phpstan": "^1.10",
-    "phpunit/phpunit": "^10.0"
+    "phpunit/phpunit": "^10.2",
+    "symfony/browser-kit": "^6.3 || ^7",
+    "phpstan/phpstan": "^1.10"
   },
   "scripts": {
     "phpstan": "php -d memory_limit=-1 vendor/bin/phpstan analyse src/ --level 5",

@@ -43,7 +43,7 @@ class TagAdminController extends AbstractController
       return $this->redirectToRoute('svc_tag_admin_index');
     }
 
-    return $this->renderForm('@SvcVideo/tag/new.html.twig', [
+    return $this->render('@SvcVideo/tag/new.html.twig', [
       'tag' => $tag,
       'form' => $form,
     ]);
@@ -63,7 +63,7 @@ class TagAdminController extends AbstractController
       return $this->redirectToRoute('svc_tag_admin_index');
     }
 
-    return $this->renderForm('@SvcVideo/tag/edit.html.twig', [
+    return $this->render('@SvcVideo/tag/edit.html.twig', [
       'tag' => $tag,
       'form' => $form,
     ]);

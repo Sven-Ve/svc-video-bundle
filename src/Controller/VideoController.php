@@ -203,7 +203,7 @@ class VideoController extends AbstractController
 
     $eventLog->log($id, $ot->value, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'enter password']);
 
-    return $this->renderForm('@SvcVideo/video/password.html.twig', [
+    return $this->render('@SvcVideo/video/password.html.twig', [
       'form' => $form,
     ]);
   }

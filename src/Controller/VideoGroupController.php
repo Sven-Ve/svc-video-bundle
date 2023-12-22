@@ -44,7 +44,7 @@ class VideoGroupController extends AbstractController
       return $this->redirectToRoute('svc_video_group_index');
     }
 
-    return $this->renderForm('@SvcVideo/video_group/new.html.twig', [
+    return $this->render('@SvcVideo/video_group/new.html.twig', [
       'video_group' => $videoGroup,
       'form' => $form,
     ]);
@@ -68,7 +68,7 @@ class VideoGroupController extends AbstractController
       return $this->redirectToRoute('svc_video_group_index');
     }
 
-    return $this->renderForm('@SvcVideo/video_group/edit.html.twig', [
+    return $this->render('@SvcVideo/video_group/edit.html.twig', [
       'video_group' => $videoGroup,
       'form' => $form,
     ]);

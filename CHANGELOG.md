@@ -285,3 +285,8 @@
 ## Version 4.3.2
 *Sun, 23 Apr 2023 13:30:55 +0000*
 - fix wrong vimeo video call
+
+
+## Version 5.0.0
+*Fri, 22 Dec 2023 21:09:29 +0000*
+- ready for symfony 6.4 and 7
