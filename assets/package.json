@@ -2,19 +2,31 @@
   "name": "@svc/video-bundle",
   "description": "Bundle to manage and stream videos",
   "license": "MIT",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "symfony": {
     "controllers": {
       "sort": {
         "main": "src/sort.js",
+        "webpackMode": "eager",
         "fetch": "lazy",
-        "enabled": true
+        "enabled": true,
+        "autoimport": {
+          "@svc/video-bundle/styles/_svc_video.css": true
+        }
       },
       "tag": {
-        "main": "src/tag.js",
+        "main": "src/tag_controller.js",
         "fetch": "lazy",
-        "enabled": true
+        "enabled": true,
+        "autoimport": {
+          "@jcubic/tagger": true
+        }
       }
+    },
+    "importmap": {
+      "@hotwired/stimulus": "^3.2.0",
+      "@jcubic/tagger": "^0.6.1",
+      "@jcubic/tagger/tagger.css": "*"
     }
   },
   "peerDependencies": {

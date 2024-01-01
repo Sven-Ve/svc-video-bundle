@@ -1,0 +1,12 @@
+.svcv-component-light {
+  border: 1px solid #efefee;
+  box-shadow: 0 0 7px 4px #efefee;
+  border-radius: 5px;
+}
+
+.svcv-component-light ul li a:hover {
+  background: #add8e6;
+}
+.svcv-component-light ul li a.selected {
+  background: #efefee;
+}
