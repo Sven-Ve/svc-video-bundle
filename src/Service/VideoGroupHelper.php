@@ -106,7 +106,7 @@ class VideoGroupHelper
 
     try { // not sure, if trait is enabled...
       return $this->router->generate('svc_video_shortGroup', ['group' => $shortName, 'sort' => $sort ?? 0], UrlGeneratorInterface::ABSOLUTE_URL);
-    } catch (Exception) {
+    } catch (\Exception) {
       return $this->router->generate('svc_video_list', ['group' => $shortName, 'sort' => $sort ?? 0], UrlGeneratorInterface::ABSOLUTE_URL);
     }
   }

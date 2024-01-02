@@ -31,7 +31,7 @@ class Tag implements \JsonSerializable, \Stringable
   #[ORM\ManyToMany(targetEntity: Video::class, mappedBy: 'tags')]
   protected Collection $videos;
 
-  public function __construct(?string $name = null)
+  public function __construct(string $name = null)
   {
     if ($name !== null) {
       $this->setName($name);

@@ -2,11 +2,11 @@
 
 namespace Svc\VideoBundle;
 
+use Symfony\Component\AssetMapper\AssetMapperInterface;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
-use Symfony\Component\AssetMapper\AssetMapperInterface;
 
 class SvcVideoBundle extends AbstractBundle
 {
@@ -77,30 +77,29 @@ class SvcVideoBundle extends AbstractBundle
     if (!$this->isAssetMapperAvailable($containerBuilder)) {
       return;
     }
-    
-      $containerBuilder->prependExtensionConfig('framework', [
-        'asset_mapper' => [
-            'paths' => [
-              __DIR__.'/../assets/src' => 'svc/video-bundle/src',
-              __DIR__.'/../assets/styles' => 'svc/video-bundle/styles',
-            ],
+
+    $containerBuilder->prependExtensionConfig('framework', [
+      'asset_mapper' => [
+        'paths' => [
+          __DIR__ . '/../assets/src' => 'svc/video-bundle/src',
+          __DIR__ . '/../assets/styles' => 'svc/video-bundle/styles',
         ],
-      ]);
+      ],
+    ]);
   }
 
   private function isAssetMapperAvailable(ContainerBuilder $container): bool
   {
-      if (!interface_exists(AssetMapperInterface::class)) {
-          return false;
-      }
+    if (!interface_exists(AssetMapperInterface::class)) {
+      return false;
+    }
 
-      // check that FrameworkBundle 6.3 or higher is installed
-      $bundlesMetadata = $container->getParameter('kernel.bundles_metadata');
-      if (!isset($bundlesMetadata['FrameworkBundle'])) {
-          return false;
-      }
+    // check that FrameworkBundle 6.3 or higher is installed
+    $bundlesMetadata = $container->getParameter('kernel.bundles_metadata');
+    if (!isset($bundlesMetadata['FrameworkBundle'])) {
+      return false;
+    }
 
-      return is_file($bundlesMetadata['FrameworkBundle']['path'].'/Resources/config/asset_mapper.php');
+    return is_file($bundlesMetadata['FrameworkBundle']['path'] . '/Resources/config/asset_mapper.php');
   }
-
 }

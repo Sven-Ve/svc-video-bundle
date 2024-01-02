@@ -3,7 +3,6 @@
 namespace Svc\VideoBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Svc\VideoBundle\Entity\_VideoSuperclass;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Enum\SourceType;
@@ -63,7 +62,7 @@ class VideoHelper
 
           return true;
         }
-      } catch (Exception) {
+      } catch (\Exception) {
         return false;
       }
     } elseif ($video->getSourceType() == SourceType::YOUTUBE) {
@@ -78,7 +77,7 @@ class VideoHelper
   /**
    * load missing metadata (thumbnail, date) or all metadata, if $force = true.
    */
-  public function getMissingMetadata(?bool $force = false, ?string &$msg = null): bool
+  public function getMissingMetadata(?bool $force = false, string &$msg = null): bool
   {
     $videos = $force ? $this->videoRep->findAll() : $this->videoRep->findBy(['thumbnailUrl' => null]);
 
@@ -99,7 +98,7 @@ class VideoHelper
   /**
    * load missing thumbnails to local server or all thumbnails, if $force = true.
    */
-  public function getMissingThumbnails(?bool $force = false, ?string &$msg = null): bool
+  public function getMissingThumbnails(?bool $force = false, string &$msg = null): bool
   {
     $videos = $force ? $this->videoRep->findAll() : $this->videoRep->findBy(['thumbnailPath' => null]);
 
@@ -127,7 +126,7 @@ class VideoHelper
     if ($force and $video->getThumbnailPath()) {
       try {
         unlink($this->thumbnailDir . '/' . $video->getThumbnailPath());
-      } catch (Exception) {
+      } catch (\Exception) {
       }
     }
 
@@ -138,7 +137,7 @@ class VideoHelper
         file_put_contents($imgPath, file_get_contents($video->getThumbnailUrl()));
 
         return $imgName;
-      } catch (Exception) {
+      } catch (\Exception) {
       }
     } elseif ($video->getSourceType() == SourceType::YOUTUBE) {
       try {
@@ -147,7 +146,7 @@ class VideoHelper
         file_put_contents($imgPath, file_get_contents($video->getThumbnailUrl()));
 
         return $imgName;
-      } catch (Exception) {
+      } catch (\Exception) {
       }
     }
 
@@ -157,7 +156,7 @@ class VideoHelper
   /**
    * get videos for a group or all videos, if group = null.
    */
-  public function getVideoByGroup(?int $group = null, ?int $sort = VideoRepository::SORT_BY_DATE_DESC): ?array
+  public function getVideoByGroup(int $group = null, ?int $sort = VideoRepository::SORT_BY_DATE_DESC): ?array
   {
     if ($sort !== null and array_key_exists($sort, VideoRepository::SORT_FIELDS)) {
       $sortField = VideoRepository::SORT_FIELDS[$sort]['f'];
@@ -319,7 +318,7 @@ class VideoHelper
       } elseif ($currentRoute == 'svc_video_run_hn') {
         $url = $this->router->generate('svc_video_short_runHideNav', ['id' => $video->getIDorShortname()], UrlGeneratorInterface::ABSOLUTE_URL);
       }
-    } catch (Exception) {
+    } catch (\Exception) {
     }
 
     return $url;

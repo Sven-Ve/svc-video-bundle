@@ -300,3 +300,9 @@
 ## Version 5.1.0
 *Mon, 01 Jan 2024 19:51:26 +0000*
 - ready for assetmapper
+
+
+## Version 5.1.1
+*Tue, 02 Jan 2024 20:50:48 +0000*
+- fix php 8.2 deprecation
+add daily statistic to all_stats

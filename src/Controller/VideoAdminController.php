@@ -180,6 +180,7 @@ class VideoAdminController extends AbstractController
    */
   public function allStats(bool $isVideo, VideoRepository $videoRepo, VideoGroupRepository $videoGroupRepo, LogStatistics $logStatistics): Response
   {
+    $videoStats = [];
     if ($isVideo) {
       $videos = $videoRepo->findAll();
       $videoType = ObjectType::VIDEO->value;
@@ -191,12 +192,12 @@ class VideoAdminController extends AbstractController
       array_unshift($videos, $allVideoGroup);
     }
 
-    $statistics = $logStatistics->pivotMonthly($videoType, EventLog::LEVEL_DATA);
+    $statistics = $logStatistics->pivotMonthly($videoType, EventLog::LEVEL_DATA, true);
 
     foreach ($videos as $video) {
       foreach ($statistics['data'] as $statistic) {
         if ($statistic['sourceID'] === $video->getId() or ($video->getId() === null and $statistic['sourceID'] === 0)) {
-          $video->statistics = $statistic;
+          $videoStats[$video->getId()] = $statistic;
           break;
         }
       }
@@ -206,6 +207,7 @@ class VideoAdminController extends AbstractController
       'videos' => $videos,
       'statHeader' => $statistics['header'],
       'isVideo' => $isVideo,
+      'stats' => $videoStats,
     ]);
   }
 }

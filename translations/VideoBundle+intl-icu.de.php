@@ -79,5 +79,5 @@ return [
   'A maximum of 4 tags are allowed' => 'Es sind maximal 4 Tags erlaubt',
   'Tags' => 'Tags',
   'Search videos' => 'Videosuche',
-  '' => '',
+  'Today' => 'Heute',
 ];

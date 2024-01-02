@@ -24,9 +24,6 @@ class TagArrayToStringTransformer implements DataTransformerInterface
   ) {
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function transform($value): string
   {
     // The value received is an array of Tag objects generated with
@@ -37,9 +34,6 @@ class TagArrayToStringTransformer implements DataTransformerInterface
     return implode(',', $value);
   }
 
-  /**
-   * {@inheritdoc}
-   */
   public function reverseTransform($value): array
   {
     if (null === $value || u($value)->isEmpty()) {

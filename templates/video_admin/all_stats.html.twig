@@ -16,6 +16,7 @@
 			<thead>
 				<tr>
 					<th>{% trans %}Title{% endtrans %}</th>
+					<th>{% trans %}Today{% endtrans %}</th>
 					<th>{{ statHeader.0 }}</th>
 					<th>{{ statHeader.1 }}</th>
 					<th>{{ statHeader.2 }}</th>
@@ -30,12 +31,13 @@
 				{% for video in videos %}
 					<tr>
 						<td>{{ video.title }}</td>
-            {% if video.statistics is defined %}
-              <td>{{ video.statistics.month0 }}</td>
-              <td>{{ video.statistics.month1 }}</td>
-              <td>{{ video.statistics.month2 }}</td>
-              <td>{{ video.statistics.month3 }}</td>
-              <td>{{ video.statistics.month4 }}</td>
+            {% if stats[video.id] is defined %}
+              <td>{{ stats[video.id].daily }}</td>
+              <td>{{ stats[video.id].month0 }}</td>
+              <td>{{ stats[video.id].month1 }}</td>
+              <td>{{ stats[video.id].month2 }}</td>
+              <td>{{ stats[video.id].month3 }}</td>
+              <td>{{ stats[video.id].month4 }}</td>
             {% else %}
               {% for i in 0..4 %}
                 <td>0</td>
