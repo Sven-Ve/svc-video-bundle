@@ -306,3 +306,8 @@
 *Tue, 02 Jan 2024 20:50:48 +0000*
 - fix php 8.2 deprecation
 add daily statistic to all_stats
+
+
+## Version 5.2.0
+*Sun, 21 Jan 2024 16:22:51 +0000*
+- adding autosubmit to video search

@@ -46,16 +46,16 @@
                 </div>
               </span>
             {% endif %}
-
           </div>
         </div>
       {% else %}
 				<div class="d-flex justify-content-between">
         	<h2>{% trans %}All Videos{% endtrans %}</h2>
-					{{ include('@SvcVideo/video/_search.html.twig') }}
+					{{ include('@SvcVideo/_common/_search.html.twig') }}
 				</div>
       {% endif %}
 
+      <turbo-frame id="video-list" data-turbo-action="advance">
 			<div class='row'>
 				{% for video in videos %}
 					<div class="col-md-6 col-lg-4 col-xl-3 mb-3 card-group">
@@ -93,6 +93,7 @@
 					{% trans %}no videos found{% endtrans %}
 				{% endfor %}
 			</div>
+      </turbo-frame>
 
 			{% if not hideGroups %}
 			</div>

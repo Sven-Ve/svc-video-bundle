@@ -7,7 +7,7 @@
     "controllers": {
       "sort": {
         "main": "src/sort.js",
-        "webpackMode": "eager",
+        "webpackMode": "lazy",
         "fetch": "lazy",
         "enabled": true,
         "autoimport": {

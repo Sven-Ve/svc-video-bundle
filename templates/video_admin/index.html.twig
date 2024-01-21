@@ -11,9 +11,10 @@
       <i class="fas fa-video"></i>
       {% trans %}Video overview{% endtrans %}
     </h1>
-    {{ include('@SvcVideo/video_admin/_search.html.twig') }}
+    {{ include('@SvcVideo/_common/_search.html.twig', {'frame': 'video-admin-list' }) }}
   </div>
 
+  <turbo-frame id="video-admin-list" data-turbo-action="advance">
   <div class='table-responsive'>
     <table class="table table-hover">
       <thead>
@@ -44,14 +45,14 @@
           <td>{{ video.calls }}</td>
           <td>{{ video.likes }}</td>
           <td>
-            <a href="{{ path('svc_video_admin_edit', {'id': video.id}) }}"
+            <a href="{{ path('svc_video_admin_edit', {'id': video.id}) }}" data-turbo-frame="_top"
                class='btn btn-sm btn-secondary'>{% trans %}Edit{% endtrans %}</a>
-            <a href="{{ path('svc_video_run', {'id': video.id}) }}"
+            <a href="{{ path('svc_video_run', {'id': video.id}) }}" data-turbo-frame="_top"
                class='btn btn-sm btn-primary'>{% trans %}Run{% endtrans %}</a>
-            <a href="{{ path('svc_video_admin_stats', {'id': video.id}) }}"
+            <a href="{{ path('svc_video_admin_stats', {'id': video.id}) }}" data-turbo-frame="_top"
                class='btn btn-sm btn-info'>{% trans %}Statistics{% endtrans %}</a>
             <span class="d-none"
-                {{ stimulus_controller('svc--util-bundle--mclipboard', {
+                {{ stimulus_controller('svc/util-bundle/mclipboard', {
                   'link': url('svc_video_run', {id: video.id} ),
                   'link1': url('svc_video_run_hn', {id: video.id} )
                 } ) }}
@@ -81,6 +82,7 @@
       </tbody>
     </table>
   </div>
+  </turbo-frame>
 
   <div class="d-flex justify-content-between">
   	<span>

@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '5.1.1';
-$message = "fix php 8.2 deprecation\nadd daily statistic to all_stats";
+$version = '5.2.0';
+$message = 'adding autosubmit to video search';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

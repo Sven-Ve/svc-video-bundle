@@ -1,0 +1,15 @@
+{% trans_default_domain 'VideoBundle' %}
+<form 
+  data-controller="svc--util-bundle--autosubmit"
+  data-turbo-frame="{{ frame | default ('video-list') }}"
+>
+  <div class="input-group input-group-sm mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-search"></i></span>
+    <input type="search" class="form-control" aria-label="{% trans %}Search videos{% endtrans %}"
+           name="q" value="{{ q }}" 
+           placeholder="{% trans %}Search videos{% endtrans %}"
+           data-action="svc--util-bundle--autosubmit#debouncedSubmit"
+           autofocus
+    >
+  </div>
+</form>
