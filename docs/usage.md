@@ -4,15 +4,31 @@
 Create tables (run `bin/console doctrine:schema:update --force`) or create a migration
 
 ## CSS
+
+### SCSS
 - include the scss file in your global css
 
 ```scss
 // /assets/styles/app.sccs
 ...
 @import '~@svc/video-bundle/styles/_svc_video.scss';
+@import '~@svc/like-bundle/styles/layout/_likes.scss';
 @import '@jcubic/tagger/tagger.css'; // for tagging, if you enable it
 ...
 ```
+
+### Assetmapper
+- include the css file in your global app.js
+
+```js
+// /assets/app.js
+...
+import './svc/video-bundle/styles/_svc_video.css';
+import './svc/like-bundle/styles/layout/_likes.css'
+import '@jcubic/tagger/tagger.css'; // for tagging, if you enable it
+...
+```
+
 
 ## Routes
 - adapt the default url prefix in config/routes/svc_profile.yaml and enable translation (if you like it)
