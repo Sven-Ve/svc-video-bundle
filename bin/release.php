@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '5.2.0';
-$message = 'adding autosubmit to video search';
+$version = '5.3.0';
+$message = 'runs with doctrine/orm ^3 too';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

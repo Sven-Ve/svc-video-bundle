@@ -311,3 +311,8 @@ add daily statistic to all_stats
 ## Version 5.2.0
 *Sun, 21 Jan 2024 16:22:51 +0000*
 - adding autosubmit to video search
+
+
+## Version 5.3.0
+*Sat, 23 Mar 2024 20:15:34 +0000*
+- runs with doctrine/orm ^3 too
