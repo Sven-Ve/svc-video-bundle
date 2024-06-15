@@ -77,7 +77,7 @@ class VideoHelper
   /**
    * load missing metadata (thumbnail, date) or all metadata, if $force = true.
    */
-  public function getMissingMetadata(?bool $force = false, string &$msg = null): bool
+  public function getMissingMetadata(?bool $force = false, ?string &$msg = null): bool
   {
     $videos = $force ? $this->videoRep->findAll() : $this->videoRep->findBy(['thumbnailUrl' => null]);
 
@@ -98,7 +98,7 @@ class VideoHelper
   /**
    * load missing thumbnails to local server or all thumbnails, if $force = true.
    */
-  public function getMissingThumbnails(?bool $force = false, string &$msg = null): bool
+  public function getMissingThumbnails(?bool $force = false, ?string &$msg = null): bool
   {
     $videos = $force ? $this->videoRep->findAll() : $this->videoRep->findBy(['thumbnailPath' => null]);
 
@@ -156,7 +156,7 @@ class VideoHelper
   /**
    * get videos for a group or all videos, if group = null.
    */
-  public function getVideoByGroup(int $group = null, ?int $sort = VideoRepository::SORT_BY_DATE_DESC): ?array
+  public function getVideoByGroup(?int $group = null, ?int $sort = VideoRepository::SORT_BY_DATE_DESC): ?array
   {
     if ($sort !== null and array_key_exists($sort, VideoRepository::SORT_FIELDS)) {
       $sortField = VideoRepository::SORT_FIELDS[$sort]['f'];

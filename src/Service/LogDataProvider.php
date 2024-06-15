@@ -39,7 +39,7 @@ class LogDataProvider extends GeneralDataProvider
   /**
    * get the text/description for a source ID / objectType combination.
    */
-  public function getSourceIDText(int $sourceID, int $objectType = null): string
+  public function getSourceIDText(int $sourceID, ?int $objectType = null): string
   {
     if ($objectType === ObjectType::VIDEO->value) {
       if (!$this->isVideoSourceIDsInitialized) {

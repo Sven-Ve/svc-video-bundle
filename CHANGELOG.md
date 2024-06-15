@@ -316,3 +316,8 @@ add daily statistic to all_stats
 ## Version 5.3.0
 *Sat, 23 Mar 2024 20:15:34 +0000*
 - runs with doctrine/orm ^3 too
+
+
+## Version 5.3.1
+*Sat, 15 Jun 2024 19:42:54 +0000*
+- update requirements

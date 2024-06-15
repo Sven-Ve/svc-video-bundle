@@ -41,7 +41,7 @@ class VideoController extends AbstractController
     VideoRepository $videoRep,
     Request $request,
     EventLog $eventLog,
-    int $id = null): Response
+    ?int $id = null): Response
   {
     $sort = $request->query->get('sort') ?? '0';
     $query = $request->query->get('q');

@@ -60,7 +60,7 @@ class _VideoSuperclass
     return $this->password;
   }
 
-  public function setPassword(string $password = null): self
+  public function setPassword(?string $password = null): self
   {
     $this->password = $password;
 
@@ -72,7 +72,7 @@ class _VideoSuperclass
     return $this->plainPassword;
   }
 
-  public function setPlainPassword(string $plainPassword = null): self
+  public function setPlainPassword(?string $plainPassword = null): self
   {
     $this->plainPassword = $plainPassword;
 
