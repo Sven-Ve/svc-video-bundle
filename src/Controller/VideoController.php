@@ -43,8 +43,8 @@ class VideoController extends AbstractController
     EventLog $eventLog,
     ?int $id = null): Response
   {
-    $sort = $request->query->get('sort') ?? '0';
-    $query = $request->query->get('q');
+    $sort = $request->query->getInt('sort');
+    $query = $request->query->getString('q');
 
     $hideNav = false;
     $hideGroups = false;
@@ -171,7 +171,14 @@ class VideoController extends AbstractController
   /**
    * enter the password for a private video.
    */
-  public function enterPwd(int $id, Request $request, VideoHelper $videoHelper, VideoGroupRepository $videoGroupRep, VideoRepository $videoRep, EventLog $eventLog, ?ObjectType $ot = ObjectType::VIDEO)
+  public function enterPwd(
+    int $id,
+    Request $request,
+    VideoHelper $videoHelper,
+    VideoGroupRepository $videoGroupRep,
+    VideoRepository $videoRep,
+    EventLog $eventLog,
+    ?ObjectType $ot = ObjectType::VIDEO): Response
   {
     $ot ??= ObjectType::VIDEO;
     $form = $this->createForm(EnterPasswordType::class);
@@ -185,7 +192,10 @@ class VideoController extends AbstractController
       }
 
       if ($videoHelper->checkPassword($form->get('plainPassword')->getData(), $videoObj->getPassword())) {
-        $path = $request->query->get('path') ?? 'svc_video_run';
+        $path = $request->query->getString('path');
+        if (!$path) {
+          $path = 'svc_video_run';
+        }
         try {
           $url = $this->generateUrl($path, ['id' => $videoObj->getId()]);
           $eventLog->log($id, $ot->value, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'correct password']);

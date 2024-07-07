@@ -13,7 +13,7 @@ class TagRepository extends ServiceEntityRepository
     parent::__construct($registry, Tag::class);
   }
 
-  public function getTagNamesAsJson(): string
+  public function getTagNamesAsJson(): string|false
   {
     $tags = $this->createQueryBuilder('t')
       ->orderBy('t.name', 'ASC')
@@ -24,7 +24,9 @@ class TagRepository extends ServiceEntityRepository
   }
 
   /**
-   * @return Tag[]
+   * @param array<string> $searchTerms
+   *
+   * @return array<int,object>
    */
   public function getTagsBySearchQuery(array $searchTerms): array
   {

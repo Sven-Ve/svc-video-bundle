@@ -32,6 +32,8 @@ class VideoHelper
    *
    * default: 1x1|4x3|16x9|21x9
    * could be overwritten via .env parameter VIDEO_RATIOS
+   *
+   * @return array<string>|null
    */
   public static function getRatioList(): ?array
   {
@@ -155,6 +157,8 @@ class VideoHelper
 
   /**
    * get videos for a group or all videos, if group = null.
+   *
+   * @return array<Video>|null
    */
   public function getVideoByGroup(?int $group = null, ?int $sort = VideoRepository::SORT_BY_DATE_DESC): ?array
   {
@@ -324,6 +328,9 @@ class VideoHelper
     return $url;
   }
 
+  /**
+   * @return array<mixed>
+   */
   public function getVideoStats(): array
   {
     return $this->videoRep->videoStatsByGroup();

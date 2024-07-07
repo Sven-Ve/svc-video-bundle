@@ -49,7 +49,7 @@
     "phpstan/phpstan": "^1.10"
   },
   "scripts": {
-    "phpstan": "php -d memory_limit=-1 vendor/bin/phpstan analyse src/ --level 5",
+    "phpstan": "php -d memory_limit=-1 vendor/bin/phpstan analyse -c .phpstan.neon",
     "test": "vendor/bin/phpunit --testdox"
   }
 }

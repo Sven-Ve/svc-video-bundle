@@ -7,5 +7,8 @@ namespace Svc\VideoBundle\Exception;
  */
 final class TaggingNotEnabledException extends \Exception
 {
+  /**
+   * @var string
+   */
   protected $message = 'Tagging is not enabled. You should not be able to invoke this method.';
 }

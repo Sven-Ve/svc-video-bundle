@@ -35,7 +35,7 @@ class VideoAdminController extends AbstractController
   public function index(VideoRepository $videoRepository, VideoGroupHelper $videoGroupHelper, Request $request): Response
   {
     $videoGroupHelper->initDefaultVideoGroup();
-    $query = $request->query->get('q');
+    $query = $request->query->getString('q');
 
     if ($this->enablePagination) {
       if ($query) {
@@ -45,7 +45,7 @@ class VideoAdminController extends AbstractController
       }
       $videos = new Pagerfanta(new QueryAdapter($queryBuilder));
       $videos->setMaxPerPage(15);
-      $videos->setCurrentPage($request->query->get('page', 1));
+      $videos->setCurrentPage($request->query->getInt('page', 1));
       $haveToPaginate = $videos->haveToPaginate();
     } else {
       $videos = $videoRepository->findAll();
@@ -137,7 +137,7 @@ class VideoAdminController extends AbstractController
 
   public function delete(Request $request, Video $video, EntityManagerInterface $entityManager): Response
   {
-    if ($this->isCsrfTokenValid('delete' . $video->getId(), $request->request->get('_token'))) {
+    if ($this->isCsrfTokenValid('delete' . $video->getId(), $request->request->getString('_token'))) {
       $entityManager->remove($video);
       $entityManager->flush();
     }

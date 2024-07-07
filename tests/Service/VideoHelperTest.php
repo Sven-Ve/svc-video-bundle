@@ -52,6 +52,8 @@ class VideoHelperTest extends TestCase
     $video->setIsPrivate(true);
     $video->setPlainPassword('Test');
     $encPassword = $this->videoHelper->getEncPassword($video);
+
+    /* @phpstan-ignore argument.type */
     $this->assertTrue($this->videoHelper->checkPassword('Test', $encPassword), 'Check password match');
   }
 

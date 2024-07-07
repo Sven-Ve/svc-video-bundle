@@ -19,7 +19,10 @@ class VideoGroupRepository extends ServiceEntityRepository
     parent::__construct($registry, VideoGroup::class);
   }
 
-  public function findAllExceptHidenOnHomePage()
+  /**
+   * @return array<mixed>
+   */
+  public function findAllExceptHidenOnHomePage(): array
   {
     return $this->createQueryBuilder('v')
             ->andWhere('v.hideOnHomePage = false')

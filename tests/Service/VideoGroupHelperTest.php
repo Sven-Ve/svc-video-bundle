@@ -39,7 +39,7 @@ class VideoGroupHelperTest extends TestCase
     $this->assertInstanceOf(VideoGroupHelper::class, $this->videoGroupHelper, 'Create instance');
   }
 
-  public function testInitDefaultVideoGroupWithoutExistingDefault()
+  public function testInitDefaultVideoGroupWithoutExistingDefault(): void
   {
     $this->mockEntityMan
       ->expects(self::once())
@@ -55,7 +55,7 @@ class VideoGroupHelperTest extends TestCase
     $this->videoGroupHelper->initDefaultVideoGroup();
   }
 
-  public function testInitDefaultVideoGroupWithExistingDefault()
+  public function testInitDefaultVideoGroupWithExistingDefault(): void
   {
     $this->mockEntityMan
       ->expects(self::never())
@@ -75,7 +75,7 @@ class VideoGroupHelperTest extends TestCase
     $this->videoGroupHelper->initDefaultVideoGroup();
   }
 
-  public function testGetDefaultVideoGroupWithExistingDefault()
+  public function testGetDefaultVideoGroupWithExistingDefault(): void
   {
     $videoGroup = new VideoGroup();
     $videoGroup->setDefaultGroup(true);
@@ -90,7 +90,7 @@ class VideoGroupHelperTest extends TestCase
     $this->assertSame('Default Group', $defaultVGroup->getName(), 'Get Default Video Group name');
   }
 
-  public function testGetDefaultVideoGroupWithoutExistingDefault()
+  public function testGetDefaultVideoGroupWithoutExistingDefault(): void
   {
     $this->mockVideoGroupRep
       ->expects(self::once())
@@ -102,7 +102,7 @@ class VideoGroupHelperTest extends TestCase
     $this->videoGroupHelper->getDefaultVideoGroup();
   }
 
-  public function testGetVideoGroupsAll()
+  public function testGetVideoGroupsAll(): void
   {
     $videoGroup = new VideoGroup();
     $videoGroup->setName('Test');
@@ -115,7 +115,7 @@ class VideoGroupHelperTest extends TestCase
     $this->assertSame([$videoGroup], $this->videoGroupHelper->getVideoGroups(false));
   }
 
-  public function testGetVideoGroupsOnlyVisiblesOnHomePage()
+  public function testGetVideoGroupsOnlyVisiblesOnHomePage(): void
   {
     $videoGroup = new VideoGroup();
     $videoGroup->setName('Test');

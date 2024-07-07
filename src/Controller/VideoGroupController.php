@@ -76,7 +76,7 @@ class VideoGroupController extends AbstractController
 
   public function delete(Request $request, VideoGroup $videoGroup, EntityManagerInterface $entityManager): Response
   {
-    if ($this->isCsrfTokenValid('delete' . $videoGroup->getId(), $request->request->get('_token'))) {
+    if ($this->isCsrfTokenValid('delete' . $videoGroup->getId(), $request->request->getString('_token'))) {
       $entityManager->remove($videoGroup);
       $entityManager->flush();
     }

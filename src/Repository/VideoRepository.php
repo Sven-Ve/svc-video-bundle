@@ -45,6 +45,9 @@ class VideoRepository extends ServiceEntityRepository
       ->orderBy('v.id', 'DESC');
   }
 
+  /**
+   * @return array<mixed>
+   */
   public function videoStatsByGroup(): array
   {
     return $this->createQueryBuilder('v')
@@ -112,6 +115,9 @@ class VideoRepository extends ServiceEntityRepository
       ->orderBy('v.id', 'DESC');
   }
 
+  /**
+   * @return array<string>
+   */
   private static function extractSearchTerms(string $searchQuery): array
   {
     $searchQuery = u($searchQuery)->replaceMatches('/[[:space:]]+/', ' ')->trim();

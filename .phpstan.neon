@@ -1,0 +1,16 @@
+parameters:
+  level: 6
+  paths:
+    - bin/
+    - config/
+    - src/
+    - tests/
+  ignoreErrors:
+    - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition.*#'
+    - '#Call to an undefined method Svc\\VideoBundle\\Entity\\_VideoSuperclass::getId\(\).#'
+    - '#Method Svc\\VideoBundle\\Tests\\SvcVideoTestingKernel::configureRoutes\(\) is unused.#'
+    - '#Call to an undefined method .*::expects\(\).#'
+    - '#Class .* extends generic class .* but does not specify its types: .*#'
+    - '#Class .* implements generic interface .* but does not specify its types: .*#'
+    - '#Property .* with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types: TKey, T#'
+    - '#Method .* return type with generic interface .* does not specify its types: .*#'

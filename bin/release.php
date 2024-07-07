@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '5.3.1';
-$message = 'update requirements';
+$version = '5.4.0';
+$message = 'more test, check with phpstan level 6, fixed level 6 errors';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

@@ -34,6 +34,9 @@ class TagArrayToStringTransformer implements DataTransformerInterface
     return implode(',', $value);
   }
 
+  /**
+   * @return array<mixed>
+   */
   public function reverseTransform($value): array
   {
     if (null === $value || u($value)->isEmpty()) {

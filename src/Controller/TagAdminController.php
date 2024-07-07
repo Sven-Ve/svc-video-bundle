@@ -71,7 +71,7 @@ class TagAdminController extends AbstractController
 
   public function delete(Request $request, Tag $tag, EntityManagerInterface $entityManager): Response
   {
-    if ($this->isCsrfTokenValid('delete' . $tag->getId(), $request->request->get('_token'))) {
+    if ($this->isCsrfTokenValid('delete' . $tag->getId(), $request->request->getString('_token'))) {
       $entityManager->remove($tag);
       $entityManager->flush();
     }

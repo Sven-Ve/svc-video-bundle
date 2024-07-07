@@ -9,10 +9,16 @@ use Svc\VideoBundle\Repository\VideoRepository;
 
 class LogDataProvider extends GeneralDataProvider
 {
+  /**
+   * @var array<int,string>
+   */
   private array $videoSourceIDs = [];
 
   private bool $isVideoSourceIDsInitialized = false;
 
+  /**
+   * @var array<int,string>
+   */
   private array $vGroupSourceIDs = [];
 
   private bool $isVGroupSourceIDsInitialized = false;
@@ -46,13 +52,13 @@ class LogDataProvider extends GeneralDataProvider
         $this->initVideoSourceIDs();
       }
 
-      return array_key_exists($sourceID, $this->videoSourceIDs) ? $this->videoSourceIDs[$sourceID] : $sourceID;
+      return array_key_exists($sourceID, $this->videoSourceIDs) ? $this->videoSourceIDs[$sourceID] : (string) $sourceID;
     } elseif ($objectType === ObjectType::VGROUP->value) {
       if (!$this->isVGroupSourceIDsInitialized) {
         $this->initVGroupSourceIDs();
       }
 
-      return array_key_exists($sourceID, $this->vGroupSourceIDs) ? $this->vGroupSourceIDs[$sourceID] : $sourceID;
+      return array_key_exists($sourceID, $this->vGroupSourceIDs) ? $this->vGroupSourceIDs[$sourceID] : (string) $sourceID;
     }
 
     return strval($sourceID);
@@ -64,7 +70,7 @@ class LogDataProvider extends GeneralDataProvider
   private function initVideoSourceIDs(): void
   {
     foreach ($this->videoRep->findAll() as $video) {
-      $this->videoSourceIDs[$video->getId()] = $video->getTitle();
+      $this->videoSourceIDs[(int) $video->getId()] = (string) $video->getTitle();
     }
 
     $this->isVideoSourceIDsInitialized = true;
@@ -76,7 +82,7 @@ class LogDataProvider extends GeneralDataProvider
   private function initVGroupSourceIDs(): void
   {
     foreach ($this->videoGroupRep->findAll() as $vGroup) {
-      $this->vGroupSourceIDs[$vGroup->getId()] = $vGroup->getTitle();
+      $this->vGroupSourceIDs[(int) $vGroup->getId()] = (string) $vGroup->getTitle();
     }
     $this->vGroupSourceIDs['0'] = 'All videos';
 
