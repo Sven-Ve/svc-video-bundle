@@ -326,3 +326,8 @@ add daily statistic to all_stats
 ## Version 5.4.0
 *Sun, 07 Jul 2024 18:15:19 +0000*
 - more test, check with phpstan level 6, fixed level 6 errors
+
+
+## Version 5.5.0
+*Sun, 28 Jul 2024 19:55:05 +0000*
+- switch to svc/log-bundle 6.x, use jbtronics/settings-bundle now

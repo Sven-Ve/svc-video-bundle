@@ -3,8 +3,9 @@
 namespace Svc\VideoBundle\Tests;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
+use Jbtronics\SettingsBundle\JbtronicsSettingsBundle;
 use Svc\LogBundle\SvcLogBundle;
-use Svc\ParamBundle\SvcParamBundle;
+use Svc\UtilBundle\SvcUtilBundle;
 use Svc\VideoBundle\SvcVideoBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -14,8 +15,6 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Symfony\UX\StimulusBundle\StimulusBundle;
-use Twig\Extra\TwigExtraBundle\TwigExtraBundle;
 
 /**
  * Test kernel.
@@ -32,9 +31,8 @@ class SvcVideoTestingKernel extends Kernel
     yield new DoctrineBundle();
     yield new SvcLogBundle();
     yield new SecurityBundle();
-    yield new SvcParamBundle();
-    //    yield new StimulusBundle();
-    //    yield new TwigExtraBundle();
+    yield new JbtronicsSettingsBundle();
+    yield new SvcUtilBundle();
   }
 
   protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
