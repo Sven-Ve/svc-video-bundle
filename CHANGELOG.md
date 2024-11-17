@@ -331,3 +331,8 @@ add daily statistic to all_stats
 ## Version 5.5.0
 *Sun, 28 Jul 2024 19:55:05 +0000*
 - switch to svc/log-bundle 6.x, use jbtronics/settings-bundle now
+
+
+## Version 5.6.0
+*Sun, 17 Nov 2024 09:45:53 +0000*
+- switch to svc/log-bundle 7.x (new data model)

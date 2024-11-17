@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '5.5.0';
-$message = 'switch to svc/log-bundle 6.x, use jbtronics/settings-bundle now';
+$version = '5.6.0';
+$message = 'switch to svc/log-bundle 7.x (new data model)';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);
