@@ -23,7 +23,7 @@ class VideoHelper
     private readonly VideoRepository $videoRep,
     private readonly EntityManagerInterface $entityManager,
     private readonly RequestStack $requestStack,
-    private readonly UrlGeneratorInterface $router
+    private readonly UrlGeneratorInterface $router,
   ) {
   }
 
@@ -182,7 +182,7 @@ class VideoHelper
   /**
    * create the thumbnail directory.
    *
-   * @param string|null $msg by reference: give the error message back
+   * @param-out string $msg by reference: give the error message back
    *
    * @return bool true = successfully
    */

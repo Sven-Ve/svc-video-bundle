@@ -20,7 +20,7 @@ use function Symfony\Component\String\u;
 class TagArrayToStringTransformer implements DataTransformerInterface
 {
   public function __construct(
-    private readonly TagRepository $tags
+    private readonly TagRepository $tags,
   ) {
   }
 
@@ -49,6 +49,8 @@ class TagArrayToStringTransformer implements DataTransformerInterface
     $tags = $this->tags->findBy([
       'name' => $names,
     ]);
+
+    /** @phpstan-ignore argument.type */
     $newNames = array_diff($names, $tags);
 
     foreach ($newNames as $name) {

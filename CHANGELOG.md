@@ -336,3 +336,8 @@ add daily statistic to all_stats
 ## Version 5.6.0
 *Sun, 17 Nov 2024 09:45:53 +0000*
 - switch to svc/log-bundle 7.x (new data model)
+
+
+## Version 5.7.0
+*Wed, 20 Nov 2024 18:53:34 +0000*
+- switch to svc/log-bundle 7.3 (new data model), upgrade phpstan to 2.x

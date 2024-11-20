@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/** @phpstan-ignore trait.unused */
 trait VideoShortCallTrait
 {
   #[Route(path: '/hn/{id}', name: 'svc_video_short_runHideNav')]
