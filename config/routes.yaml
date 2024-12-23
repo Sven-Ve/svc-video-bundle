@@ -45,6 +45,9 @@ svc_video_list:
   controller: Svc\VideoBundle\Controller\VideoController::list
   requirements:
     id: '\d+'
+  options: 
+    sitemap:
+      priority: 1
 
 svc_video_stats:
   path: /stats/

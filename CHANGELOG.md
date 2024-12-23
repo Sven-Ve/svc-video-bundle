@@ -341,3 +341,8 @@ add daily statistic to all_stats
 ## Version 5.7.0
 *Wed, 20 Nov 2024 18:53:34 +0000*
 - switch to svc/log-bundle 7.3 (new data model), upgrade phpstan to 2.x
+
+
+## Version 5.7.1
+*Mon, 23 Dec 2024 21:19:11 +0000*
+- add sitemap.xml option to route.yaml
