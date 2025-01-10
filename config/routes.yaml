@@ -60,6 +60,9 @@ svc_video_inc_likes:
 svc_video_pwd:
   path: /pwd/{id}/{ot?}
   controller: Svc\VideoBundle\Controller\VideoController::enterPwd
+  requirements:
+    id: '\d+'
+    ot: '\d+'
 
 svc_video_group_index:
   path: /admin/group/

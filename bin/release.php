@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '5.7.1';
-$message = 'add sitemap.xml option to route.yaml';
+$version = '5.7.2';
+$message = 'improve route requirements for password entry';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

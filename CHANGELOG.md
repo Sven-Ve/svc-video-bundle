@@ -346,3 +346,8 @@ add daily statistic to all_stats
 ## Version 5.7.1
 *Mon, 23 Dec 2024 21:19:11 +0000*
 - add sitemap.xml option to route.yaml
+
+
+## Version 5.7.2
+*Fri, 10 Jan 2025 21:47:58 +0000*
+- improve route requirements for password entry
