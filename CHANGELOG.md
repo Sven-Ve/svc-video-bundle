@@ -351,3 +351,8 @@ add daily statistic to all_stats
 ## Version 5.7.2
 *Fri, 10 Jan 2025 21:47:58 +0000*
 - improve route requirements for password entry
+
+
+## Version 5.7.3
+*Sun, 12 Jan 2025 15:02:08 +0000*
+- log hacking attemts during password entry

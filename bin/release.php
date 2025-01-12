@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '5.7.2';
-$message = 'improve route requirements for password entry';
+$version = '5.7.3';
+$message = 'log hacking attemts during password entry';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

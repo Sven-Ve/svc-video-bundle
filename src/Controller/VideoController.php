@@ -5,6 +5,7 @@ namespace Svc\VideoBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Svc\LikeBundle\Service\LikeHelper;
 use Svc\LogBundle\Service\EventLog;
+use Svc\LogBundle\Service\LogAppConstants;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Enum\ObjectType;
 use Svc\VideoBundle\Form\EnterPasswordType;
@@ -189,6 +190,14 @@ class VideoController extends AbstractController
         $videoObj = $videoGroupRep->find($id);
       } else {
         $videoObj = $videoRep->find($id);
+      }
+
+      if (!$videoObj) {
+        $eventLog->log($id, LogAppConstants::LOG_TYPE_HACKING_ATTEMPT, ['level' => EventLog::LEVEL_ERROR, 'message' => 'hacking url: ' . $request->getUri()]);
+
+        $this->addFlash('danger', 'Wrong parameter, please do not modify the url...');
+
+        return $this->redirectToRoute('svc_video_list');
       }
 
       if ($videoHelper->checkPassword($form->get('plainPassword')->getData(), $videoObj->getPassword())) {

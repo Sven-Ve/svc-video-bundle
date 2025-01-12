@@ -24,7 +24,7 @@
     "symfony/twig-bundle": "^6.3 || ^7",
     "svc/like-bundle": "^5.2|dev-main",
     "svc/util-bundle": "^5.8|dev-main",
-    "svc/log-bundle": "^7.3|dev-main",
+    "svc/log-bundle": "^7.7|dev-main",
     "liip/imagine-bundle": "^2.7",
     "symfony/form": "^6.3 || ^7",
     "symfony/ux-chartjs": "^2.18",
