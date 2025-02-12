@@ -4,6 +4,7 @@ namespace Svc\VideoBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Svc\LikeBundle\Service\LikeHelper;
+use Svc\LogBundle\Enum\LogLevel;
 use Svc\LogBundle\Service\EventLog;
 use Svc\LogBundle\Service\LogAppConstants;
 use Svc\VideoBundle\Entity\Video;
@@ -73,7 +74,7 @@ class VideoController extends AbstractController
       $hideGroups = true;
     }
 
-    $eventLog->log($currentGroup ? $currentGroup->getId() : 0, ObjectType::VGROUP->value);
+    $eventLog->writeLog($currentGroup ? $currentGroup->getId() : 0, ObjectType::VGROUP->value);
 
     if ($id === null and $query != null) {
       $videos = $videoRep->findBySearchQuery($query);
@@ -132,7 +133,7 @@ class VideoController extends AbstractController
       $hideNav = $video->getVideoGroup()->getHideNav();
     }
 
-    $eventLog->log($video->getId(), ObjectType::VIDEO->value);
+    $eventLog->writeLog($video->getId(), ObjectType::VIDEO->value);
 
     return $this->render('@SvcVideo/video/run.html.twig', [
       'video' => $video,
@@ -193,7 +194,7 @@ class VideoController extends AbstractController
       }
 
       if (!$videoObj) {
-        $eventLog->log($id, LogAppConstants::LOG_TYPE_HACKING_ATTEMPT, ['level' => EventLog::LEVEL_ERROR, 'message' => 'hacking url: ' . $request->getUri()]);
+        $eventLog->writeLog($id, LogAppConstants::LOG_TYPE_HACKING_ATTEMPT, level: LogLevel::ERROR, message: 'hacking url: ' . $request->getUri());
 
         $this->addFlash('danger', 'Wrong parameter, please do not modify the url...');
 
@@ -207,7 +208,7 @@ class VideoController extends AbstractController
         }
         try {
           $url = $this->generateUrl($path, ['id' => $videoObj->getId()]);
-          $eventLog->log($id, $ot->value, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'correct password']);
+          $eventLog->writeLog($id, $ot->value, LogLevel::DEBUG, message: 'correct password');
 
           return $this->redirect($url);
         } catch (RouteNotFoundException) {
@@ -216,11 +217,11 @@ class VideoController extends AbstractController
           return $this->redirectToRoute('svc_video_list');
         }
       }
-      $eventLog->log($id, $ot->value, ['level' => EventLog::LEVEL_WARN, 'message' => 'wrong password']);
+      $eventLog->writeLog($id, $ot->value, LogLevel::LEVEL_WARN, message: 'wrong password');
       $this->addFlash('danger', 'Wrong password');
     }
 
-    $eventLog->log($id, $ot->value, ['level' => EventLog::LEVEL_DEBUG, 'message' => 'enter password']);
+    $eventLog->writeLog($id, $ot->value, LogLevel::DEBUG, message: 'enter password');
 
     return $this->render('@SvcVideo/video/password.html.twig', [
       'form' => $form,

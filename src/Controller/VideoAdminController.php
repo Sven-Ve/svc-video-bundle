@@ -5,7 +5,7 @@ namespace Svc\VideoBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
-use Svc\LogBundle\Service\EventLog;
+use Svc\LogBundle\Enum\LogLevel;
 use Svc\LogBundle\Service\LogStatistics;
 use Svc\VideoBundle\Entity\Video;
 use Svc\VideoBundle\Entity\VideoGroup;
@@ -150,7 +150,7 @@ class VideoAdminController extends AbstractController
    */
   public function stats(Video $video, LogStatistics $logStatistics, ChartBuilderInterface $chartBuilder): Response
   {
-    $countries = $logStatistics->getCountriesForChartJS($video->getId(), ObjectType::VIDEO->value, EventLog::LEVEL_DATA);
+    $countries = $logStatistics->getCountriesForChartJS($video->getId(), ObjectType::VIDEO->value, LogLevel::DATA);
     $countries['datasets'][0]['backgroundColor'] = ['#A3C408', '#86914E', '#F7D723', '#708AFA', '#085CC4'];
     $countries['datasets'][0]['borderColor'] = 'rgb(255, 255, 255)';
 
@@ -169,7 +169,7 @@ class VideoAdminController extends AbstractController
       'chart' => $chart,
       'sourceID' => $video->getId(),
       'sourceType' => ObjectType::VIDEO,
-      'logLevel' => EventLog::LEVEL_DATA,
+      'logLevel' => LogLevel::DATA,
     ]);
   }
 
@@ -192,7 +192,7 @@ class VideoAdminController extends AbstractController
       array_unshift($videos, $allVideoGroup);
     }
 
-    $statistics = $logStatistics->pivotMonthly($videoType, EventLog::LEVEL_DATA, true);
+    $statistics = $logStatistics->pivotMonthly($videoType, LogLevel::DATA, true);
 
     foreach ($videos as $video) {
       foreach ($statistics['data'] as $statistic) {

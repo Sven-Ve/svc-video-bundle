@@ -3,7 +3,7 @@
 namespace Svc\VideoBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Svc\LogBundle\Service\EventLog;
+use Svc\LogBundle\Enum\LogLevel;
 use Svc\VideoBundle\Entity\VideoGroup;
 use Svc\VideoBundle\Enum\ObjectType;
 use Svc\VideoBundle\Form\VideoGroupType;
@@ -93,7 +93,7 @@ class VideoGroupController extends AbstractController
       'video' => $videoGroup,
       'sourceID' => $videoGroup->getId(),
       'sourceType' => ObjectType::VGROUP,
-      'logLevel' => EventLog::LEVEL_DATA,
+      'logLevel' => LogLevel::DATA,
     ]);
   }
 }
