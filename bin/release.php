@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-$version = '5.7.3';
-$message = 'log hacking attemts during password entry';
+$version = '5.8.0';
+$message = 'change to the new SvcLogBundle model';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

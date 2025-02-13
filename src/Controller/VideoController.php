@@ -217,7 +217,7 @@ class VideoController extends AbstractController
           return $this->redirectToRoute('svc_video_list');
         }
       }
-      $eventLog->writeLog($id, $ot->value, LogLevel::LEVEL_WARN, message: 'wrong password');
+      $eventLog->writeLog($id, $ot->value, LogLevel::WARN, message: 'wrong password');
       $this->addFlash('danger', 'Wrong password');
     }
 

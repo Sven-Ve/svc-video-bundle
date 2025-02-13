@@ -356,3 +356,8 @@ add daily statistic to all_stats
 ## Version 5.7.3
 *Sun, 12 Jan 2025 15:02:08 +0000*
 - log hacking attemts during password entry
+
+
+## Version 5.8.0
+*Thu, 13 Feb 2025 20:08:24 +0000*
+- change to the new SvcLogBundle model
