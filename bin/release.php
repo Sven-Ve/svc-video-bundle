@@ -10,8 +10,8 @@
  * file that was distributed with this source code.
  */
 
-$version = '5.8.1';
-$message = 'add license text to all files';
+$version = '5.8.2';
+$message = 'update github actions';
 
 echo "Running phpstan:\n";
 system('composer run-script phpstan', $res);

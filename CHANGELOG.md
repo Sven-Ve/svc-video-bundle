@@ -366,3 +366,8 @@ add daily statistic to all_stats
 ## Version 5.8.1
 *Wed, 18 Jun 2025 15:39:49 +0000*
 - add license text to all files
+
+
+## Version 5.8.2
+*Wed, 18 Jun 2025 15:44:08 +0000*
+- update github actions
