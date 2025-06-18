@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the Symfony package.
+ * This file is part of the SvcVideo bundle.
  *
- * (c) Fabien Potencier <fabien@symfony.com>
+ * (c) Sven Vetter <dev@sv-systems.com>.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,45 +19,45 @@ use function Symfony\Component\String\u;
 
 class TagArrayToStringTransformer implements DataTransformerInterface
 {
-  public function __construct(
-    private readonly TagRepository $tags,
-  ) {
-  }
-
-  public function transform($value): string
-  {
-    // The value received is an array of Tag objects generated with
-    // Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer::transform()
-    // The value returned is a string that concatenates the string representation of those objects
-
-    /* @var Tag[] $tags */
-    return implode(',', $value);
-  }
-
-  /**
-   * @return array<mixed>
-   */
-  public function reverseTransform($value): array
-  {
-    if (null === $value || u($value)->isEmpty()) {
-      return [];
+    public function __construct(
+        private readonly TagRepository $tags,
+    ) {
     }
 
-    // @phpstan-ignore-next-line
-    $names = array_filter(array_unique(array_map('trim', u($value)->split(','))));
+    public function transform($value): string
+    {
+        // The value received is an array of Tag objects generated with
+        // Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer::transform()
+        // The value returned is a string that concatenates the string representation of those objects
 
-    $tags = $this->tags->findBy([
-      'name' => $names,
-    ]);
-
-    /** @phpstan-ignore argument.type */
-    $newNames = array_diff($names, $tags);
-
-    foreach ($newNames as $name) {
-      $tag = new Tag($name);
-      $tags[] = $tag;
+        /* @var Tag[] $tags */
+        return implode(',', $value);
     }
 
-    return $tags;
-  }
+    /**
+     * @return array<mixed>
+     */
+    public function reverseTransform($value): array
+    {
+        if (null === $value || u($value)->isEmpty()) {
+            return [];
+        }
+
+        // @phpstan-ignore-next-line
+        $names = array_filter(array_unique(array_map('trim', u($value)->split(','))));
+
+        $tags = $this->tags->findBy([
+            'name' => $names,
+        ]);
+
+        /** @phpstan-ignore argument.type */
+        $newNames = array_diff($names, $tags);
+
+        foreach ($newNames as $name) {
+            $tag = new Tag($name);
+            $tags[] = $tag;
+        }
+
+        return $tags;
+    }
 }

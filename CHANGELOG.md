@@ -361,3 +361,8 @@ add daily statistic to all_stats
 ## Version 5.8.0
 *Thu, 13 Feb 2025 20:08:24 +0000*
 - change to the new SvcLogBundle model
+
+
+## Version 5.8.1
+*Wed, 18 Jun 2025 15:39:49 +0000*
+- add license text to all files

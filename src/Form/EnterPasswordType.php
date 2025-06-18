@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the SvcVideo bundle.
+ *
+ * (c) Sven Vetter <dev@sv-systems.com>.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Svc\VideoBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -9,22 +18,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EnterPasswordType extends AbstractType
 {
-  public function buildForm(FormBuilderInterface $builder, array $options): void
-  {
-    $builder
-      ->add('plainPassword', PasswordType::class, [
-        'label' => 'Password',
-        'mapped' => false,
-        'attr' => ['autofocus' => true, 'placeholder' => 'Password'],
-        'row_attr' => ['class' => 'form-floating'],
-      ]);
-  }
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+          ->add('plainPassword', PasswordType::class, [
+              'label' => 'Password',
+              'mapped' => false,
+              'attr' => ['autofocus' => true, 'placeholder' => 'Password'],
+              'row_attr' => ['class' => 'form-floating'],
+          ]);
+    }
 
-  public function configureOptions(OptionsResolver $resolver): void
-  {
-    $resolver->setDefaults([
-      'data_class' => null,
-      'translation_domain' => 'VideoBundle',
-    ]);
-  }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => null,
+            'translation_domain' => 'VideoBundle',
+        ]);
+    }
 }

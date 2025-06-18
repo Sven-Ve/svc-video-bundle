@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the SvcVideo bundle.
+ *
+ * (c) Sven Vetter <dev@sv-systems.com>.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Svc\VideoBundle\Form\Type;
 
 use Svc\VideoBundle\Form\DataTransformer\TagArrayToStringTransformer;
@@ -13,27 +22,27 @@ use Symfony\Component\Form\FormView;
 
 class TagInputType extends AbstractType
 {
-  public function __construct(private readonly TagRepository $tagRep)
-  {
-  }
+    public function __construct(private readonly TagRepository $tagRep)
+    {
+    }
 
-  public function buildForm(FormBuilderInterface $builder, array $options): void
-  {
-    $builder
-      ->addModelTransformer(new CollectionToArrayTransformer(), true)
-      ->addModelTransformer(new TagArrayToStringTransformer($this->tagRep), true);
-  }
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+          ->addModelTransformer(new CollectionToArrayTransformer(), true)
+          ->addModelTransformer(new TagArrayToStringTransformer($this->tagRep), true);
+    }
 
-  public function buildView(FormView $view, FormInterface $form, array $options): void
-  {
-    $json = $this->tagRep->getTagNamesAsJson();
-    $view->vars['row_attr']['data-svc--video-bundle--tag-auto-com-list-value'] = $json;
-    $view->vars['row_attr']['data-controller'] = 'svc--video-bundle--tag';
-    $view->vars['attr']['data-svc--video-bundle--tag-target'] = 'tags';
-  }
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $json = $this->tagRep->getTagNamesAsJson();
+        $view->vars['row_attr']['data-svc--video-bundle--tag-auto-com-list-value'] = $json;
+        $view->vars['row_attr']['data-controller'] = 'svc--video-bundle--tag';
+        $view->vars['attr']['data-svc--video-bundle--tag-target'] = 'tags';
+    }
 
-  public function getParent(): ?string
-  {
-    return TextType::class;
-  }
+    public function getParent(): ?string
+    {
+        return TextType::class;
+    }
 }

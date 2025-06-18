@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the SvcVideo bundle.
+ *
+ * (c) Sven Vetter <dev@sv-systems.com>.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Svc\VideoBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -14,21 +23,21 @@ use Svc\VideoBundle\Entity\VideoGroup;
  */
 class VideoGroupRepository extends ServiceEntityRepository
 {
-  public function __construct(ManagerRegistry $registry)
-  {
-    parent::__construct($registry, VideoGroup::class);
-  }
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, VideoGroup::class);
+    }
 
-  /**
-   * @return array<mixed>
-   */
-  public function findAllExceptHidenOnHomePage(): array
-  {
-    return $this->createQueryBuilder('v')
-            ->andWhere('v.hideOnHomePage = false')
-            ->orderBy('v.name', 'ASC')
-            ->getQuery()
-            ->getResult()
-    ;
-  }
+    /**
+     * @return array<mixed>
+     */
+    public function findAllExceptHidenOnHomePage(): array
+    {
+        return $this->createQueryBuilder('v')
+                ->andWhere('v.hideOnHomePage = false')
+                ->orderBy('v.name', 'ASC')
+                ->getQuery()
+                ->getResult()
+        ;
+    }
 }

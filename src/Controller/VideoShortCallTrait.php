@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the SvcVideo bundle.
+ *
+ * (c) Sven Vetter <dev@sv-systems.com>.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Svc\VideoBundle\Controller;
 
 use Svc\VideoBundle\Service\VideoGroupHelper;
@@ -10,30 +19,30 @@ use Symfony\Component\Routing\Annotation\Route;
 /** @phpstan-ignore trait.unused */
 trait VideoShortCallTrait
 {
-  #[Route(path: '/hn/{id}', name: 'svc_video_short_runHideNav')]
-  public function shortRunHideNav($id): Response
-  {
-    return $this->redirectToRoute('svc_video_run_hn', ['id' => $id], 303);
-  }
+    #[Route(path: '/hn/{id}', name: 'svc_video_short_runHideNav')]
+    public function shortRunHideNav($id): Response
+    {
+        return $this->redirectToRoute('svc_video_run_hn', ['id' => $id], 303);
+    }
 
-  #[Route(path: '/{id}', name: 'svc_video_short_run', requirements: ['id' => "\d+"])]
-  public function shortRun($id): Response
-  {
-    return $this->redirectToRoute('svc_video_run', ['id' => $id], 303);
-  }
+    #[Route(path: '/{id}', name: 'svc_video_short_run', requirements: ['id' => "\d+"])]
+    public function shortRun($id): Response
+    {
+        return $this->redirectToRoute('svc_video_run', ['id' => $id], 303);
+    }
 
-  #[Route(path: '/v/{id}', name: 'svc_video_short_run1')]
-  public function shortRun1($id): Response
-  {
-    return $this->redirectToRoute('svc_video_run', ['id' => $id], 303);
-  }
+    #[Route(path: '/v/{id}', name: 'svc_video_short_run1')]
+    public function shortRun1($id): Response
+    {
+        return $this->redirectToRoute('svc_video_run', ['id' => $id], 303);
+    }
 
-  #[Route(path: '/g/{group}', name: 'svc_video_shortGroup')]
-  public function shortGroup($group, VideoGroupHelper $videoGroupHelper, Request $request): Response
-  {
-    $sort = $request->query->get('sort') ?? 0;
-    $id = $videoGroupHelper->getVideoGroupIDbyShortName($group);
+    #[Route(path: '/g/{group}', name: 'svc_video_shortGroup')]
+    public function shortGroup($group, VideoGroupHelper $videoGroupHelper, Request $request): Response
+    {
+        $sort = $request->query->get('sort') ?? 0;
+        $id = $videoGroupHelper->getVideoGroupIDbyShortName($group);
 
-    return $this->redirectToRoute('svc_video_list', ['id' => $id, 'sort' => $sort], 303);
-  }
+        return $this->redirectToRoute('svc_video_list', ['id' => $id, 'sort' => $sort], 303);
+    }
 }

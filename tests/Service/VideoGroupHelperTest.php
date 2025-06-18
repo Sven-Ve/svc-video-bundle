@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the SvcVideo bundle.
+ *
+ * (c) Sven Vetter <dev@sv-systems.com>.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Svc\VideoBundle\Tests\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,119 +21,119 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class VideoGroupHelperTest extends TestCase
 {
-  private VideoGroupHelper $videoGroupHelper;
+    private VideoGroupHelper $videoGroupHelper;
 
-  private VideoGroupRepository $mockVideoGroupRep;
+    private VideoGroupRepository $mockVideoGroupRep;
 
-  private EntityManagerInterface $mockEntityMan;
+    private EntityManagerInterface $mockEntityMan;
 
-  protected function setUp(): void
-  {
-    parent::setUp();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-    $this->mockVideoGroupRep = $this->createMock(VideoGroupRepository::class);
-    $this->mockEntityMan = $this->createMock(EntityManagerInterface::class);
-    $mockUrlGen = $this->createMock(UrlGeneratorInterface::class);
+        $this->mockVideoGroupRep = $this->createMock(VideoGroupRepository::class);
+        $this->mockEntityMan = $this->createMock(EntityManagerInterface::class);
+        $mockUrlGen = $this->createMock(UrlGeneratorInterface::class);
 
-    $this->videoGroupHelper = new VideoGroupHelper(
-      true,
-      $this->mockVideoGroupRep,
-      $this->mockEntityMan,
-      $mockUrlGen
-    );
-  }
+        $this->videoGroupHelper = new VideoGroupHelper(
+            true,
+            $this->mockVideoGroupRep,
+            $this->mockEntityMan,
+            $mockUrlGen
+        );
+    }
 
-  public function testServiceCreate(): void
-  {
-    $this->assertInstanceOf(VideoGroupHelper::class, $this->videoGroupHelper, 'Create instance');
-  }
+    public function testServiceCreate(): void
+    {
+        $this->assertInstanceOf(VideoGroupHelper::class, $this->videoGroupHelper, 'Create instance');
+    }
 
-  public function testInitDefaultVideoGroupWithoutExistingDefault(): void
-  {
-    $this->mockEntityMan
-      ->expects(self::once())
-      ->method('flush');
-    $this->mockEntityMan
-      ->expects(self::once())
-      ->method('persist');
+    public function testInitDefaultVideoGroupWithoutExistingDefault(): void
+    {
+        $this->mockEntityMan
+          ->expects(self::once())
+          ->method('flush');
+        $this->mockEntityMan
+          ->expects(self::once())
+          ->method('persist');
 
-    $this->mockVideoGroupRep
-      ->expects(self::once())
-      ->method('findOneBy');
+        $this->mockVideoGroupRep
+          ->expects(self::once())
+          ->method('findOneBy');
 
-    $this->videoGroupHelper->initDefaultVideoGroup();
-  }
+        $this->videoGroupHelper->initDefaultVideoGroup();
+    }
 
-  public function testInitDefaultVideoGroupWithExistingDefault(): void
-  {
-    $this->mockEntityMan
-      ->expects(self::never())
-      ->method('flush');
-    $this->mockEntityMan
-      ->expects(self::never())
-      ->method('persist');
+    public function testInitDefaultVideoGroupWithExistingDefault(): void
+    {
+        $this->mockEntityMan
+          ->expects(self::never())
+          ->method('flush');
+        $this->mockEntityMan
+          ->expects(self::never())
+          ->method('persist');
 
-    $videoGroup = new VideoGroup();
-    $videoGroup->setDefaultGroup(true);
+        $videoGroup = new VideoGroup();
+        $videoGroup->setDefaultGroup(true);
 
-    $this->mockVideoGroupRep
-      ->expects(self::once())
-      ->method('findOneBy')
-      ->willReturn($videoGroup);
+        $this->mockVideoGroupRep
+          ->expects(self::once())
+          ->method('findOneBy')
+          ->willReturn($videoGroup);
 
-    $this->videoGroupHelper->initDefaultVideoGroup();
-  }
+        $this->videoGroupHelper->initDefaultVideoGroup();
+    }
 
-  public function testGetDefaultVideoGroupWithExistingDefault(): void
-  {
-    $videoGroup = new VideoGroup();
-    $videoGroup->setDefaultGroup(true);
-    $videoGroup->setName('Default Group');
+    public function testGetDefaultVideoGroupWithExistingDefault(): void
+    {
+        $videoGroup = new VideoGroup();
+        $videoGroup->setDefaultGroup(true);
+        $videoGroup->setName('Default Group');
 
-    $this->mockVideoGroupRep
-      ->expects(self::once())
-      ->method('findOneBy')
-      ->willReturn($videoGroup);
+        $this->mockVideoGroupRep
+          ->expects(self::once())
+          ->method('findOneBy')
+          ->willReturn($videoGroup);
 
-    $defaultVGroup = $this->videoGroupHelper->getDefaultVideoGroup();
-    $this->assertSame('Default Group', $defaultVGroup->getName(), 'Get Default Video Group name');
-  }
+        $defaultVGroup = $this->videoGroupHelper->getDefaultVideoGroup();
+        $this->assertSame('Default Group', $defaultVGroup->getName(), 'Get Default Video Group name');
+    }
 
-  public function testGetDefaultVideoGroupWithoutExistingDefault(): void
-  {
-    $this->mockVideoGroupRep
-      ->expects(self::once())
-      ->method('findOneBy')
-      ->willReturn(null);
+    public function testGetDefaultVideoGroupWithoutExistingDefault(): void
+    {
+        $this->mockVideoGroupRep
+          ->expects(self::once())
+          ->method('findOneBy')
+          ->willReturn(null);
 
-    $this->expectExceptionMessage('Default video group not found. Please initialize the app.');
-    $this->expectExceptionObject(new DefaultVideoGroupNotExistsException());
-    $this->videoGroupHelper->getDefaultVideoGroup();
-  }
+        $this->expectExceptionMessage('Default video group not found. Please initialize the app.');
+        $this->expectExceptionObject(new DefaultVideoGroupNotExistsException());
+        $this->videoGroupHelper->getDefaultVideoGroup();
+    }
 
-  public function testGetVideoGroupsAll(): void
-  {
-    $videoGroup = new VideoGroup();
-    $videoGroup->setName('Test');
+    public function testGetVideoGroupsAll(): void
+    {
+        $videoGroup = new VideoGroup();
+        $videoGroup->setName('Test');
 
-    $this->mockVideoGroupRep
-      ->expects(self::once())
-      ->method('findAll')
-      ->willReturn([$videoGroup]);
+        $this->mockVideoGroupRep
+          ->expects(self::once())
+          ->method('findAll')
+          ->willReturn([$videoGroup]);
 
-    $this->assertSame([$videoGroup], $this->videoGroupHelper->getVideoGroups(false));
-  }
+        $this->assertSame([$videoGroup], $this->videoGroupHelper->getVideoGroups(false));
+    }
 
-  public function testGetVideoGroupsOnlyVisiblesOnHomePage(): void
-  {
-    $videoGroup = new VideoGroup();
-    $videoGroup->setName('Test');
+    public function testGetVideoGroupsOnlyVisiblesOnHomePage(): void
+    {
+        $videoGroup = new VideoGroup();
+        $videoGroup->setName('Test');
 
-    $this->mockVideoGroupRep
-      ->expects(self::once())
-      ->method('findAllExceptHidenOnHomePage')
-      ->willReturn([$videoGroup]);
+        $this->mockVideoGroupRep
+          ->expects(self::once())
+          ->method('findAllExceptHidenOnHomePage')
+          ->willReturn([$videoGroup]);
 
-    $this->assertSame([$videoGroup], $this->videoGroupHelper->getVideoGroups(true));
-  }
+        $this->assertSame([$videoGroup], $this->videoGroupHelper->getVideoGroups(true));
+    }
 }
